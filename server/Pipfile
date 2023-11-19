@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+mysqlclient = "*"
+drf-nested-routers = "*"
+djangorestframework = "*"
+djoser = "*"
+pillow = "*"
+
+[dev-packages]
+pytest = "*"
+pytest-django = "*"
+django-debug-toolbar = "*"
+pytest-watch = "*"
+model-bakery = "*"
+
+[requires]
+python_version = "3.10"

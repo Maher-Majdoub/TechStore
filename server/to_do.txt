@@ -1,0 +1,1 @@
+test products endpoint with all features
