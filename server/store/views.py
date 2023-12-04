@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.permissions import IsAdminUser, AllowAny
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.validators import ValidationError
 from rest_framework.mixins import (
@@ -8,6 +8,7 @@ from rest_framework.mixins import (
     DestroyModelMixin,
 )
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.decorators import action
 from .models import *
 from .serializers import *
 from .permissions import *
@@ -139,3 +140,49 @@ class CartItemViewSet(ModelViewSet):
     def get_serializer_context(self):
         return {'cart_id': self.kwargs['cart_pk']}
     
+
+class AdressViewSet(ModelViewSet):
+    serializer_class = AdressSerializer
+    #authentication_classes = [IsAuthenticated]
+    
+    def list(self, request, *args, **kwargs):
+        if kwargs['customer_pk'] == 'me':
+            id = Customer.objects.only('id').get(user_id=request.user.id)
+            self.kwargs['customer_pk'] = id
+        return super().list(request, *args, **kwargs)
+
+    def create(self, request, *args, **kwargs):
+        if kwargs['customer_pk'] == 'me':
+            id = Customer.objects.only('id').get(user_id=request.user.id)
+            self.kwargs['customer_pk'] = id
+        return super().create(request, *args, **kwargs)
+
+    def get_queryset(self):
+        return Adress.objects.filter(customer=self.kwargs['customer_pk'])
+    
+    def get_serializer_context(self):
+        return {'customer_id': self.kwargs['customer_pk']}
+    
+
+class CustomerViewSet(ModelViewSet):
+    queryset = Customer.objects.all().prefetch_related('adresses')
+    serializer_class = CustomerSerializer
+    http_method_names = ["get", "put", "patch", "options"]
+    permission_classes = [IsAdminUser]
+
+
+    @action(methods=["GET", "PUT"], detail=False, permission_classes=[IsAuthenticated])
+    def me(self, request):
+        customer = Customer.objects.prefetch_related("adresses").get(
+            user_id=request.user.id
+        )
+
+        if request.method == "GET":
+            serializer = CustomerSerializer(customer)
+
+        elif request.method == "PUT":
+            serializer = CustomerSerializer(customer, data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+
+        return Response(serializer.data)

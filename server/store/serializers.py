@@ -216,9 +216,6 @@ class CartItemSerializer(serializers.ModelSerializer):
 class GetCartItemSerializer(CartItemSerializer):
     product = GetProductSerializer()
 
-    class Meta(CartItemSerializer.Meta):
-        pass
-
 
 class CartSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
@@ -227,3 +224,40 @@ class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
         fields = ['id', 'items']
+
+
+class AdressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Adress
+        fields = [
+            'id',
+            'is_default',
+            'state',
+            'city',
+            'street_number',
+            'postal_code',
+            'description',
+        ]
+
+    def create(self, validated_data):
+        return Adress.objects.create(
+                customer=self.context['customer_id'], 
+                **validated_data
+            )
+    
+
+class CustomerSerializer(serializers.ModelSerializer):
+    membership = serializers.CharField(read_only=True)
+    adresses = AdressSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Customer
+        fields = [
+            'id',
+            'user_id', 
+            'phone', 
+            'birth_date', 
+            'membership', 
+            'adresses'
+        ]
+

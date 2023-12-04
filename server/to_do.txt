@@ -1,2 +1,4 @@
 test products endpoint with all features
 there is a bug in the url of products images
+
+optimiser adress view set (create, list)
