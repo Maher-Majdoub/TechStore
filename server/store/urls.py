@@ -6,6 +6,7 @@ router = routers.DefaultRouter()
 router.register('categories', CategoryViewSet, 'category')
 router.register('products', ProductViewSet, 'product')
 router.register('discounts', DiscountViewSet, 'discount')
+router.register('carts', CartViewSet, 'cart')
 
 categories_router = routers.NestedDefaultRouter(router, 'categories', lookup='category')
 categories_router.register('variations', VariationViewSet, 'category-variations')
@@ -21,4 +22,7 @@ categories_products_router.register('configurations', ProductConfigurationViewSe
 categories_products_router.register('discounts', ProductDiscountViewSet, 'product-discounts')
 categories_products_router.register('images', ProductImageViewSet, 'product-images')
 
-urlpatterns = router.urls + categories_router.urls + products_router.urls + categories_products_router.urls
+carts_router = routers.NestedDefaultRouter(router, 'carts', lookup='cart')
+carts_router.register('items', CartItemViewSet, 'cart-items')
+
+urlpatterns = router.urls + categories_router.urls + products_router.urls + categories_products_router.urls + carts_router.urls

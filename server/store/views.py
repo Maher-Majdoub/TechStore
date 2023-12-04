@@ -1,8 +1,13 @@
 from rest_framework import status
-from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
 from rest_framework.validators import ValidationError
+from rest_framework.mixins import (
+    RetrieveModelMixin,
+    CreateModelMixin,
+    DestroyModelMixin,
+)
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from .models import *
 from .serializers import *
 from .permissions import *
@@ -111,3 +116,26 @@ class ProductImageViewSet(ModelViewSet):
     
     def get_serializer_context(self):
         return {'product_id': self.kwargs['product_pk']}
+    
+
+class CartViewSet(
+            RetrieveModelMixin, 
+            CreateModelMixin, 
+            DestroyModelMixin, 
+            GenericViewSet
+        ):
+    # 1f0fa040-4059-4cfd-9471-b19064c8f784
+    serializer_class = CartSerializer
+    queryset = Cart.objects.all().prefetch_related('items__product')
+    
+
+class CartItemViewSet(ModelViewSet):
+    def get_serializer_class(self):
+        return GetCartItemSerializer if self.request.method == 'GET' else CartItemSerializer
+
+    def get_queryset(self):
+        return CartItem.objects.filter(cart_id=self.kwargs['cart_pk']).prefetch_related('product')
+
+    def get_serializer_context(self):
+        return {'cart_id': self.kwargs['cart_pk']}
+    

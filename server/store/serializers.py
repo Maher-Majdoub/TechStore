@@ -194,3 +194,36 @@ class GetCategoryProductSerializer(GetProductSerializer):
             'discounts',
             'images',
         ]
+
+
+class CartItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CartItem
+        fields = ['id', 'product', 'quantity']
+
+    def create(self, validated_data):
+        cart_id = self.context['cart_id']
+        #check if the product exists in the cart
+        response = CartItem.objects.filter(cart=cart_id, product_id=validated_data['product'])
+        if response.exists():
+            cart_item: CartItem = response[0]
+            cart_item.quantity += validated_data['quantity']
+            cart_item.save()
+            return cart_item
+        return CartItem.objects.create(cart_id=cart_id, **validated_data)
+
+
+class GetCartItemSerializer(CartItemSerializer):
+    product = GetProductSerializer()
+
+    class Meta(CartItemSerializer.Meta):
+        pass
+
+
+class CartSerializer(serializers.ModelSerializer):
+    id = serializers.UUIDField(read_only=True)
+    items = GetCartItemSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = Cart
+        fields = ['id', 'items']
