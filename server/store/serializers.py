@@ -15,6 +15,21 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ['id', 'name', 'parent_category']
+
+    def update(self, instance, validated_data): 
+        new_parent= validated_data.get('parent_category')
+        
+        if new_parent:
+            if new_parent.id == instance.id: 
+                raise ValidationError({'error': 'parent is current.'})
+            if instance.parent_category and  new_parent.id != instance.parent_category.id or not instance.parent_category:
+                while True:
+                    if not new_parent.parent_category: break
+                    if new_parent.parent_category.id == instance.id:
+                        raise ValidationError({'error': 'mrgl'})
+                    new_parent = new_parent.parent_category 
+
+        return super().update(instance, validated_data)
         
 class GetCategorySerializer(CategorySerializer):
     sub_categories = RecursiveSerializer()

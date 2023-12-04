@@ -27,16 +27,6 @@ class CategoryViewSet(ModelViewSet):
             raise ValidationError({'Error': 'Parent category does not exist.'})
         return super().create(request, *args, **kwargs)
     
-    def update(self, request, *args, **kwargs):
-        parent_category = request.data.get('parent_category')
-        if parent_category:
-            print('here',kwargs, parent_category)
-            if parent_category == kwargs['pk']:
-                raise ValidationError({'Error': 'Parent category cannot be current.'})
-            if not Category.objects.filter(id=parent_category).exists():
-                raise ValidationError({'Error': 'Parent category does not exist.'})
-            
-        return super().update(request, *args, **kwargs)
 
 
 class VariationViewSet(ModelViewSet):

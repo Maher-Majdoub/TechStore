@@ -10,11 +10,12 @@ class Category(models.Model):
     parent_category = models.ForeignKey('self', on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='sub_categories')
     name = models.CharField(max_length=255, unique=True)
 
-    def __str__(self) -> str:
-        return self.name
-    
     class Meta:
         ordering = ['id']
+
+    def __str__(self) -> str:
+        return self.name
+
 
 
 class Variation(models.Model):

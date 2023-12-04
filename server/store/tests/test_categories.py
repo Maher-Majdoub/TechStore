@@ -65,7 +65,6 @@ class TestDeleteCategory:
         response = delete_category(category.id)
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
-
     def test_if_user_is_not_admin_returns_403(self, delete_category, authenticate):
         authenticate()
         category = baker.make(Category)
@@ -109,6 +108,13 @@ class TestPutCategory:
         response = put_category(category.id, {'name': category.name, 'parent_category': category.id})
         assert response.status_code == status.HTTP_400_BAD_REQUEST
 
+    def test_if_parent_category_is_son_returns_400(self, put_category, authenticate):
+        authenticate(is_staff=True)
+        parent_category = baker.make(Category)
+        category = baker.make(Category, parent_category=parent_category)
+        response = put_category(parent_category.id, {'name': 'a', 'parent_category': category.id})
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+
     def test_if_data_is_valid_returns_200(self, put_category, authenticate):
         authenticate(is_staff=True)
         category1 = baker.make(Category)
@@ -140,6 +146,13 @@ class TestPatchCategory:
         authenticate(is_staff=True)
         category = baker.make(Category)
         response = patch_category(category.id, {'parent_category': category.id})
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+    def test_if_parent_category_is_son_returns_400(self, patch_category, authenticate):
+        authenticate(is_staff=True)
+        parent_category = baker.make(Category)
+        category = baker.make(Category, parent_category=parent_category)
+        response = patch_category(parent_category.id, {'name': 'a', 'parent_category': category.id})
         assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_if_data_is_valid_returns_200(self, patch_category, authenticate):
