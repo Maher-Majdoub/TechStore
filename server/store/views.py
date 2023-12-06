@@ -12,6 +12,7 @@ from rest_framework.decorators import action
 from .models import *
 from .serializers import *
 from .permissions import *
+from .tasks import notify_customer
 
 class CategoryViewSet(ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
@@ -162,7 +163,7 @@ class AdressViewSet(ModelViewSet):
     
     def get_serializer_context(self):
         return {'customer_id': self.kwargs['customer_pk']}
-    
+
 
 class CustomerViewSet(ModelViewSet):
     queryset = Customer.objects.all().prefetch_related('adresses')
@@ -172,6 +173,7 @@ class CustomerViewSet(ModelViewSet):
 
     @action(methods=["GET", "PUT"], detail=False, permission_classes=[IsAuthenticated])
     def me(self, request):
+        notify_customer.delay('mahermaher@gmail.com')
         customer = Customer.objects.prefetch_related("adresses").get(
             user_id=request.user.id
         )

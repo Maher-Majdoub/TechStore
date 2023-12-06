@@ -10,6 +10,10 @@ drf-nested-routers = "*"
 djangorestframework = "*"
 djoser = "*"
 pillow = "*"
+django-templated-mail = "*"
+redis = "*"
+celery = "*"
+flower = "*"
 
 [dev-packages]
 pytest = "*"
