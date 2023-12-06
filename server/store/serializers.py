@@ -1,3 +1,5 @@
+from django.utils import timezone
+from django.db import transaction
 from rest_framework import serializers
 from rest_framework.validators import ValidationError
 from .models import *
@@ -261,3 +263,99 @@ class CustomerSerializer(serializers.ModelSerializer):
             'adresses'
         ]
 
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(read_only=True)
+    
+    class Meta:
+        model = OrderItem
+        fields = [
+            'id',
+            'product',
+            'discount',
+            'final_unit_price',
+            'quantity',
+        ]
+
+
+class GetOrderSerializer(serializers.ModelSerializer):
+    items = OrderItemSerializer(many=True)
+    class Meta:
+        model = Order
+        fields = [
+            'id', 
+            'customer_id',
+            'created_at',
+            'status',
+            'payment_method',
+            'payment_status',
+            'shipping_adress',
+            'shipping_method',
+            'items',
+        ]
+
+
+class OrderSerializer(GetOrderSerializer):
+    def validate_cart_id(self, cart_id):
+        if not Cart.objects.filter(pk=cart_id).exists():
+            raise ValidationError(
+                {'error': 'No cart with the given ID was found.'}
+            )
+        if not CartItem.objects.filter(cart_id=cart_id).exists():
+            raise ValidationError(
+                {'error', 'The cart is empty.'}
+            )
+        return cart_id
+
+    @transaction.atomic
+    def save(self, **kwargs):
+        cart_id = self.validated_data['cart_id']
+        customer_id = self.context['customer_id']
+
+        order = Order.objects.create(
+            customer_id=customer_id,
+            payment_method = self.validated_data['payment_method'],
+            shipping_adress = self.validated_data['shipping_adress'],
+            shipping_method = self.validated_data['shipping_method'],
+        )
+
+        cart_items = CartItem.objects.filter(cart_id=cart_id).select_related('product')
+        order_items = []
+
+        for item in cart_items:
+            discounts = Discount.objects.only('rate').filter(
+                product = item.product,
+                start_date__lt = timezone.now(),
+                end_date__gt = timezone.now(),
+            )
+
+            discount = 0
+            if discounts.exists():
+                print(discount)
+                discount = discounts[0] # | discounts | = 0 or 1 no more
+
+            order_item = OrderItem(
+                order = order,
+                product = item.product,
+                discount = discount,
+                final_unit_price = item.product.unit_price * (1 - discount),
+                quantity = item.quantity
+            )
+
+            order_items.append(order_item)
+        
+        OrderItem.objects.bulk_create(order_items)
+        Cart.objects.get(pk=cart_id).delete()
+        return order
+
+    cart_id = serializers.UUIDField()
+
+    class Meta(GetOrderSerializer.Meta):
+        fields = [
+            'cart_id',
+            'payment_method',
+            'shipping_adress',
+            'shipping_method'
+        ]
+
+    

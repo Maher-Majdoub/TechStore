@@ -170,13 +170,12 @@ class CustomerViewSet(ModelViewSet):
     http_method_names = ["get", "put", "patch", "options"]
     permission_classes = [IsAdminUser]
 
-
     @action(methods=["GET", "PUT"], detail=False, permission_classes=[IsAuthenticated])
     def me(self, request):
         customer = Customer.objects.prefetch_related("adresses").get(
             user_id=request.user.id
         )
-
+     
         if request.method == "GET":
             serializer = CustomerSerializer(customer)
 
@@ -186,3 +185,40 @@ class CustomerViewSet(ModelViewSet):
             serializer.save()
 
         return Response(serializer.data)
+    
+
+class OrderViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Order.objects.filter(customer=self.kwargs['customer_pk']).prefetch_related('items__product')
+
+    def get_serializer_class(self):
+        return GetOrderSerializer if  self.request.method == 'GET' else OrderSerializer
+
+    def get_serializer_context(self):
+        return {'customer_id': self.kwargs['customer_pk']}
+
+    # find a better solution
+    def list(self, request, *args, **kwargs):
+        if kwargs['customer_pk'] == 'me':
+            id = Customer.objects.only('id').get(user_id=request.user.id)
+            self.kwargs['customer_pk'] = id
+        return super().list(request, *args, **kwargs)
+
+    def create(self, request, *args, **kwargs):
+        if kwargs['customer_pk'] == 'me':
+            id = Customer.objects.only('id').get(user_id=request.user.id)
+            self.kwargs['customer_pk'] = id
+        return super().create(request, *args, **kwargs)
+
+
+class OrderItemViewSet(ModelViewSet):
+    serializer_class = OrderItemSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return OrderItem.objects.filter(order=self.kwargs['order_pk']).select_related('product')
+
+    def get_serializer_context(self):
+        return {'order_id': self.kwargs['order_pk']}

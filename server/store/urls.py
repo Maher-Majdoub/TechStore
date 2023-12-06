@@ -28,6 +28,7 @@ carts_router.register('items', CartItemViewSet, 'cart-items')
 
 customers_router = routers.NestedDefaultRouter(router, 'customers', lookup='customer')
 customers_router.register('adresses', AdressViewSet, 'customer-adresses')
+customers_router.register('orders', OrderViewSet, 'customer-orders')
 
 urlpatterns = (
     router.urls + 

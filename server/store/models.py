@@ -51,7 +51,7 @@ class ProductImage(models.Model):
 
 class Discount(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='discounts')
-    rate = models.DecimalField(max_digits=4, decimal_places=2)
+    rate = models.DecimalField(max_digits=3, decimal_places=2)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
 
@@ -103,6 +103,9 @@ class Adress(models.Model):
     postal_code = models.SmallIntegerField()
     description = models.TextField(null=True)
 
+    def __str__(self) -> str:
+        return self.state + ' ' + self.city + self.region + ' ' + self.street_number
+
 
 class Order(models.Model):
     ORDER_STATUS_CHOICES = [
@@ -133,7 +136,7 @@ class Order(models.Model):
 
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
-    order_status = models.CharField(max_length=3, choices=ORDER_STATUS_CHOICES, default=ORDER_STATUS_CHOICES[0][0])
+    status = models.CharField(max_length=3, choices=ORDER_STATUS_CHOICES, default=ORDER_STATUS_CHOICES[0][0])
     payment_method = models.CharField(max_length=3, choices=PAYMENT_METHOD_CHOICES, default=PAYMENT_METHOD_CHOICES[0][0])
     payment_status = models.CharField(max_length=1, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_STATUS_CHOICES[0][0])
     shipping_adress = models.ForeignKey(Adress, on_delete=models.PROTECT)
@@ -142,8 +145,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
-    base_unit_price = models.DecimalField(max_digits=8, decimal_places=2, validators=[MinValueValidator(0)])
-    discount = models.DecimalField(max_digits=4, decimal_places=2, validators=[MinValueValidator(0), MaxValueValidator(99)])
+    discount = models.DecimalField(max_digits=3, decimal_places=2, validators=[MinValueValidator(0), MaxValueValidator(0.99)])
     final_unit_price = models.DecimalField(max_digits=8, decimal_places=2, validators=[MinValueValidator(0)])
     quantity = models.IntegerField(validators=[MinValueValidator(0)])
 
