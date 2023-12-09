@@ -63,11 +63,6 @@ class Discount(models.Model):
             ),
         ]
 
-    def save(self, *args, **kwargs):
-        if self.start_date >= self.end_date:
-            raise ValidationError({'Error': 'End date should be after start date.'})
-        return super().save(*args, **kwargs)
-
 
 class Cart(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4)

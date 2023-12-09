@@ -144,7 +144,7 @@ class CartItemViewSet(ModelViewSet):
 
 class AdressViewSet(ModelViewSet):
     serializer_class = AdressSerializer
-    #authentication_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     def list(self, request, *args, **kwargs):
         if kwargs['customer_pk'] == 'me':

@@ -1,5 +1,6 @@
 from django.utils import timezone
 from django.db import transaction
+from django.db.models import Q
 from rest_framework import serializers
 from rest_framework.validators import ValidationError
 from .models import *
@@ -140,6 +141,24 @@ class ProductDiscountSerializer(DiscountSerializer):
     class Meta(DiscountSerializer.Meta):
         fields = ['id', 'rate', 'start_date', 'end_date']
 
+    def save(self, **kwargs):
+        sd = self.validated_data['start_date']
+        ed = self.validated_data['end_date']
+        
+        if sd >= ed:
+            raise ValidationError({'Error': 'End date should be after start date.'})
+
+        discounts = Discount.objects.filter(
+            Q(product = self.context['product_id']) & (
+                Q(start_date__gt = sd) & Q(start_date__lt = ed) |
+                Q(end_date__lt = ed) & Q(end_date__gt = sd)
+            )
+        )
+
+        if discounts.exists():
+            raise ValidationError({'error': 'There is a discount for this product in this date.'})
+        return super().save(**kwargs)
+
     def create(self, validated_data):
         return Discount.objects.create(product_id=self.context['product_id'], **validated_data)
 
@@ -243,10 +262,9 @@ class AdressSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-        return Adress.objects.create(
-                customer=self.context['customer_id'], 
-                **validated_data
-            )
+        if validated_data['is_default']:
+            Adress.objects.filter(customer=self.context['customer_id']).update(is_default=False)
+        return Adress.objects.create(customer=self.context['customer_id'], **validated_data)
     
 
 class CustomerSerializer(serializers.ModelSerializer):

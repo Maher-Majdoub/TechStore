@@ -5,7 +5,6 @@ from celery import shared_task
 
 @shared_task
 def notify_customer(user, customer, order, total_price, order_items, shipping_adress, email):
-    sleep(5)
     try:
         message = BaseEmailMessage(
             template_name = 'emails/order_confirm.html',
