@@ -1,4 +1,5 @@
 # run smtp4dev
+sudo chmod 666 /var/run/docker.sock
 docker run --rm -it -p 3000:80 -p 2525:25 rnwood/smtp4dev
 
 
@@ -7,3 +8,4 @@ docker run -p 6379:6379 redis
 
 # start celery 
 celery -A storefront worker --loglevel=info
+celery -A storefront flower

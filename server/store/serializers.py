@@ -3,7 +3,8 @@ from django.db import transaction
 from rest_framework import serializers
 from rest_framework.validators import ValidationError
 from .models import *
-
+from .tasks import notify_customer
+from core.serializers import UserSerializer
 
 class RecursiveSerializer(serializers.Serializer):
     # this class is used for models who have relation with the same model type
@@ -263,14 +264,13 @@ class CustomerSerializer(serializers.ModelSerializer):
             'adresses'
         ]
 
-
 class OrderItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer(read_only=True)
-    
     class Meta:
         model = OrderItem
         fields = [
             'id',
+            'order',
             'product',
             'discount',
             'final_unit_price',
@@ -310,17 +310,22 @@ class OrderSerializer(GetOrderSerializer):
     @transaction.atomic
     def save(self, **kwargs):
         cart_id = self.validated_data['cart_id']
-        customer_id = self.context['customer_id']
+        customer_id = self.context['customer'].id
+        payment_method = self.validated_data['payment_method']
+        shipping_adress = self.validated_data['shipping_adress']
+        shipping_method = self.validated_data['shipping_method']
 
         order = Order.objects.create(
-            customer_id=customer_id,
-            payment_method = self.validated_data['payment_method'],
-            shipping_adress = self.validated_data['shipping_adress'],
-            shipping_method = self.validated_data['shipping_method'],
+            customer_id = customer_id,
+            payment_method = payment_method,
+            shipping_adress = shipping_adress,
+            shipping_method = shipping_method,
         )
 
         cart_items = CartItem.objects.filter(cart_id=cart_id).select_related('product')
         order_items = []
+
+        total_price = 0
 
         for item in cart_items:
             discounts = Discount.objects.only('rate').filter(
@@ -334,11 +339,14 @@ class OrderSerializer(GetOrderSerializer):
                 print(discount)
                 discount = discounts[0] # | discounts | = 0 or 1 no more
 
+            final_unit_price = item.product.unit_price * (1 - discount)
+            total_price += final_unit_price * item.quantity
+
             order_item = OrderItem(
                 order = order,
                 product = item.product,
                 discount = discount,
-                final_unit_price = item.product.unit_price * (1 - discount),
+                final_unit_price = final_unit_price,
                 quantity = item.quantity
             )
 
@@ -346,6 +354,17 @@ class OrderSerializer(GetOrderSerializer):
         
         OrderItem.objects.bulk_create(order_items)
         Cart.objects.get(pk=cart_id).delete()
+
+        notify_customer.delay(
+            user = UserSerializer(self.context['user']).data,
+            customer = CustomerSerializer(self.context['customer']).data,
+            order = GetOrderSerializer(order).data,
+            total_price = total_price,
+            order_items = [OrderItemSerializer(order_item).data for order_item in order_items],
+            shipping_adress = AdressSerializer(order.shipping_adress).data,
+            email = self.context['user'].email
+        )
+        
         return order
 
     cart_id = serializers.UUIDField()
@@ -357,5 +376,3 @@ class OrderSerializer(GetOrderSerializer):
             'shipping_adress',
             'shipping_method'
         ]
-
-    

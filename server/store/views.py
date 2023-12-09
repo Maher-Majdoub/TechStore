@@ -35,7 +35,6 @@ class CategoryViewSet(ModelViewSet):
         return super().create(request, *args, **kwargs)
     
 
-
 class VariationViewSet(ModelViewSet):
     serializer_class = VariationSerializer
     permission_classes = [IsAdminOrReadOnly]
@@ -68,6 +67,7 @@ class ProductConfigurationViewSet(ModelViewSet):
     
     def get_serializer_context(self):
         return {'product_id': self.kwargs['product_pk']}
+
 
 class ProductViewSet(ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
@@ -126,7 +126,7 @@ class CartViewSet(
             DestroyModelMixin, 
             GenericViewSet
         ):
-    # 1f0fa040-4059-4cfd-9471-b19064c8f784
+    
     serializer_class = CartSerializer
     queryset = Cart.objects.all().prefetch_related('items__product')
     
@@ -199,19 +199,22 @@ class OrderViewSet(ModelViewSet):
         return GetOrderSerializer if  self.request.method == 'GET' else OrderSerializer
 
     def get_serializer_context(self):
-        return {'customer_id': self.kwargs['customer_pk']}
+        return {
+            'user': self.request.user,
+            'customer': Customer.objects.get(id=self.kwargs['customer_pk']),
+        }
 
     # find a better solution
     def list(self, request, *args, **kwargs):
         if kwargs['customer_pk'] == 'me':
-            id = Customer.objects.only('id').get(user_id=request.user.id)
-            self.kwargs['customer_pk'] = id
+            customer = Customer.objects.only('id').get(user_id=request.user.id)
+            self.kwargs['customer_pk'] = customer.id
         return super().list(request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):
         if kwargs['customer_pk'] == 'me':
-            id = Customer.objects.only('id').get(user_id=request.user.id)
-            self.kwargs['customer_pk'] = id
+            customer = Customer.objects.only('id').get(user_id=request.user.id)
+            self.kwargs['customer_pk'] = customer.id
         return super().create(request, *args, **kwargs)
 
 

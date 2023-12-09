@@ -4,11 +4,19 @@ from time import sleep
 from celery import shared_task
 
 @shared_task
-def notify_customer(email):
-    sleep(20)
+def notify_customer(user, customer, order, total_price, order_items, shipping_adress, email):
+    sleep(5)
     try:
         message = BaseEmailMessage(
-            template_name='emails/hello.html',
+            template_name = 'emails/order_confirm.html',
+            context = {
+                'user': user,
+                'customer': customer,
+                'order': order,
+                'total_price': total_price,
+                'shipping_adress': shipping_adress,
+                'order_items': order_items,
+            }
         )
         message.send([email])
     except BadHeaderError:
