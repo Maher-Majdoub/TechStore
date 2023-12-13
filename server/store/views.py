@@ -235,3 +235,29 @@ class OrderItemViewSet(ModelViewSet):
 
     def get_serializer_context(self):
         return {'order_id': self.kwargs['order_pk']}
+
+
+class WishViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request, *args, **kwargs):
+        if kwargs['customer_pk'] == 'me':
+            customer = Customer.objects.only('id').get(user_id=request.user.id)
+            self.kwargs['customer_pk'] = customer.id
+        return super().list(request, *args, **kwargs)
+
+    def create(self, request, *args, **kwargs):
+        if kwargs['customer_pk'] == 'me':
+            customer = Customer.objects.only('id').get(user_id=request.user.id)
+            self.kwargs['customer_pk'] = customer.id
+        return super().create(request, *args, **kwargs)
+    
+    def get_queryset(self):
+        return Wish.objects.filter(customer=self.kwargs['customer_pk']).select_related('product')
+    
+    def get_serializer_class(self):
+        return GetWishSerializer if self.request.method == 'GET' else WishSerializer
+
+    def get_serializer_context(self):
+        return {'customer_id': self.kwargs['customer_pk']}
+    
