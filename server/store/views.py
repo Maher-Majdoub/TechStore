@@ -9,6 +9,9 @@ from rest_framework.mixins import (
 )
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.decorators import action
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+from .pagination import DefaultPagination
 from .models import *
 from .serializers import *
 from .permissions import *
@@ -71,6 +74,11 @@ class ProductConfigurationViewSet(ModelViewSet):
 
 class ProductViewSet(ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['reference', 'name']
+    search_fields = ['reference', 'name']
+    ordering_fileds = ['unit_price']
+    pagination_class = DefaultPagination
 
     def get_queryset(self):
         return Product.objects.all().prefetch_related('category', 'configurations__variation', 'discounts', 'images')

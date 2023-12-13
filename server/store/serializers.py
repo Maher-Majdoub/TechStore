@@ -2,6 +2,7 @@ from django.utils import timezone
 from django.db import transaction
 from django.db.models import Q
 from rest_framework import serializers
+from rest_framework.fields import empty
 from rest_framework.validators import ValidationError
 from .models import *
 from .tasks import notify_customer
@@ -13,7 +14,6 @@ class RecursiveSerializer(serializers.Serializer):
         serializer = self.parent.__class__(value, context=self.context, many=True)
         return serializer.data
 
-# parent category tal3 ken lid 7awel sal7ha snn faskh el cmnt :)
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -35,6 +35,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
         return super().update(instance, validated_data)
         
+
 class GetCategorySerializer(CategorySerializer):
     sub_categories = RecursiveSerializer()
     class Meta(CategorySerializer.Meta):
@@ -126,6 +127,7 @@ class ProductConfigurationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return ProductConfiguration.objects.create(product_id=self.context['product_id'], **validated_data)
 
+
 class GetProductConfigurationSerializer(ProductConfigurationSerializer):
     variation= serializers.CharField(source='variation.name', read_only=True)
 
@@ -144,7 +146,7 @@ class ProductDiscountSerializer(DiscountSerializer):
     def save(self, **kwargs):
         sd = self.validated_data['start_date']
         ed = self.validated_data['end_date']
-        
+
         if sd >= ed:
             raise ValidationError({'Error': 'End date should be after start date.'})
 
@@ -192,6 +194,7 @@ class GetProductSerializer(serializers.ModelSerializer):
             'images',
         ]
 
+
 class CategoryProductSerializer(ProductSerializer):
     class Meta(ProductSerializer.Meta):
         fields = [
@@ -202,6 +205,7 @@ class CategoryProductSerializer(ProductSerializer):
             'unit_price', 
             'inventory'
         ]
+
 
 class GetCategoryProductSerializer(GetProductSerializer):
     class Meta(GetProductSerializer.Meta):
@@ -282,6 +286,7 @@ class CustomerSerializer(serializers.ModelSerializer):
             'adresses'
         ]
 
+
 class OrderItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer(read_only=True)
     class Meta:
@@ -314,6 +319,16 @@ class GetOrderSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(GetOrderSerializer):
+    cart_id = serializers.UUIDField()
+
+    class Meta(GetOrderSerializer.Meta):
+        fields = [
+            'cart_id',
+            'payment_method',
+            'shipping_adress',
+            'shipping_method'
+        ]
+
     def validate_cart_id(self, cart_id):
         if not Cart.objects.filter(pk=cart_id).exists():
             raise ValidationError(
@@ -384,13 +399,3 @@ class OrderSerializer(GetOrderSerializer):
         )
         
         return order
-
-    cart_id = serializers.UUIDField()
-
-    class Meta(GetOrderSerializer.Meta):
-        fields = [
-            'cart_id',
-            'payment_method',
-            'shipping_adress',
-            'shipping_method'
-        ]
