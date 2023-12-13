@@ -1,3 +1,4 @@
+from django.urls import reverse
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
@@ -180,12 +181,8 @@ class CustomerViewSet(ModelViewSet):
     permission_classes = [IsAdminUser]
 
     @action(methods=["GET", "PUT"], detail=False, permission_classes=[IsAuthenticated])
-    def me(self, request):
-        notify_customer.delay('mahermaher@gmail.com')
-        customer = Customer.objects.prefetch_related("adresses").get(
-            user_id=request.user.id
-        )
-     
+    def me(self, request, customer_pk=None):
+        customer = Customer.objects.get(user_id=request.user.id)
         if request.method == "GET":
             serializer = CustomerSerializer(customer)
 
@@ -194,7 +191,7 @@ class CustomerViewSet(ModelViewSet):
             serializer.is_valid(raise_exception=True)
             serializer.save()
 
-        return Response(serializer.data)
+        return Response(serializer.data)   
     
 
 class OrderViewSet(ModelViewSet):
@@ -261,3 +258,27 @@ class WishViewSet(ModelViewSet):
     def get_serializer_context(self):
         return {'customer_id': self.kwargs['customer_pk']}
     
+
+class CompareViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request, *args, **kwargs):
+        if kwargs['customer_pk'] == 'me':
+            customer = Customer.objects.only('id').get(user_id=request.user.id)
+            self.kwargs['customer_pk'] = customer.id
+        return super().list(request, *args, **kwargs)
+
+    def create(self, request, *args, **kwargs):
+        if kwargs['customer_pk'] == 'me':
+            customer = Customer.objects.only('id').get(user_id=request.user.id)
+            self.kwargs['customer_pk'] = customer.id
+        return super().create(request, *args, **kwargs)
+    
+    def get_queryset(self):
+        return Compare.objects.filter(customer=self.kwargs['customer_pk']).select_related('product')
+    
+    def get_serializer_class(self):
+        return GetCompareSerializer if self.request.method == 'GET' else CompareSerializer
+
+    def get_serializer_context(self):
+        return {'customer_id': self.kwargs['customer_pk']}

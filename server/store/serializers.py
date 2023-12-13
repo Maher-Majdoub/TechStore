@@ -405,7 +405,7 @@ class WishSerializer(serializers.ModelSerializer):
     class Meta:
         model = Wish
         fields = ['id', 'product', 'created_at']
-    
+        
     def validate_product(self, product_id):
         wish = Wish.objects.filter(customer_id=self.context['customer_id'], product_id=product_id)
         if wish.exists(): raise ValidationError({'error': 'Product already in the wishlist.'})
@@ -413,6 +413,25 @@ class WishSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Wish.objects.create(customer_id=self.context['customer_id'], **validated_data)
-    
+
+
 class GetWishSerializer(WishSerializer):
+    product = GetProductSerializer()
+
+
+class CompareSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Compare
+        fields = ['id', 'product', 'created_at']
+
+    def validate_product(self, product_id):
+        compare = Compare.objects.filter(customer_id=self.context['customer_id'], product_id=product_id)
+        if compare.exists(): raise ValidationError({'error': 'Product already in the comparelist.'})
+        return product_id
+    
+    def create(self, validated_data):
+        return Compare.objects.create(customer_id=self.context['customer_id'], **validated_data)
+
+
+class GetCompareSerializer(CompareSerializer):
     product = GetProductSerializer()

@@ -30,6 +30,7 @@ customers_router = routers.NestedDefaultRouter(router, 'customers', lookup='cust
 customers_router.register('adresses', AdressViewSet, 'customer-adresses')
 customers_router.register('orders', OrderViewSet, 'customer-orders')
 customers_router.register('wishlist', WishViewSet, 'customer-wishlist')
+customers_router.register('comparelist', CompareViewSet, 'customer-comparelist')
 
 urlpatterns = (
     router.urls + 
