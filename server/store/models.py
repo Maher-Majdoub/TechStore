@@ -25,6 +25,9 @@ class Variation(models.Model):
     class Meta:
         unique_together = ['category', 'name']
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products')
@@ -40,8 +43,11 @@ class Product(models.Model):
 
 class ProductConfiguration(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='configurations')
-    variation = models.ForeignKey(Variation, on_delete=models.PROTECT)
-    value = models.CharField(max_length=255, null=True)
+    variation = models.ForeignKey(Variation, on_delete=models.CASCADE)
+    value = models.CharField(max_length=255, null=True, blank=True)
+
+    def __str__(self) -> str:
+        return self.value or 'not specified'
 
 
 class ProductImage(models.Model):
