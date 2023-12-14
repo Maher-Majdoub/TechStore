@@ -151,7 +151,7 @@ class ProductDiscountSerializer(DiscountSerializer):
         ed = self.validated_data['end_date']
 
         if sd >= ed:
-            raise ValidationError({'Error': 'End date should be after start date.'})
+            raise ValidationError({'error': 'End date should be after start date.'})
 
         discounts = Discount.objects.filter(
             Q(product = self.context['product_id']) & (

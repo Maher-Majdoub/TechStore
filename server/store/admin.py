@@ -2,6 +2,7 @@ from typing import Any
 from django.contrib import admin
 from django.db.models.query import QuerySet
 from django.http.request import HttpRequest
+from rangefilter.filters import NumericRangeFilter
 from . import models
 
 @admin.register(models.Category)
@@ -27,3 +28,17 @@ class VariationAdmin(admin.ModelAdmin):
             self.message_user(request, 'Variation with same name already exists in this category.', level=40)
             return
         return super().save_model(request, obj, form, change)
+    
+
+@admin.register(models.Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = [
+        'id', 
+        'name',
+    ] 
+    list_per_page = 10
+    list_filter = [
+        'category',
+        ('unit_price', NumericRangeFilter),
+        ('inventory', NumericRangeFilter),
+    ]

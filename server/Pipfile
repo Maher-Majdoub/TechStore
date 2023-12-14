@@ -15,6 +15,7 @@ redis = "*"
 celery = "*"
 flower = "*"
 django-filter = "*"
+django-admin-rangefilter = "*"
 
 [dev-packages]
 pytest = "*"
