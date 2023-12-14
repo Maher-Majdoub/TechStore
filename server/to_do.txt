@@ -2,3 +2,4 @@ test products endpoint with all features
 optimiser adress view set (create, list)
 solve the proble of 'me' action in the customer 
 add total price to order model
+make the product -> discounts returns only one or 0 not all discounts

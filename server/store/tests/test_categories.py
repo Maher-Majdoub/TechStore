@@ -115,6 +115,11 @@ class TestPutCategory:
         response = put_category(parent_category.id, {'name': 'a', 'parent_category': category.id})
         assert response.status_code == status.HTTP_400_BAD_REQUEST
 
+    def test_if_category_not_exists_returns_404(self, put_category, authenticate):
+        authenticate(is_staff=True)
+        response = put_category(9999, {'name': 'test'})
+        assert response.status_code == status.HTTP_404_NOT_FOUND
+
     def test_if_data_is_valid_returns_200(self, put_category, authenticate):
         authenticate(is_staff=True)
         category1 = baker.make(Category)
@@ -154,6 +159,11 @@ class TestPatchCategory:
         category = baker.make(Category, parent_category=parent_category)
         response = patch_category(parent_category.id, {'name': 'a', 'parent_category': category.id})
         assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+    def test_if_category_not_exists_returns_404(self, patch_category, authenticate):
+        authenticate(is_staff=True)
+        response = patch_category(-1, {'name': 'test'})
+        assert response.status_code == status.HTTP_404_NOT_FOUND
 
     def test_if_data_is_valid_returns_200(self, patch_category, authenticate):
         authenticate(is_staff=True)

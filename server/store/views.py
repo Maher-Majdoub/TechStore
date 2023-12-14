@@ -1,4 +1,3 @@
-from django.urls import reverse
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
@@ -9,14 +8,14 @@ from rest_framework.mixins import (
     DestroyModelMixin,
 )
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
-from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.decorators import action
 from django_filters.rest_framework import DjangoFilterBackend
 from .pagination import DefaultPagination
 from .models import *
 from .serializers import *
 from .permissions import *
-from .tasks import notify_customer
+
 
 class CategoryViewSet(ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]

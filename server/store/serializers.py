@@ -69,11 +69,12 @@ class VariationSerializer(serializers.ModelSerializer):
     
 
 class ProductSerializer(serializers.ModelSerializer):
+    category_id = serializers.IntegerField()
     class Meta:
         model = Product
         fields = [
             'id',
-            'category', 
+            'category_id', 
             'name', 
             'reference', 
             'description', 
@@ -81,13 +82,18 @@ class ProductSerializer(serializers.ModelSerializer):
             'inventory'
         ]
 
-    def create(self, validated_data):
-        category_id = validated_data.get('category') or self.context.get('category_id')
-
+    def validate_category_id(self, category_id):
+        if not Category.objects.filter(id=category_id).exists():
+            raise ValidationError({'error': 'Category not exists.'})
+        
         if Category.objects.filter(parent_category_id=category_id).exists():
             raise ValidationError({'Error': 'Cannot add products to this category.'})
         
-        product = Product.objects.create(**validated_data, category_id=category_id)
+        return category_id
+
+    def create(self, validated_data):
+        category_id = validated_data.get('category_id') or self.context.get('category_id')
+        product = Product.objects.create(**{**validated_data, 'category_id':category_id})
         variations = Variation.objects.only('id').filter(category_id=category_id)
 
         configurations = [
@@ -100,11 +106,8 @@ class ProductSerializer(serializers.ModelSerializer):
         return product
     
     def update(self, instance, validated_data):
-        category_id = validated_data.get('category').id or self.context.get('category_id')
+        category_id = validated_data.get('category_id') or self.context.get('category_id')
         if instance.category.id != category_id:
-            if Category.objects.filter(parent_category_id=category_id).exists():
-                raise ValidationError({'Error': 'Cannot add products to this category.'})
-
             Product.objects.filter(id=instance.id).update(**validated_data)
             ProductConfiguration.objects.filter(product_id=instance.id).delete()
             variations = Variation.objects.only('id').filter(category=category_id)
