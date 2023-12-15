@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin as BaseModelAdmin, TabularInline as BaseTabularInline
+from django.utils.html import format_html
 from rangefilter.filters import NumericRangeFilter
-from .models import Product, Category, Variation, ProductConfiguration, Discount
+from .models import Product, Category, Variation, ProductConfiguration, Discount, ProductImage
 
 
 class ModelAdmin(BaseModelAdmin):
@@ -78,6 +79,19 @@ class DiscountInline(TabularInline):
     model = Discount
 
 
+class ImageInline(TabularInline):
+    model = ProductImage
+    readonly_fields = ['thumbnail']
+
+    def thumbnail(self, instance):
+        if instance.image:
+            return format_html(f'<img src="{instance.image.url}" class="thumbnail"/>')
+        
+    class Media:
+        css = {
+            'all': ['store/style.css'],
+        }
+
 @admin.register(Product)
 class ProductAdmin(ModelAdmin):
     list_display = [
@@ -90,10 +104,7 @@ class ProductAdmin(ModelAdmin):
         ('unit_price', NumericRangeFilter),
         ('inventory', NumericRangeFilter),
     ]
-    inlines = [ConfigurationInline, DiscountInline]
-
-    def get_queryset(self, request):
-        return super().get_queryset(request).prefetch_related('category', 'configurations__variation', 'discounts')
+    inlines = [ConfigurationInline, DiscountInline, ImageInline]
 
     def save_model(self, request, obj: Product, form, change) -> None:
         if Category.objects.filter(parent_category_id=obj.category.pk).exists():

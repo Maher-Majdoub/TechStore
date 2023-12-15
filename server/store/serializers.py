@@ -2,7 +2,6 @@ from django.utils import timezone
 from django.db import transaction
 from django.db.models import Q
 from rest_framework import serializers
-from rest_framework.fields import empty
 from rest_framework.validators import ValidationError
 from .models import *
 from .tasks import notify_customer
