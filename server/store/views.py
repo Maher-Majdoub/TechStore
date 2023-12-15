@@ -1,7 +1,6 @@
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.validators import ValidationError
 from rest_framework.mixins import (
     RetrieveModelMixin,
     CreateModelMixin,
@@ -41,7 +40,7 @@ class VariationViewSet(ModelViewSet):
     
     def list(self, request, *args, **kwargs):
         if not Category.objects.filter(id=kwargs['category_pk']).exists():
-            return Response({'Error': 'Category not found.'}, status.HTTP_404_NOT_FOUND)
+            return Response({'detail': 'Category not found.'}, status.HTTP_404_NOT_FOUND)
         return super().list(request, *args, **kwargs)
 
 
@@ -54,6 +53,11 @@ class ProductConfigurationViewSet(ModelViewSet):
     
     def get_serializer_context(self):
         return {'product_id': self.kwargs['product_pk']}
+    
+    def list(self, request, *args, **kwargs):
+        if not Product.objects.filter(id=kwargs['product_pk']).exists():
+            return Response({'detail': 'Product not found.'}, status.HTTP_404_NOT_FOUND)
+        return super().list(request, *args, **kwargs)
 
 
 class ProductViewSet(ModelViewSet):
@@ -79,6 +83,11 @@ class CategoryProductViewSet(ProductViewSet):
     def get_serializer_context(self):
         return {'category_id': self.kwargs['category_pk']}
 
+    def list(self, request, *args, **kwargs):
+        if not Category.objects.filter(id=kwargs['category_pk']).exists():
+            return Response({'detail': 'Category not found.'}, status.HTTP_404_NOT_FOUND)
+        return super().list(request, *args, **kwargs)
+
 
 class DiscountViewSet(ModelViewSet):
     queryset = Discount.objects.all()
@@ -96,6 +105,11 @@ class ProductDiscountViewSet(ModelViewSet):
     def get_serializer_context(self):
         return {'product_id': self.kwargs['product_pk']}
     
+    def list(self, request, *args, **kwargs):
+        if not Product.objects.filter(id=kwargs['product_pk']).exists():
+            return Response({'detail': 'Product not found.'}, status.HTTP_404_NOT_FOUND)
+        return super().list(request, *args, **kwargs)
+
 
 class ProductImageViewSet(ModelViewSet):
     serializer_class = ProductImageSerializer
@@ -106,6 +120,11 @@ class ProductImageViewSet(ModelViewSet):
     
     def get_serializer_context(self):
         return {'product_id': self.kwargs['product_pk']}
+
+    def list(self, request, *args, **kwargs):
+        if not Product.objects.filter(id=kwargs['product_pk']).exists():
+            return Response({'detail': 'Product not found.'}, status.HTTP_404_NOT_FOUND)
+        return super().list(request, *args, **kwargs)
     
 
 class CartViewSet(
@@ -129,6 +148,11 @@ class CartItemViewSet(ModelViewSet):
     def get_serializer_context(self):
         return {'cart_id': self.kwargs['cart_pk']}
     
+    def list(self, request, *args, **kwargs):
+        if not Cart.objects.filter(id=kwargs['cart_pk']).exists():
+            return Response({'detail': 'Cart not found.'}, status.HTTP_404_NOT_FOUND)
+        return super().list(request, *args, **kwargs)
+    
 
 class AdressViewSet(ModelViewSet):
     serializer_class = AdressSerializer
@@ -151,6 +175,11 @@ class AdressViewSet(ModelViewSet):
     
     def get_serializer_context(self):
         return {'customer_id': self.kwargs['customer_pk']}
+    
+    def list(self, request, *args, **kwargs):
+        if not Customer.objects.filter(id=kwargs['customer_pk']).exists():
+            return Response({'detail': 'Customer not found.'}, status.HTTP_404_NOT_FOUND)
+        return super().list(request, *args, **kwargs)
 
 
 class CustomerViewSet(ModelViewSet):
