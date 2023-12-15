@@ -1,7 +1,9 @@
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin as BaseModelAdmin, TabularInline as BaseTabularInline
+from django.db.models.query import QuerySet
+from django.http.request import HttpRequest
 from rangefilter.filters import NumericRangeFilter
-from .models import Product, Category, Variation, ProductConfiguration
+from .models import Product, Category, Variation, ProductConfiguration, Discount
 
 
 class ModelAdmin(BaseModelAdmin):
@@ -24,10 +26,11 @@ class TabularInline(BaseTabularInline):
             formfield.widget.can_add_related = False
 
         return formfield
-
+    
 
 @admin.register(Category)
 class CategoryAdmin(ModelAdmin):
+    list_select_related = ['parent_category']
     list_display = ['id', 'name', 'parent_category']
     list_editable = ['name', 'parent_category']
     list_select_related = ['parent_category']
@@ -44,6 +47,7 @@ class CategoryAdmin(ModelAdmin):
 class VariationAdmin(ModelAdmin):
     list_display = ['id', 'category', 'name']
     list_editable = ['name']
+    list_filter = ['category']
 
     def save_model(self, request, obj: Variation, form, change) -> None:
         if Variation.objects.filter(category = obj.category.id, name__iexact=obj.name):
@@ -72,6 +76,10 @@ class ConfigurationInline(TabularInline):
         return False
 
 
+class DiscountInline(TabularInline):
+    model = Discount
+
+
 @admin.register(Product)
 class ProductAdmin(ModelAdmin):
     list_display = [
@@ -84,7 +92,10 @@ class ProductAdmin(ModelAdmin):
         ('unit_price', NumericRangeFilter),
         ('inventory', NumericRangeFilter),
     ]
-    inlines = [ConfigurationInline]
+    inlines = [ConfigurationInline, DiscountInline]
+
+    def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
+        return super().get_queryset(request).prefetch_related('category', 'configurations__variation', 'discounts')
 
     def save_model(self, request, obj: Product, form, change) -> None:
         if Category.objects.filter(parent_category_id=obj.category.pk).exists():
