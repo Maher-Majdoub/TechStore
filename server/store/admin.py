@@ -1,7 +1,5 @@
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin as BaseModelAdmin, TabularInline as BaseTabularInline
-from django.db.models.query import QuerySet
-from django.http.request import HttpRequest
 from rangefilter.filters import NumericRangeFilter
 from .models import Product, Category, Variation, ProductConfiguration, Discount
 
@@ -94,7 +92,7 @@ class ProductAdmin(ModelAdmin):
     ]
     inlines = [ConfigurationInline, DiscountInline]
 
-    def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
+    def get_queryset(self, request):
         return super().get_queryset(request).prefetch_related('category', 'configurations__variation', 'discounts')
 
     def save_model(self, request, obj: Product, form, change) -> None:
