@@ -35,10 +35,25 @@ class CategoryAdmin(ModelAdmin):
     list_select_related = ['parent_category']
     ordering = ['id']
 
-    def save_model(self, request, obj, form, change) -> None:
-        if obj.id == obj.parent_category.id:
-            self.message_user(request, 'Parent category cannot be current.', level=40) # 40 for error
-            return
+    def save_model(self, request, obj: Category, form, change) -> None:
+        if change:
+            new_parent = obj.parent_category
+            instance = Category.objects.get(id=obj.pk)
+            if new_parent:
+                if new_parent.pk == instance.pk: 
+                    self.message_user(request, 'Parent category cannot be current.', level=40)
+                    return
+                if instance.parent_category and  new_parent.id != instance.parent_category.id or not instance.parent_category:
+                    while True:
+                        if not new_parent.parent_category: break
+                        if new_parent.parent_category.id == instance.id:
+                            self.message_user(request, 'Parent category cannot be this.', level=40)
+                            return
+                        new_parent = new_parent.parent_category 
+        else:
+            if obj.id == obj.parent_category.id:
+                self.message_user(request, 'Parent category cannot be current.', level=40) # 40 for error
+                return
         return super().save_model(request, obj, form, change)
     
 

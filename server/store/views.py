@@ -14,11 +14,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .pagination import DefaultPagination
 from .models import *
 from .serializers import *
-from .permissions import *
 
 
 class CategoryViewSet(ModelViewSet):
-    permission_classes = [IsAdminOrReadOnly]
+    http_method_names = ['get', 'options']
+    serializer_class = CategorySerializer
 
     def get_queryset(self):
         queryset = Category.objects.prefetch_related('sub_categories__sub_categories')
@@ -28,30 +28,16 @@ class CategoryViewSet(ModelViewSet):
             return queryset.filter(id=pk)
         return queryset.filter(parent_category=None)
     
-    def get_serializer_class(self):
-        return GetCategorySerializer if self.request.method == 'GET' else CategorySerializer
-    
-    def create(self, request, *args, **kwargs):
-        parent_category = request.data.get('parent_category')
-        if parent_category and not Category.objects.filter(id=parent_category).exists():
-            raise ValidationError({'Error': 'Parent category does not exist.'})
-        return super().create(request, *args, **kwargs)
-    
 
 class VariationViewSet(ModelViewSet):
     serializer_class = VariationSerializer
-    permission_classes = [IsAdminOrReadOnly]
+    http_method_names = ['get', 'options']
 
     def get_queryset(self):
         return Variation.objects.filter(category=self.kwargs['category_pk'])
 
     def get_serializer_context(self):
         return {'category_id': self.kwargs['category_pk']}
-    
-    def create(self, request, *args, **kwargs):
-        if not Category.objects.filter(id=kwargs['category_pk']).exists():
-            return Response({'Error': 'Category not found.'}, status.HTTP_404_NOT_FOUND)
-        return super().create(request, *args, **kwargs)
     
     def list(self, request, *args, **kwargs):
         if not Category.objects.filter(id=kwargs['category_pk']).exists():
@@ -60,20 +46,19 @@ class VariationViewSet(ModelViewSet):
 
 
 class ProductConfigurationViewSet(ModelViewSet):
-    permission_classes = [IsAdminOrReadOnly]
+    serializer_class = GetProductConfigurationSerializer
+    http_method_names = ['get', 'options']
 
     def get_queryset(self):
         return ProductConfiguration.objects.filter(product_id=self.kwargs['product_pk'])
-
-    def get_serializer_class(self):
-        return GetProductConfigurationSerializer if self.request.method == 'GET' else ProductConfigurationSerializer
     
     def get_serializer_context(self):
         return {'product_id': self.kwargs['product_pk']}
 
 
 class ProductViewSet(ModelViewSet):
-    permission_classes = [IsAdminOrReadOnly]
+    serializer_class = GetProductSerializer
+    http_method_names = ['get', 'options']
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ['reference', 'name']
     search_fields = ['reference', 'name']
@@ -83,31 +68,27 @@ class ProductViewSet(ModelViewSet):
     def get_queryset(self):
         return Product.objects.all().prefetch_related('category', 'configurations__variation', 'discounts', 'images')
 
-    def get_serializer_class(self):
-        return GetProductSerializer if self.request.method == 'GET' else ProductSerializer
-
 
 class CategoryProductViewSet(ProductViewSet):
+    serializer_class = GetCategoryProductSerializer
+    http_method_names = ['get', 'options']
+
     def get_queryset(self):
         return super().get_queryset().filter(category_id=self.kwargs['category_pk'])
 
     def get_serializer_context(self):
         return {'category_id': self.kwargs['category_pk']}
-    
-    def get_serializer_class(self):
-        return GetCategoryProductSerializer if self.request.method == 'GET' else CategoryProductSerializer
 
 
 class DiscountViewSet(ModelViewSet):
     queryset = Discount.objects.all()
     serializer_class = DiscountSerializer
-    permission_classes = [IsAdminOrReadOnly]
-    http_method_names = ['get', 'put', 'patch', 'delete', 'options']
+    http_method_names = ['get', 'options']
 
 
 class ProductDiscountViewSet(ModelViewSet):
     serializer_class = ProductDiscountSerializer
-    permission_classes = [IsAdminOrReadOnly]
+    http_method_names = ['get', 'options']
 
     def get_queryset(self):
         return Discount.objects.filter(product_id=self.kwargs['product_pk'])
@@ -118,8 +99,7 @@ class ProductDiscountViewSet(ModelViewSet):
 
 class ProductImageViewSet(ModelViewSet):
     serializer_class = ProductImageSerializer
-    permission_classes = [IsAdminOrReadOnly]
-    http_method_names = ['get', 'post', 'delete', 'options']
+    http_method_names = ['get', 'options']
 
     def get_queryset(self):
         return ProductImage.objects.filter(product_id=self.kwargs['product_pk'])
@@ -180,7 +160,7 @@ class CustomerViewSet(ModelViewSet):
     permission_classes = [IsAdminUser]
 
     @action(methods=["GET", "PUT"], detail=False, permission_classes=[IsAuthenticated])
-    def me(self, request, customer_pk=None):
+    def me(self, request):
         customer = Customer.objects.get(user_id=request.user.id)
         if request.method == "GET":
             serializer = CustomerSerializer(customer)
