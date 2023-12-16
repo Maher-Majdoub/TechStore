@@ -32,125 +32,18 @@ class VariationSerializer(serializers.ModelSerializer):
         model = Variation
         fields = ['id', 'name']
 
-    def validate_name(self, name):
-        category_id = self.context['category_id']
-        if Category.objects.filter(parent_category=category_id).exists():
-            raise ValidationError({'error': 'Cannot add Variation to this category.'})
-        if Variation.objects.filter(category_id=category_id, name__iexact=name):
-            raise ValidationError({'error': 'Variation already exists.'})
-        return name
-
-    def create(self, validated_data):
-        category_id = self.context['category_id']
-        variation = Variation.objects.create(category_id=category_id, **validated_data)
-
-        products = Product.objects.filter(category_id=category_id)
-        products_configurations = [
-            ProductConfiguration(product=product, variation=variation, value=None)
-            for product in products
-        ]
-        ProductConfiguration.objects.bulk_create(products_configurations)
-        return variation
-    
-
-class ProductSerializer(serializers.ModelSerializer):
-    category_id = serializers.IntegerField()
-    class Meta:
-        model = Product
-        fields = [
-            'id',
-            'category_id', 
-            'name', 
-            'reference', 
-            'description', 
-            'unit_price', 
-            'inventory'
-        ]
-
-    def validate_category_id(self, category_id):
-        if not Category.objects.filter(id=category_id).exists():
-            raise ValidationError({'error': 'Category not exists.'})
-        
-        if Category.objects.filter(parent_category_id=category_id).exists():
-            raise ValidationError({'Error': 'Cannot add products to this category.'})
-        
-        return category_id
-
-    def create(self, validated_data):
-        category_id = validated_data.get('category_id') or self.context.get('category_id')
-        product = Product.objects.create(**{**validated_data, 'category_id':category_id})
-        variations = Variation.objects.only('id').filter(category_id=category_id)
-
-        configurations = [
-            ProductConfiguration(product=product, variation=variation, value=None)
-            for variation in variations
-        ]
-
-        ProductConfiguration.objects.bulk_create(configurations)
-
-        return product
-    
-    def update(self, instance, validated_data):
-        category_id = validated_data.get('category_id') or self.context.get('category_id')
-        if instance.category.id != category_id:
-            Product.objects.filter(id=instance.id).update(**validated_data)
-            ProductConfiguration.objects.filter(product_id=instance.id).delete()
-            variations = Variation.objects.only('id').filter(category=category_id)
-            configurations = [
-                ProductConfiguration(product_id=instance.id, variation=variation, value=None)
-                for variation in variations
-            ]
-            ProductConfiguration.objects.bulk_create(configurations)
-            return instance
-        
-        return super().update(instance, validated_data)
-
 
 class ProductConfigurationSerializer(serializers.ModelSerializer):
-    variation = VariationSerializer(read_only=True)
+    variation = serializers.CharField(source='variation.name',)
     class Meta:
         model = ProductConfiguration
         fields = ['id', 'variation', 'value']
 
-    def create(self, validated_data):
-        return ProductConfiguration.objects.create(product_id=self.context['product_id'], **validated_data)
 
-
-class GetProductConfigurationSerializer(ProductConfigurationSerializer):
-    variation= serializers.CharField(source='variation.name', read_only=True)
-
-
-class DiscountSerializer(serializers.ModelSerializer):
-    product = ProductSerializer()
+class ProductDiscountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Discount
-        fields = ['id', 'product', 'rate', 'start_date', 'end_date']
-
-
-class ProductDiscountSerializer(DiscountSerializer):
-    class Meta(DiscountSerializer.Meta):
         fields = ['id', 'rate', 'start_date', 'end_date']
-
-    def save(self, **kwargs):
-        sd = self.validated_data['start_date']
-        ed = self.validated_data['end_date']
-
-        if sd >= ed:
-            raise ValidationError({'error': 'End date should be after start date.'})
-
-        discounts = Discount.objects.filter(
-            Q(product = self.context['product_id']) & (
-                Q(start_date__gt = sd) & Q(start_date__lt = ed) |
-                Q(end_date__lt = ed) & Q(end_date__gt = sd)
-            )
-        )
-
-        if discounts.exists():
-            raise ValidationError({'error': 'There is a discount for this product in this date.'})
-        return super().save(**kwargs)
-
-    def create(self, validated_data):
-        return Discount.objects.create(product_id=self.context['product_id'], **validated_data)
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
@@ -158,13 +51,10 @@ class ProductImageSerializer(serializers.ModelSerializer):
         model = ProductImage
         fields = ['id', 'image']
 
-    def create(self, validated_data):
-        return ProductImage.objects.create(product_id=self.context['product_id'], **validated_data)
 
-
-class GetProductSerializer(serializers.ModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
     category = SimpleCategorySerializer()
-    configurations = GetProductConfigurationSerializer(many=True)
+    configurations = ProductConfigurationSerializer(many=True)
     discounts = ProductDiscountSerializer(many=True)
     images = ProductImageSerializer(many=True)
     class Meta:
@@ -191,23 +81,18 @@ class CategoryProductSerializer(ProductSerializer):
             'reference', 
             'description', 
             'unit_price', 
-            'inventory'
-        ]
-
-
-class GetCategoryProductSerializer(GetProductSerializer):
-    class Meta(GetProductSerializer.Meta):
-        fields = [
-            'id',
-            'name', 
-            'reference', 
-            'description', 
-            'unit_price', 
             'inventory',
             'configurations',
             'discounts',
             'images',
         ]
+
+
+class DiscountSerializer(serializers.ModelSerializer):
+    product = ProductSerializer()
+    class Meta:
+        model = Discount
+        fields = ['id', 'product', 'rate', 'start_date', 'end_date']
 
 
 class CartItemSerializer(serializers.ModelSerializer):
@@ -228,7 +113,7 @@ class CartItemSerializer(serializers.ModelSerializer):
 
 
 class GetCartItemSerializer(CartItemSerializer):
-    product = GetProductSerializer()
+    product = ProductSerializer()
 
 
 class CartSerializer(serializers.ModelSerializer):
@@ -404,7 +289,7 @@ class WishSerializer(serializers.ModelSerializer):
 
 
 class GetWishSerializer(WishSerializer):
-    product = GetProductSerializer()
+    product = ProductSerializer()
 
 
 class CompareSerializer(serializers.ModelSerializer):
@@ -422,4 +307,4 @@ class CompareSerializer(serializers.ModelSerializer):
 
 
 class GetCompareSerializer(CompareSerializer):
-    product = GetProductSerializer()
+    product = ProductSerializer()

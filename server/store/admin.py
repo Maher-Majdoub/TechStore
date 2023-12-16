@@ -64,7 +64,10 @@ class VariationAdmin(ModelAdmin):
     list_filter = ['category']
 
     def save_model(self, request, obj: Variation, form, change) -> None:
-        if Variation.objects.filter(category = obj.category.id, name__iexact=obj.name):
+        if Category.objects.filter(parent_category=obj.category.pk).exists():
+            self.message_user(request, 'Cannot add Variation to this category.', level=40)
+            return
+        if Variation.objects.filter(category = obj.category.pk, name__iexact=obj.name):
             self.message_user(request, 'Variation with same name already exists in this category.', level=40)
             return
         
@@ -93,6 +96,9 @@ class ConfigurationInline(TabularInline):
 class DiscountInline(TabularInline):
     model = Discount
 
+    def save_model(self, request, obj, form, change):
+        print('holla')
+        super().save_model(request, obj, form, change)
 
 class ImageInline(TabularInline):
     model = ProductImage

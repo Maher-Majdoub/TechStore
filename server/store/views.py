@@ -34,9 +34,6 @@ class VariationViewSet(ModelViewSet):
 
     def get_queryset(self):
         return Variation.objects.filter(category=self.kwargs['category_pk'])
-
-    def get_serializer_context(self):
-        return {'category_id': self.kwargs['category_pk']}
     
     def list(self, request, *args, **kwargs):
         if not Category.objects.filter(id=kwargs['category_pk']).exists():
@@ -45,14 +42,11 @@ class VariationViewSet(ModelViewSet):
 
 
 class ProductConfigurationViewSet(ModelViewSet):
-    serializer_class = GetProductConfigurationSerializer
+    serializer_class = ProductConfigurationSerializer
     http_method_names = ['get', 'options']
 
     def get_queryset(self):
         return ProductConfiguration.objects.filter(product_id=self.kwargs['product_pk'])
-    
-    def get_serializer_context(self):
-        return {'product_id': self.kwargs['product_pk']}
     
     def list(self, request, *args, **kwargs):
         if not Product.objects.filter(id=kwargs['product_pk']).exists():
@@ -61,7 +55,7 @@ class ProductConfigurationViewSet(ModelViewSet):
 
 
 class ProductViewSet(ModelViewSet):
-    serializer_class = GetProductSerializer
+    serializer_class = ProductSerializer
     http_method_names = ['get', 'options']
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ['reference', 'name']
@@ -74,14 +68,11 @@ class ProductViewSet(ModelViewSet):
 
 
 class CategoryProductViewSet(ProductViewSet):
-    serializer_class = GetCategoryProductSerializer
+    serializer_class = CategoryProductSerializer
     http_method_names = ['get', 'options']
 
     def get_queryset(self):
         return super().get_queryset().filter(category_id=self.kwargs['category_pk'])
-
-    def get_serializer_context(self):
-        return {'category_id': self.kwargs['category_pk']}
 
     def list(self, request, *args, **kwargs):
         if not Category.objects.filter(id=kwargs['category_pk']).exists():
@@ -102,9 +93,6 @@ class ProductDiscountViewSet(ModelViewSet):
     def get_queryset(self):
         return Discount.objects.filter(product_id=self.kwargs['product_pk'])
     
-    def get_serializer_context(self):
-        return {'product_id': self.kwargs['product_pk']}
-    
     def list(self, request, *args, **kwargs):
         if not Product.objects.filter(id=kwargs['product_pk']).exists():
             return Response({'detail': 'Product not found.'}, status.HTTP_404_NOT_FOUND)
@@ -117,9 +105,6 @@ class ProductImageViewSet(ModelViewSet):
 
     def get_queryset(self):
         return ProductImage.objects.filter(product_id=self.kwargs['product_pk'])
-    
-    def get_serializer_context(self):
-        return {'product_id': self.kwargs['product_pk']}
 
     def list(self, request, *args, **kwargs):
         if not Product.objects.filter(id=kwargs['product_pk']).exists():
