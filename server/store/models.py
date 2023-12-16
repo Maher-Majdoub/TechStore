@@ -17,7 +17,6 @@ class Category(models.Model):
         return self.name
 
 
-
 class Variation(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='variations')
     name = models.CharField(max_length=255)
