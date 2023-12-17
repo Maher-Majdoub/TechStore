@@ -1,8 +1,6 @@
-from collections.abc import Iterable
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
-from rest_framework.exceptions import ValidationError
 from uuid import uuid4
 from .validators import validate_file_size
 
@@ -87,10 +85,13 @@ class Customer(models.Model):
         ('G', 'Gold')
     ]
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     phone = models.CharField(max_length=255, null=True)
     birth_date = models.DateField(null=True)
     membership = models.CharField(max_length=1, choices=MEMBERSHIP_CHOICES, default=MEMBERSHIP_CHOICES[0][0])
+
+    def __str__(self) -> str:
+        return f'{self.user.first_name} {self.user.last_name}'
 
 
 class Adress(models.Model):

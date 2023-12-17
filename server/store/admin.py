@@ -116,10 +116,6 @@ class ImageInline(TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(ModelAdmin):
-    list_display = [
-        'id', 
-        'name',
-    ]
     list_per_page = 10
     list_filter = [
         'category',
