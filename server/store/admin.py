@@ -1,11 +1,9 @@
 from typing import Any
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin as BaseModelAdmin, TabularInline as BaseTabularInline
-from django.db.models.query import QuerySet
-from django.http.request import HttpRequest
 from django.utils.html import format_html
 from rangefilter.filters import NumericRangeFilter
-from .models import Customer, Product, Category, Variation, ProductConfiguration, Discount, ProductImage
+from .models import Product, Category, Variation, ProductConfiguration, Discount, ProductImage
 
 
 class ModelAdmin(BaseModelAdmin):

@@ -142,12 +142,6 @@ class CartItemViewSet(ModelViewSet):
 class AdressViewSet(ModelViewSet):
     serializer_class = AdressSerializer
     permission_classes = [IsAuthenticated]
-    
-    def list(self, request, *args, **kwargs):
-        if kwargs['customer_pk'] == 'me':
-            id = Customer.objects.only('id').get(user_id=request.user.id)
-            self.kwargs['customer_pk'] = id
-        return super().list(request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):
         if kwargs['customer_pk'] == 'me':
@@ -162,7 +156,11 @@ class AdressViewSet(ModelViewSet):
         return {'customer_id': self.kwargs['customer_pk']}
     
     def list(self, request, *args, **kwargs):
-        if not Customer.objects.filter(id=kwargs['customer_pk']).exists():
+        if kwargs['customer_pk'] == 'me':
+            customer = Customer.objects.only('id').get(user_id=request.user.id)
+            self.kwargs['customer_pk'] = customer.pk
+
+        if not Customer.objects.filter(id=self.kwargs['customer_pk']).exists():
             return Response({'detail': 'Customer not found.'}, status.HTTP_404_NOT_FOUND)
         return super().list(request, *args, **kwargs)
 
@@ -206,7 +204,7 @@ class OrderViewSet(ModelViewSet):
     def list(self, request, *args, **kwargs):
         if kwargs['customer_pk'] == 'me':
             customer = Customer.objects.only('id').get(user_id=request.user.id)
-            self.kwargs['customer_pk'] = customer.id
+            self.kwargs['customer_pk'] = customer.pk
         return super().list(request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):
@@ -233,7 +231,7 @@ class WishViewSet(ModelViewSet):
     def list(self, request, *args, **kwargs):
         if kwargs['customer_pk'] == 'me':
             customer = Customer.objects.only('id').get(user_id=request.user.id)
-            self.kwargs['customer_pk'] = customer.id
+            self.kwargs['customer_pk'] = customer.pk
         return super().list(request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):
@@ -258,7 +256,7 @@ class CompareViewSet(ModelViewSet):
     def list(self, request, *args, **kwargs):
         if kwargs['customer_pk'] == 'me':
             customer = Customer.objects.only('id').get(user_id=request.user.id)
-            self.kwargs['customer_pk'] = customer.id
+            self.kwargs['customer_pk'] = customer.pk
         return super().list(request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):
