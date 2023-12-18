@@ -1,6 +1,5 @@
 from django.core.mail import BadHeaderError
 from templated_mail.mail import BaseEmailMessage
-from time import sleep
 from celery import shared_task
 
 @shared_task

@@ -11,8 +11,18 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.decorators import action
 from django_filters.rest_framework import DjangoFilterBackend
 from .pagination import DefaultPagination
-from .models import *
-from .serializers import *
+from .models import (
+    Category, Variation, ProductConfiguration, Discount, 
+    ProductImage, Product,CartItem, Cart, Adress, 
+    Customer, OrderItem, Order, Compare, Wish
+)
+from .serializers import (
+    CategorySerializer, VariationSerializer, ProductConfigurationSerializer, DiscountSerializer,
+    ProductImageSerializer, ProductSerializer, CartItemSerializer, CartSerializer, AdressSerializer,
+    CustomerSerializer, OrderItemSerializer, OrderSerializer, CompareSerializer, WishSerializer,
+    CategoryProductSerializer, ProductDiscountSerializer, GetCartItemSerializer,
+    GetCompareSerializer, GetOrderSerializer, GetWishSerializer
+)
 
 
 class CategoryViewSet(ModelViewSet):

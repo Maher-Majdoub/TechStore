@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin, StackedInline
 from django.http.request import HttpRequest
-from .models import User
 from rangefilter.filters import DateRangeFilter
 from .forms import CustomUserChangeForm
+from .models import User
 from store.models import Customer
 
 

@@ -2,7 +2,11 @@ from django.utils import timezone
 from django.db import transaction
 from rest_framework import serializers
 from rest_framework.validators import ValidationError
-from .models import *
+from .models import (
+    Category, Variation, ProductConfiguration, Discount, 
+    ProductImage, Product,CartItem, Cart, Adress, 
+    Customer, OrderItem, Order, Compare, Wish
+)
 from .tasks import notify_customer
 from core.serializers import UserSerializer
 
