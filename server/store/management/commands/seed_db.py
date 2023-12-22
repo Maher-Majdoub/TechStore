@@ -4,7 +4,7 @@ import os
 
 class Command(BaseCommand):
     help = 'Seed the database'
-
+    
     def run(self, script_path):
         with open(script_path, 'r') as file:
             sql_statements = file.read()
