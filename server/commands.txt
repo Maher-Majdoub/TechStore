@@ -1,3 +1,5 @@
+pipenv run pipenv_to_requirements -f
+
 # run smtp4dev
 sudo chmod a+rwx /var/run/docker.sock
 sudo chmod a+rwx /var/run/docker.pid

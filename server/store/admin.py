@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin as BaseModelAdmin, TabularInline as BaseTabularInline
+from django.db.models import Q
 from django.utils.html import format_html
 from rangefilter.filters import NumericRangeFilter
 from .models import Product, Category, Variation, ProductConfiguration, Discount, ProductImage
@@ -64,16 +65,15 @@ class VariationAdmin(ModelAdmin):
     list_filter = ['category']
 
     def save_model(self, request, obj: Variation, form, change) -> None:
-        if Category.objects.filter(parent_category=obj.category.pk).exists():
-            self.message_user(request, 'Cannot add Variation to this category.', level=40)
-            return
         if Variation.objects.filter(category = obj.category.pk, name__iexact=obj.name):
             self.message_user(request, 'Variation with same name already exists in this category.', level=40)
             return
         
         variation = Variation.objects.create(category_id=obj.category.pk, name=obj.name)
 
-        products = Product.objects.filter(category_id=obj.category.pk)
+        products = Product.objects.filter(
+            Q(category_id=obj.category.pk) | Q(category_id__parent_category_id=obj.category.pk))
+        
         products_configurations = [
             ProductConfiguration(product=product, variation=variation, value=None)
             for product in products
@@ -138,7 +138,8 @@ class ProductAdmin(ModelAdmin):
                 inventory = obj.inventory
             )
 
-            variations = Variation.objects.only('id').filter(category_id=obj.category.pk)
+            variations = Variation.objects.only('id').filter(
+                Q(category_id=obj.category.pk) | Q(category_id=obj.category.parent_category.pk))
 
             configurations = [
                 ProductConfiguration(product=product, variation=variation, value=None)
