@@ -7,6 +7,7 @@ from .validators import validate_file_size
 class Category(models.Model):
     parent_category = models.ForeignKey('self', on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='sub_categories')
     name = models.CharField(max_length=255, unique=True)
+    thumbnail = models.ImageField(upload_to='store/images/categories', validators=[validate_file_size])
 
     class Meta:
         ordering = ['id']

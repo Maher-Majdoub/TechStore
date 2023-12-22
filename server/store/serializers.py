@@ -22,7 +22,7 @@ class CategorySerializer(serializers.ModelSerializer):
     sub_categories = RecursiveSerializer()
     class Meta:
         model = Category
-        fields = ['id', 'name', 'sub_categories']
+        fields = ['id', 'name', 'thumbnail', 'sub_categories']
     
 
 class SimpleCategorySerializer(serializers.ModelSerializer):
