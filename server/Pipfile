@@ -16,6 +16,9 @@ celery = "*"
 flower = "*"
 django-filter = "*"
 django-admin-rangefilter = "*"
+whitenoise = "*"
+gunicorn = "*"
+dj-database-url = "*"
 
 [dev-packages]
 pytest = "*"
