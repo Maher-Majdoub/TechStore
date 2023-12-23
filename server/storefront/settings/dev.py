@@ -5,6 +5,8 @@ DEBUG = True
 
 SECRET_KEY = 'django-insecure-fj&thtuv-zfcs0s^+l+vs=cxk0zo3wu9*y+tn+4h3o0j@+9ov*'
 
+MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+
 INSTALLED_APPS += [
     'debug_toolbar',
 ]
