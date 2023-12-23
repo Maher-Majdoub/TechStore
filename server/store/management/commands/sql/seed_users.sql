@@ -1,4 +1,4 @@
-INSERT INTO `TechStore`.`core_user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `date_joined`, `is_superuser`, `is_staff`, `is_active`) VALUES
+INSERT INTO `core_user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `date_joined`, `is_superuser`, `is_staff`, `is_active`) VALUES
 	(1, 'Jordan_Blevins', '+OVjwfLM0x', 'Jordan', 'Blevins', 'Jordan.Blevins@gmail.com', '1973-01-02', 0, 0, 0),
 	(2, 'Teresa_Riley', '!IsD1Udoc0', 'Teresa', 'Riley', 'Teresa.Riley@gmail.com', '1996-01-30', 0, 0, 0),
 	(3, 'Bradley_Patel', 'nRq5ZBadk%', 'Bradley', 'Patel', 'Bradley.Patel@gmail.com', '1985-07-17', 0, 0, 0),
