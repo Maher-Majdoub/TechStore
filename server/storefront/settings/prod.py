@@ -9,7 +9,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split()
 
 DATA_BASE_URL = os.environ['DATA_BASE_URL']
-DATABASES = dj_database_url.parse(DATA_BASE_URL)
+DATABASES = {'default': dj_database_url.parse(DATA_BASE_URL)}
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'localhost'
