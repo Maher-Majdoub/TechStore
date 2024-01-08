@@ -6,7 +6,7 @@ DEBUG = False
 
 SECRET_KEY = os.environ['SECRET_KEY']
 
-ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(' ')
+ALLOWED_HOSTS = ['https://techstore-0gvh.onrender.com/']
 
 DATA_BASE_URL = os.environ['DATA_BASE_URL']
 DATABASES = {'default': dj_database_url.parse(DATA_BASE_URL)}
