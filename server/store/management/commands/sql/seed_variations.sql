@@ -1,4 +1,4 @@
-INSERT INTO `store_variation` (`id`, `name`, `category_id`) VALUES
+INSERT INTO "store_variation" ("id", "name", "category_id") VALUES
 	(1, 'Processor', 1),
 	(2, 'Ram', 1),
 	(3, 'Motherboard', 1),
