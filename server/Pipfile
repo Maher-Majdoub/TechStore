@@ -21,6 +21,7 @@ gunicorn = "*"
 dj-database-url = "*"
 psycopg2-binary = "*"
 psycopg = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 pytest = "*"
