@@ -180,6 +180,7 @@ class CustomerViewSet(ModelViewSet):
     serializer_class = CustomerSerializer
     http_method_names = ["get", "put", "patch", "options"]
     permission_classes = [IsAdminUser]
+    pagination_class = DefaultPagination
 
     @action(methods=["GET", "PUT"], detail=False, permission_classes=[IsAuthenticated])
     def me(self, request):
