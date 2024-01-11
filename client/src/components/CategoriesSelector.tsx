@@ -22,9 +22,7 @@ const CategoriesSelector = () => {
         <MdMenu />
         <span>Our Categories</span>
       </button>
-      <div
-        className={styles.menuContainer + " " + (!showMenu ? styles.hide : "")}
-      >
+      <div hidden={!showMenu}>
         <ul className={styles.menu}>
           {data?.results.map((parent_category) => (
             <li key={parent_category.id}>
