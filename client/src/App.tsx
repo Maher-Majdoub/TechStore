@@ -1,7 +1,8 @@
-import './App.css'
+import "./App.css";
+import CategoriesDisplayer from "./components/CategoriesDisplayer";
 
 function App() {
-  return <p>hello world</p>
+  return <CategoriesDisplayer />;
 }
 
-export default App
+export default App;
