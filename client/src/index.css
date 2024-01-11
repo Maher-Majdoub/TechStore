@@ -3,3 +3,22 @@
   margin: 0;
   padding: 0;
 }
+
+button, a, select, option, li {
+  cursor: pointer;
+}
+
+.logo {
+  width: 120px;
+  height: 30px;
+}
+
+.flx-bx {
+  display: flex;
+  gap: 10px
+}
+
+body {
+  width: 1024px;
+  margin: auto;
+}

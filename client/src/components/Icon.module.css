@@ -1,0 +1,16 @@
+.container {
+    position: relative;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.cnt {
+    position: absolute;
+    font-size: 10px;
+    top: 0;
+    right: 2px;
+    background-color: rgba(0, 0, 0, 0.758);
+    color: rgb(254, 254, 254);
+    padding: 2px;
+    border-radius: 50%;
+}

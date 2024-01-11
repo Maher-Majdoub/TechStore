@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import ApiService from "../services/apiService";
 
-interface Category {
+export interface Category {
   id: number;
   name: string;
   thumbnail: string;
