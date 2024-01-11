@@ -1,4 +1,4 @@
-import useCategories from "../hooks/useCategories";
+import useCategories from "../../hooks/useCategories";
 
 const CategoriesDisplayer = () => {
   const { data, isLoading, error } = useCategories();

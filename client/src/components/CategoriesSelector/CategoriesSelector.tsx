@@ -1,9 +1,9 @@
 import { MdMenu, MdOutlineKeyboardArrowRight } from "react-icons/md";
-import useCategories from "../hooks/useCategories";
+import useCategories from "../../hooks/useCategories";
 import styles from "./CategoriesSelector.module.css";
 import { useRef, useState } from "react";
-import CategoryCard from "./CategoryCard";
-import hideOnClickOutSide from "../services/hideOnClickOutside";
+import CategoryCard from "../CategoryCard/CategoryCard";
+import hideOnClickOutSide from "../../services/hideOnClickOutside";
 
 const CategoriesSelector = () => {
   const { data } = useCategories();

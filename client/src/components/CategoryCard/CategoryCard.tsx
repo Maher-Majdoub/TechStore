@@ -1,4 +1,4 @@
-import { Category } from "../hooks/useCategories";
+import { Category } from "../../hooks/useCategories";
 import styles from "./CategoryCard.module.css";
 
 interface Props {

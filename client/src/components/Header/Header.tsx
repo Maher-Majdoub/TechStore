@@ -1,8 +1,8 @@
-import logo from "../assets/logo.png";
-import CategoriesSelector from "./CategoriesSelector";
-import SearchBar from "./SearchBar";
+import logo from "../../assets/logo.png";
+import CategoriesSelector from "../CategoriesSelector/CategoriesSelector";
+import SearchBar from "../SearchBar/SearchBar";
 import styles from "./Header.module.css";
-import Icon from "./Icon";
+import Icon from "../Icon/Icon";
 import { MdOutlineShoppingCart } from "react-icons/md";
 
 const Header = () => {

@@ -1,4 +1,4 @@
-import useCategories from "../hooks/useCategories";
+import useCategories from "../../hooks/useCategories";
 import styles from "./SeachBar.module.css";
 
 const SearchBar = () => {
