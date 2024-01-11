@@ -1,14 +1,14 @@
 import useCategories from "../hooks/useCategories";
 
 const CategoriesDisplayer = () => {
-  const { categories, isLoading, error } = useCategories();
+  const { data, isLoading, error } = useCategories();
 
   if (error) return <p>{error.message}</p>;
   return (
     <>
       {isLoading && <p>Loading....</p>}
       <ul>
-        {categories?.map((category) => (
+        {data?.results?.map((category) => (
           <li key={category.id}>{category.name}</li>
         ))}
       </ul>

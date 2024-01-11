@@ -10,7 +10,7 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.decorators import action
 from django_filters.rest_framework import DjangoFilterBackend
-from .pagination import DefaultPagination
+from .pagination import NoLimitPagination
 from .models import (
     Category, Variation, ProductConfiguration, Discount, 
     ProductImage, Product,CartItem, Cart, Adress, 
@@ -28,6 +28,7 @@ from .serializers import (
 class CategoryViewSet(ModelViewSet):
     http_method_names = ['get', 'options']
     serializer_class = CategorySerializer
+    pagination_class = NoLimitPagination
 
     def get_queryset(self):
         queryset = Category.objects.prefetch_related('sub_categories__sub_categories')
@@ -71,7 +72,6 @@ class ProductViewSet(ModelViewSet):
     filterset_fields = ['reference', 'name']
     search_fields = ['reference', 'name']
     ordering_fileds = ['unit_price']
-    pagination_class = DefaultPagination
 
     def get_queryset(self):
         return Product.objects.all().prefetch_related('category', 'configurations__variation', 'discounts', 'images')
@@ -180,7 +180,6 @@ class CustomerViewSet(ModelViewSet):
     serializer_class = CustomerSerializer
     http_method_names = ["get", "put", "patch", "options"]
     permission_classes = [IsAdminUser]
-    pagination_class = DefaultPagination
 
     @action(methods=["GET", "PUT"], detail=False, permission_classes=[IsAuthenticated])
     def me(self, request):
