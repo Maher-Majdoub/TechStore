@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    gap: 7px;
+    color: #A2A6B0;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.stars {
+    display: flex;
+    gap: 2px
+}
+
+.checked {
+    color: #E9A426;
+}
+
+.unchecked {
+    color: #C4C4C4;
+}

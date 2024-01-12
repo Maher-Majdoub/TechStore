@@ -1,0 +1,8 @@
+.container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 400;
+    color: #78A962;
+}

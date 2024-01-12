@@ -1,4 +1,6 @@
 import useProducts from "../../hooks/useProducts";
+import ProductCard from "../ProductCard/ProductCard";
+import styles from "./ProductDisplayer.module.css";
 
 const ProductsDisplayer = () => {
   const { data, isLoading, error } = useProducts();
@@ -8,14 +10,11 @@ const ProductsDisplayer = () => {
   return (
     <>
       {isLoading && <p>Loading....</p>}
-      <ul>
+      <div className={styles.displayer}>
         {data?.results.map((prod) => (
-          <li key={prod.id}>
-            <img src={prod.images[0].image} alt="image" width="50px" />
-            <p>{prod.name}</p>
-          </li>
+          <ProductCard key={prod.id} product={prod} />
         ))}
-      </ul>
+      </div>
     </>
   );
 };
