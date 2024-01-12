@@ -27,6 +27,12 @@ class Variation(models.Model):
         return self.name
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self) -> str:
+        return self.name
+
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products')
     name = models.CharField(max_length=255, unique=True)
@@ -52,6 +58,13 @@ class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='store/images/products', validators=[validate_file_size])
 
+
+class ProductTag(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='tags')
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE, related_name='products')
+
+    def __str__(self) -> str:
+        return f'{self.tag.name}: {self.product.name}'
 
 class Discount(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='discounts')

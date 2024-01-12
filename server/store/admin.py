@@ -3,7 +3,7 @@ from django.contrib.admin import ModelAdmin as BaseModelAdmin, TabularInline as 
 from django.db.models import Q
 from django.utils.html import format_html
 from rangefilter.filters import NumericRangeFilter
-from .models import Product, Category, Variation, ProductConfiguration, Discount, ProductImage
+from .models import Product, Category, Variation, ProductConfiguration, Discount, ProductImage, Tag, ProductTag
 
 
 class ModelAdmin(BaseModelAdmin):
@@ -169,3 +169,13 @@ class ProductAdmin(ModelAdmin):
                 return obj
         
         return super().save_model(request, obj, form, change)
+    
+
+@admin.register(Tag)
+class TagAdmin(ModelAdmin):
+    pass
+
+
+@admin.register(ProductTag)
+class ProductTagAdmin(ModelAdmin):
+    pass

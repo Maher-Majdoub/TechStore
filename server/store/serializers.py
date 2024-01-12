@@ -5,7 +5,7 @@ from rest_framework.validators import ValidationError
 from .models import (
     Category, Variation, ProductConfiguration, Discount, 
     ProductImage, Product,CartItem, Cart, Adress, 
-    Customer, OrderItem, Order, Compare, Wish
+    Customer, OrderItem, Order, Compare, Wish, ProductTag, Tag
 )
 from .tasks import notify_customer
 from core.serializers import UserSerializer
@@ -74,6 +74,21 @@ class ProductSerializer(serializers.ModelSerializer):
             'discounts',
             'images',
         ]
+
+
+class TagSerializer(serializers.ModelSerializer):
+    # products = ProductSerializer(many=True)
+    class Meta:
+        model = Tag
+        fields = ['id', 'name']
+
+
+class ProductTagSerializer(serializers.ModelSerializer):
+    tag = TagSerializer()
+    product = ProductSerializer()
+    class Meta:
+        model = ProductTag
+        fields = ['id', 'tag', 'product']
 
 
 class CategoryProductSerializer(ProductSerializer):

@@ -14,14 +14,14 @@ from .pagination import NoLimitPagination
 from .models import (
     Category, Variation, ProductConfiguration, Discount, 
     ProductImage, Product,CartItem, Cart, Adress, 
-    Customer, OrderItem, Order, Compare, Wish
+    Customer, OrderItem, Order, Compare, Wish, ProductTag, Tag
 )
 from .serializers import (
     CategorySerializer, VariationSerializer, ProductConfigurationSerializer, DiscountSerializer,
     ProductImageSerializer, ProductSerializer, CartItemSerializer, CartSerializer, AdressSerializer,
     CustomerSerializer, OrderItemSerializer, OrderSerializer, CompareSerializer, WishSerializer,
     CategoryProductSerializer, ProductDiscountSerializer, GetCartItemSerializer,
-    GetCompareSerializer, GetOrderSerializer, GetWishSerializer
+    GetCompareSerializer, GetOrderSerializer, GetWishSerializer, TagSerializer, ProductTagSerializer
 )
 
 
@@ -74,7 +74,25 @@ class ProductViewSet(ModelViewSet):
     ordering_fileds = ['unit_price']
 
     def get_queryset(self):
-        return Product.objects.all().prefetch_related('category', 'configurations__variation', 'discounts', 'images')
+        query = Product.objects.prefetch_related('category', 'configurations__variation', 'discounts', 'images')
+        tag_name = self.request.GET.get('tag')
+        if tag_name:
+            return query.filter(tags__tag__name=tag_name)
+        return query.all()
+
+
+class TagViewSet(ModelViewSet):
+    serializer_class = TagSerializer
+    http_method_names = ['get', 'options']
+    queryset = Tag.objects.all()
+
+
+class ProductTagViewSet(ModelViewSet):
+    serializer_class = ProductTagSerializer
+    http_method_names = ['get', 'options']
+    
+    def get_queryset(self):
+        return ProductTag.objects.all().prefetch_related('tag', 'product')
 
 
 class CategoryProductViewSet(ProductViewSet):
