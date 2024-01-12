@@ -1,9 +1,27 @@
 import { useQuery } from "@tanstack/react-query";
 import ApiService from "../services/apiService";
 
-interface Product {
+export interface Product {
   id: number;
+  category: {
+    id: number;
+    nmae: string;
+  };
   name: string;
+  reference: string;
+  description: string;
+  unit_price: number;
+  inventory: number;
+  configuration: {
+    id: number;
+    variation: string;
+    value: string;
+  }[];
+  dicounts: string[];
+  images: {
+    id: number;
+    image: string;
+  }[];
 }
 
 const apiService = new ApiService<Product>("/products");
