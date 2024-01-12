@@ -22,7 +22,7 @@ const CategoriesSelector = () => {
         <MdMenu />
         <span>Our Categories</span>
       </button>
-      <div hidden={!showMenu}>
+      <div hidden={!showMenu} className={styles.menuContainer}>
         <ul className={styles.menu}>
           {data?.results.map((parent_category) => (
             <li key={parent_category.id}>
