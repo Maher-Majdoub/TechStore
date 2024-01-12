@@ -23,6 +23,9 @@ class Command(BaseCommand):
         self.run(os.path.join(curr, 'sql/seed_categories.sql'))
         print('seeding variations.....')
         self.run(os.path.join(curr, 'sql/seed_variations.sql'))
+        print('seeding products....')
+        self.run(os.path.join(curr, 'sql/seed_products.sql'))
+
 
 
         
