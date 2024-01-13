@@ -1,9 +1,14 @@
 .card {
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     padding: 20px;
-    border: 1px solid gray;
-    position: relative;
+    transition: .5s;
+}
+
+.card:hover {
+    transform: translateY(-20px);
+    position: absolute;
 }
 
 .actions {
@@ -15,10 +20,9 @@
     z-index: 999;
     right: 10px;
     top: 30px;
-
 }
 
-.actions > .action {
+.action {
     cursor: pointer;
     display: grid;
     place-items: center;
@@ -67,15 +71,15 @@
     display: none;
     align-items: center;
     gap: 10px;
-    width: fit-content;
     color: #0156FF;
     font-weight: 600;
     font-size: 14;
-    padding: 8px 20px;
+    padding: 0 20px;
     border: 3px solid #0156FF;
     border-radius: 50px;
     margin: 10px auto 0;
-    transition: .5s;
+    height: 40px;
+    animation: anim .5s linear;
 }
 
 .addToCart:hover {
@@ -83,6 +87,15 @@
     background-color: #0156FF;
 }
 
-.card:hover .addToCart, .card:hover .actions {
+.card:hover .addToCart, .card:hover .actions{
     display: flex;
+}
+
+@keyframes anim {
+    0% {
+        transform: translateY(50%);
+    }
+    100% {
+        transform: translateY(0);
+    }
 }

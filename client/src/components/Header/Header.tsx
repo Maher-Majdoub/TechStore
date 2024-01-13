@@ -8,7 +8,7 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 const Header = () => {
   return (
     <header className={styles.header}>
-      <div className="flx-bx">
+      <div className="flx-bx" style={{ width: "100%" }}>
         <img src={logo} alt="logo" className="logo" />
         <SearchBar />
         <div className="flx-bx">

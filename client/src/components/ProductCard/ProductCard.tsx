@@ -1,7 +1,6 @@
 import { Product } from "../../hooks/useProducts";
 import { GrCart } from "react-icons/gr";
 import { FaRegHeart, FaBalanceScale } from "react-icons/fa";
-
 import CheckAvailability from "../CheckAvailability/CheckAvailability";
 import InStock from "../InStock/InStock";
 import Review from "../Review/Review";
@@ -29,7 +28,9 @@ const ProductCard = ({ product }: Props) => {
         className={styles.img}
       />
       <Review rate={4} total={4} />
-      <span className={styles.prodName}>{product.name}</span>
+      <span className={styles.prodName}>
+        {product.name.slice(0, 50) + "..."}
+      </span>
       <span className={styles.prevPrice}>${product.unit_price.toFixed(2)}</span>
       <span className={styles.currPrice}>${product.unit_price.toFixed(2)}</span>
       <div className={styles.addToCart}>
