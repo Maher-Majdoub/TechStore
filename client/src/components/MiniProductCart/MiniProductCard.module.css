@@ -1,0 +1,38 @@
+.card {
+    display: flex;
+    align-items: center;
+    gap: 20px
+}
+
+.img {
+    width: 40px;
+}
+
+.prodName {
+    width: 200px;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 0;
+    gap: 5px;
+}
+
+.action {
+    font-size: 18px;
+    width: 25px;
+    height: 25px;
+    display: grid;
+    place-items: center;
+    color: var(--color-6);
+    border: 2px solid var(--color-6);
+    border-radius: 50%;
+}
+
+.action:hover {
+    color: var(--color-10);
+    border-color: var(--color-10);
+}

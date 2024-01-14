@@ -1,5 +1,5 @@
 :root {
-  --color-1: #F5F7FF;
+  --color-1: #FFFFFF;
   --color-2: #0074BE;
   --color-3: #0156FF;
   --color-4: #01A4FF;
@@ -12,7 +12,7 @@
   --color-11: #E9A426;
   --shadow-1: 0 0 200px 0 #00000023;
   --shadow-2: 0 4px 200px 0 #00000033;
-  --shadow-3: 0 0 4px 0 #00000023;
+  --shadow-3: 0 0 4px 0 #00000051;
 }
 
 * {
@@ -31,6 +31,10 @@ button, input, select {
   background-color: transparent;
   border: none;
   outline: none;
+}
+
+ul {
+  list-style: none;
 }
 
 .container {

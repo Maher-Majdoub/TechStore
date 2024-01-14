@@ -35,7 +35,9 @@ const SearchBar = () => {
         ))}
       </select>
       <button className={styles.btn}>
-        <IoSearch />
+        <span>
+          <IoSearch />
+        </span>
       </button>
     </form>
   );

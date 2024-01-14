@@ -9,9 +9,9 @@
 }
 
 .topHeader {
-    background-color: var(--color-7);
-    color: var(--color-1);
-    padding: 5px 0 15px;
+    background-color: var(--color-1);
+    color: var(--color-7);
+    padding: 5px 0 10px;
 }
 
 .logo {
@@ -26,10 +26,11 @@
 }
 
 .bottomHeader {
-    border-bottom: 1px solid var(--color-5);
+    border-bottom: 1px solid var(--color-1);
     height: 35px;
     padding: 0 50px;
-    color: #020202;
+    color: var(--color-1);
+    background-color: var(--color-7);
 }
 .catSelect {
     margin-top: -8px;
