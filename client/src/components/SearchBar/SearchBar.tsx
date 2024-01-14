@@ -1,4 +1,5 @@
 import useCategories from "../../hooks/useCategories";
+import { IoSearch } from "react-icons/io5";
 import styles from "./SeachBar.module.css";
 
 const SearchBar = () => {
@@ -16,8 +17,12 @@ const SearchBar = () => {
       }}
       className={styles.form}
     >
-      <input type="text" className={styles.input} />
-      <select name="category" id="category_selector">
+      <input
+        type="text"
+        placeholder="Search for product..."
+        className={styles.input}
+      />
+      <select name="category" id="category_selector" className={styles.select}>
         <option value={""}>All Categories</option>
         {data?.results.map((parent_category) => (
           <optgroup key={parent_category.id} label={parent_category.name}>
@@ -29,7 +34,9 @@ const SearchBar = () => {
           </optgroup>
         ))}
       </select>
-      <button>Seach</button>
+      <button className={styles.btn}>
+        <IoSearch />
+      </button>
     </form>
   );
 };

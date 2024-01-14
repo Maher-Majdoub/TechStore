@@ -9,7 +9,9 @@ function App() {
   return (
     <>
       <Header />
-      <ProductsDisplayer />
+      <main className="container">
+        <ProductsDisplayer />
+      </main>
       <Footer />
     </>
   );

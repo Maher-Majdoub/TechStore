@@ -3,10 +3,12 @@
     display: flex;
     flex-direction: column;
     padding: 20px;
-    transition: .5s;
+    border-radius: 5px;
+    transition: .3s;
 }
 
 .card:hover {
+    
     transform: translateY(-20px);
     position: absolute;
 }
@@ -14,7 +16,7 @@
 .actions {
     display: none;
     flex-direction: column;
-    color: #A2A6B0;
+    color: var(--color-5);
     gap: 5px;
     position: absolute;
     z-index: 999;
@@ -28,7 +30,7 @@
     place-items: center;
     width: 30px;
     height: 30px;
-    border: 2px solid #A2A6B0;
+    border: 2px solid var(--color-5);
     border-radius: 50%;
     font-size: 17px;
     font-weight: 600;
@@ -36,8 +38,8 @@
 }
 
 .action:hover {
-    color: white;
-    background-color: #A2A6B0;
+    color: var(--color-1);
+    background-color: var(--color-5);
 }
 
 .img {
@@ -50,20 +52,20 @@
 .prodName {
     font-weight: 400;
     font-size: 13px;
-    color: #000;
+    color: var(--color-7);
     margin: 10px 0;
 }
 
 .prevPrice {
     font-size: 14px;
     text-decoration: line-through;
-    color: #666666;
+    color: var(--color-10);
 }
 
 .currPrice {
     font-size: 18px;
     font-weight: 600;
-    color: #000;
+    color: var(--color-7);
 }
 
 .addToCart {
@@ -71,11 +73,11 @@
     display: none;
     align-items: center;
     gap: 10px;
-    color: #0156FF;
+    color: var(--color-3);
     font-weight: 600;
     font-size: 14;
     padding: 0 20px;
-    border: 3px solid #0156FF;
+    border: 3px solid var(--color-3);
     border-radius: 50px;
     margin: 10px auto 0;
     height: 40px;
@@ -83,8 +85,8 @@
 }
 
 .addToCart:hover {
-    color: white;
-    background-color: #0156FF;
+    color:  var(--color-1);
+    background-color: var(--color-3);
 }
 
 .card:hover .addToCart, .card:hover .actions{

@@ -1,3 +1,20 @@
+:root {
+  --color-1: #F5F7FF;
+  --color-2: #0074BE;
+  --color-3: #0156FF;
+  --color-4: #01A4FF;
+  --color-5: #A2A6B0;
+  --color-6: #CACDD8;
+  --color-7: #020202;
+  --color-8: #C94D3F;
+  --color-9: #78A962;
+  --color-10: #666666;
+  --color-11: #E9A426;
+  --shadow-1: 0 0 200px 0 #00000023;
+  --shadow-2: 0 4px 200px 0 #00000033;
+  --shadow-3: 0 0 4px 0 #00000023;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -10,23 +27,20 @@ button, a, select, option, li {
   cursor: pointer;
 }
 
-.logo {
-  width: 120px;
-  height: 30px;
+button, input, select {
+  background-color: transparent;
+  border: none;
+  outline: none;
 }
 
-.flx-bx {
-  display: flex;
-  gap: 10px
+.container {
+  padding-left: 50px;
+  padding-right:50px;
 }
 
-body {
-  width: 1200px;
-  margin: auto;
-}
-
-@media only  screen and (max-width: 1200px) {
-  body {
-    width: 90vw;
+@media only screen and (max-width: 1200px) {
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }

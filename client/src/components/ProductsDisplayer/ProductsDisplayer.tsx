@@ -1,7 +1,7 @@
 import useProducts from "../../hooks/useProducts";
 import ProductCard from "../ProductCard/ProductCard";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import styles from "./ProductsDisplayer.module.css";
@@ -16,10 +16,11 @@ const ProductsDisplayer = () => {
       {isLoading && <p>Loading....</p>}
       <Swiper
         className={styles.swiper}
-        modules={[Navigation]}
-        slidesPerView={5}
+        modules={[Navigation, Autoplay]}
+        slidesPerView={6}
         spaceBetween={15}
         navigation
+        autoplay={{ delay: 3000, pauseOnMouseEnter: true }}
         breakpoints={{
           0: {
             slidesPerView: 1,

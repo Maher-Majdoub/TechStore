@@ -1,9 +1,24 @@
 .container {
     position: relative;
+    background-color: var(--color-1);
+    border: 1px solid var(--color-5);
+    border-radius: 15px;
 }
 
 .btn {
-    height: 20px;
+    padding: 0 10px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.btn .icon {
+    display: flex;
+    align-items: center;
+    font-size: 17px;
 }
 
 .thumbnail {
@@ -15,7 +30,7 @@
     position: absolute;
     z-index: 9999;
     background-color: white;
-    top: 20px;
+    top: 41px;
 }
 
 .menu {
@@ -32,7 +47,7 @@
     display: flex;
     gap: 20px;
     justify-content: space-between;
-    color: rgb(255, 255, 255);
+    color: var(--color-1);
     /* background-color: green; */
     padding: 8px 10px;
 }

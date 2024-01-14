@@ -4,5 +4,5 @@
     gap: 5px;
     font-size: 10px;
     font-weight: 400;
-    color: #78A962;
+    color: var(--color-9);
 }

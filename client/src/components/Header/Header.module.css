@@ -2,7 +2,73 @@
     width: 100%;
 }
 
-.header > div {
+.topHeader, .bottomHeader {
     display: flex;
-    /* justify-content: space-between; */
+    align-items: center;
+    gap: 35px;
+}
+
+.topHeader {
+    background-color: var(--color-7);
+    color: var(--color-1);
+    padding: 5px 0 15px;
+}
+
+.logo {
+    width: 100px;
+}
+
+.actions {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.bottomHeader {
+    border-bottom: 1px solid var(--color-5);
+    height: 35px;
+    padding: 0 50px;
+    color: #020202;
+}
+.catSelect {
+    margin-top: -8px;
+}
+
+.options {
+    height: fit-content;
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+}
+
+.option {
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    font-size: 13px;
+    font-weight: 600;
+    position: relative;
+}
+
+.option .icon {
+    font-size: 18px;
+}
+
+.option::before {
+    content: '';
+    height: 1px;
+    background-color: var(--color-10);
+    width: 0;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    transition: .5s;
+}
+
+.option:hover::before{
+    width: 100%;
 }

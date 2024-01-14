@@ -19,7 +19,9 @@ const CategoriesSelector = () => {
   return (
     <div ref={containerRef} className={styles.container}>
       <button className={styles.btn} onClick={() => toggleShowMenu(!showMenu)}>
-        <MdMenu />
+        <div className={styles.icon}>
+          <MdMenu />
+        </div>
         <span>Our Categories</span>
       </button>
       <div hidden={!showMenu} className={styles.menuContainer}>
