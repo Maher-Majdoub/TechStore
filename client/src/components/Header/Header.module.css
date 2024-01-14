@@ -22,15 +22,14 @@
     height: 100%;
     display: flex;
     align-items: center;
-    gap: 7px;
+    gap: 15px;
 }
 
 .bottomHeader {
-    border-bottom: 1px solid var(--color-1);
     height: 35px;
     padding: 0 50px;
     color: var(--color-1);
-    background-color: var(--color-7);
+    background-color: var(--color-2);
 }
 .catSelect {
     margin-top: -8px;
@@ -61,8 +60,8 @@
 
 .option::before {
     content: '';
-    height: 1px;
-    background-color: var(--color-10);
+    height: 3px;
+    background-color: var(--color-1);
     width: 0;
     position: absolute;
     bottom: -3px;

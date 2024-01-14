@@ -23,6 +23,11 @@
   font-style: normal;
 }
 
+body {
+  color: var(--color-7);
+  background-color: var(--color-1);
+}
+
 button, a, select, option, li {
   cursor: pointer;
 }

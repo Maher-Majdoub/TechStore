@@ -1,0 +1,19 @@
+.container {
+    position: relative;
+}
+
+.miniCart {
+    position: absolute;
+    z-index:99999;
+    right: -45px;
+    bottom: -15px;
+    transform: translateY(100%);
+}
+
+.miniCart.hiden {
+    display: none;
+}
+
+.miniCart.shown {
+    height: block;
+}

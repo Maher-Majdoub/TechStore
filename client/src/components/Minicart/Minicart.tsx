@@ -18,7 +18,7 @@ const Minicart = () => {
       </button>
       <ul className={styles.productsList}>
         {products?.map((prod) => (
-          <li className={styles.product}>
+          <li key={prod.id} className={styles.product}>
             <MiniProductCard
               product={prod}
               count={5}

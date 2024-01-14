@@ -34,6 +34,10 @@
     width: 40px;
 }
 
+.btn:hover {
+    background-color: var(--color-9);
+}
+
 .btn > span {
     display: flex;
     align-items: center;

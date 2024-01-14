@@ -4,15 +4,13 @@ import SearchBar from "../SearchBar/SearchBar";
 import styles from "./Header.module.css";
 import Icon from "../Icon/Icon";
 import {
-  MdOutlineShoppingCart,
   MdOutlineCategory,
   MdAccessTime,
   MdPercent,
   MdLocalPhone,
 } from "react-icons/md";
-
 import { FaRegHeart, FaBalanceScale, FaRegUserCircle } from "react-icons/fa";
-
+import CartButton from "../CartButton/CartButton";
 const Header = () => {
   return (
     <header className={styles.header}>
@@ -26,11 +24,9 @@ const Header = () => {
           <Icon count={10} onClick={() => console.log("hola")}>
             <FaRegHeart />
           </Icon>
-          <Icon count={10} onClick={() => console.log("hola")}>
-            <MdOutlineShoppingCart />
-          </Icon>
+          <CartButton />
           <Icon onClick={() => console.log("hola")}>
-            <FaRegUserCircle />
+            <FaRegUserCircle fontWeight={100} />
           </Icon>
         </div>
       </div>
