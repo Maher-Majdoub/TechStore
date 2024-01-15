@@ -6,12 +6,18 @@ import "swiper/css";
 import "swiper/css/navigation";
 import styles from "./ProductsDisplayer.module.css";
 
-const ProductsDisplayer = ({ products }: { products: Product[] }) => {
+const ProductsDisplayer = ({
+  products,
+  maxCards = 6,
+}: {
+  products: Product[];
+  maxCards?: number;
+}) => {
   return (
     <Swiper
       className={styles.swiper}
       modules={[Navigation, Autoplay]}
-      slidesPerView={6}
+      slidesPerView={maxCards}
       spaceBetween={15}
       navigation
       autoplay={{ delay: 3000, pauseOnMouseEnter: true }}
@@ -20,16 +26,19 @@ const ProductsDisplayer = ({ products }: { products: Product[] }) => {
           slidesPerView: 1,
         },
         480: {
-          slidesPerView: 2,
+          slidesPerView: maxCards - 4 > 0 ? maxCards - 4 : 1,
         },
         768: {
-          slidesPerView: 3,
+          slidesPerView: maxCards - 3 > 0 ? maxCards - 3 : 1,
         },
         1024: {
-          slidesPerView: 4,
+          slidesPerView: maxCards - 2 > 0 ? maxCards - 2 : 1,
         },
         1200: {
-          slidesPerView: 5,
+          slidesPerView: maxCards - 1 > 0 ? maxCards - 1 : 1,
+        },
+        1450: {
+          slidesPerView: maxCards,
         },
       }}
     >

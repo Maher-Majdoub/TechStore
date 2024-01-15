@@ -89,6 +89,11 @@
     background-color: var(--color-3);
 }
 
+.addToCart > span {
+    text-wrap: nowrap;
+    user-select: none;
+}
+
 .card:hover .addToCart, .card:hover .actions{
     display: flex;
 }

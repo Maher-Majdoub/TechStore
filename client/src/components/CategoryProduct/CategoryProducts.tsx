@@ -25,7 +25,7 @@ const CategoryProducts = ({ products, title, bgImage, mainPageUrl }: Props) => {
         </div>
       </div>
       <div className={styles.products}>
-        <ProductsDisplayer products={products} />
+        <ProductsDisplayer products={products} maxCards={4} />
       </div>
     </div>
   );
