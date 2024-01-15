@@ -1,0 +1,26 @@
+.newProds {
+    margin: 10px 0;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+}
+
+.title {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.btn {
+    background-color: transparent;
+    text-decoration: underline;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--color-3);
+    transition: .3s;
+}
+
+.btn:hover {
+    font-size: 14px;
+}

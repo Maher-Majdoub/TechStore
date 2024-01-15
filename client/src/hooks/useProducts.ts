@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import ApiService from "../services/apiService";
+import { AxiosRequestConfig } from "axios";
 
 export interface Product {
   id: number;
@@ -26,10 +27,11 @@ export interface Product {
 
 const apiService = new ApiService<Product>("/products");
 
-const useProducts = (page?: number) => {
+const useProducts = (config: AxiosRequestConfig = {}) => {
+  console.log("lahne", config);
   const { data, isLoading, error } = useQuery({
-    queryKey: page ? ["products", page] : ["products"],
-    queryFn: () => apiService.getPage(page),
+    queryKey: ["products", config],
+    queryFn: () => apiService.get(config),
     staleTime: 60 * 60 * 1000, // 1h
   });
   return { data, isLoading, error };

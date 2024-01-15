@@ -1,3 +1,4 @@
+import { AxiosRequestConfig } from "axios";
 import apiClient from "./apiClient";
 
 export interface Response<T> {
@@ -14,9 +15,10 @@ class ApiService<T> {
     this.endpoint = endpoint;
   }
 
-  getPage = (page: number = 1) => {
+  get = (config: AxiosRequestConfig = {}) => {
+    console.log("holla.html", config);
     return apiClient
-      .get<Response<T>>(this.endpoint, { params: { page: page } })
+      .get<Response<T>>(this.endpoint, config)
       .then((res) => res.data);
   };
 }

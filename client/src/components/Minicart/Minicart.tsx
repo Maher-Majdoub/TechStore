@@ -5,7 +5,7 @@ import styles from "./Minicart.module.css";
 const total = 1234.99;
 
 const Minicart = () => {
-  const { data } = useProducts(2);
+  const { data } = useProducts({ params: { page: 1 } });
 
   const products = data?.results.slice(0, 3);
 

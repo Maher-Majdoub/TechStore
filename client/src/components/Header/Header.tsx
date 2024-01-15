@@ -11,6 +11,7 @@ import {
 } from "react-icons/md";
 import { FaRegHeart, FaBalanceScale, FaRegUserCircle } from "react-icons/fa";
 import CartButton from "../CartButton/CartButton";
+
 const Header = () => {
   return (
     <header className={styles.header}>
