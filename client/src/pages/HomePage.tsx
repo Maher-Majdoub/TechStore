@@ -12,7 +12,7 @@ const HomePage = () => {
   }
 
   return (
-    <main>
+    <main className="container">
       <div className={styles.newProds}>
         <div className={styles.options}>
           <h3 className={styles.title}>New Products</h3>

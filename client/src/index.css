@@ -12,7 +12,7 @@
   --color-11: #E9A426;
   --shadow-1: 0 0 200px 0 #00000023;
   --shadow-2: 0 4px 200px 0 #00000033;
-  --shadow-3: 0 0 4px 0 #00000051;
+  --shadow-3: 0 0 6px 0 #00000051;
 }
 
 * {
@@ -42,14 +42,25 @@ ul {
   list-style: none;
 }
 
-.container {
-  padding-left: 50px;
-  padding-right:50px;
+body {
+  width: 1700px;
+  margin: auto;
 }
 
-@media only screen and (max-width: 1200px) {
+.container {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+@media only screen and (max-width: 1800px) {
+  body {
+    width: 100vw;
+  }
+}
+
+@media only screen and (max-width: 768px) {
   .container {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
   }
 }
