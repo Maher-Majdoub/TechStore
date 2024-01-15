@@ -1,0 +1,47 @@
+.container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    
+}
+
+.image {
+    background-position: center;
+    background-size: cover;
+    width: 240px;
+    margin: 15px 0;   
+}
+
+.image > div {
+    height: 100%;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.619);
+}
+
+.title {
+    font-size: 22px;
+    font-weight: 600;
+    align-self: end;
+    color: var(--color-1);
+}
+
+.link {
+    align-self: center;
+}
+
+.link > a {
+    color: var(--color-1);
+    font-size: 15px;
+    transition: .5s;
+}
+
+.link:hover > a {
+    font-size: 16px;
+}
+
+.products {
+    margin: auto;
+    width: calc(100% - 300px);
+}
