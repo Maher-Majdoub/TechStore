@@ -15,11 +15,14 @@ class ApiService<T> {
     this.endpoint = endpoint;
   }
 
-  get = (config: AxiosRequestConfig = {}) => {
-    console.log("holla.html", config);
+  getPage = (config: AxiosRequestConfig = {}) => {
     return apiClient
       .get<Response<T>>(this.endpoint, config)
       .then((res) => res.data);
+  };
+
+  get = (id: number) => {
+    return apiClient.get<T>(`${this.endpoint}/${id}/`).then((res) => res.data);
   };
 }
 

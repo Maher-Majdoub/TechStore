@@ -13,7 +13,7 @@ export interface Product {
   description: string;
   unit_price: number;
   inventory: number;
-  configuration: {
+  configurations: {
     id: number;
     variation: string;
     value: string;
@@ -28,10 +28,9 @@ export interface Product {
 const apiService = new ApiService<Product>("/products");
 
 const useProducts = (config: AxiosRequestConfig = {}) => {
-  console.log("lahne", config);
   const { data, isLoading, error } = useQuery({
     queryKey: ["products", config],
-    queryFn: () => apiService.get(config),
+    queryFn: () => apiService.getPage(config),
     staleTime: 60 * 60 * 1000, // 1h
   });
   return { data, isLoading, error };

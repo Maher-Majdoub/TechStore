@@ -5,19 +5,38 @@ import CheckAvailability from "../CheckAvailability/CheckAvailability";
 import InStock from "../InStock/InStock";
 import Review from "../Review/Review";
 import styles from "./ProductCard.module.css";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   product: Product;
 }
 
 const ProductCard = ({ product }: Props) => {
+  const navigate = useNavigate();
   return (
-    <div className={styles.card}>
+    <div
+      className={styles.card}
+      onClick={() => {
+        navigate(`/product/${product.id}`);
+      }}
+    >
       <div className={styles.actions}>
-        <div className={styles.action}>
+        <div
+          className={styles.action}
+          onClick={(event) => {
+            event.stopPropagation();
+            console.log("add to wish");
+          }}
+        >
           <FaRegHeart />
         </div>
-        <div className={styles.action}>
+        <div
+          className={styles.action}
+          onClick={(event) => {
+            event.stopPropagation();
+            console.log("add to compare");
+          }}
+        >
           <FaBalanceScale />
         </div>
       </div>
@@ -33,7 +52,13 @@ const ProductCard = ({ product }: Props) => {
       </span>
       <span className={styles.prevPrice}>${product.unit_price.toFixed(2)}</span>
       <span className={styles.currPrice}>${product.unit_price.toFixed(2)}</span>
-      <div className={styles.addToCart}>
+      <div
+        className={styles.addToCart}
+        onClick={(event) => {
+          event.stopPropagation();
+          console.log("add to cart");
+        }}
+      >
         <GrCart />
         <span>Add To Cart</span>
       </div>

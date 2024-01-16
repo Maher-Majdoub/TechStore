@@ -13,7 +13,7 @@ const apiService = new ApiService<Category>("/categories");
 const useCategories = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["categories"],
-    queryFn: () => apiService.get(),
+    queryFn: () => apiService.getPage(),
     staleTime: 24 * 60 * 60 * 1000, // 24h
   });
 
