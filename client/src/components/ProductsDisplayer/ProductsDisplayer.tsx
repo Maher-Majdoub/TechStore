@@ -43,7 +43,7 @@ const ProductsDisplayer = ({
       }}
     >
       {products.map((prod) => (
-        <SwiperSlide key={prod.id}>
+        <SwiperSlide key={`${prod.id}-${Math.random()}`}>
           <ProductCard product={prod} />
         </SwiperSlide>
       ))}
