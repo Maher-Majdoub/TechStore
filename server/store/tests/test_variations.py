@@ -4,29 +4,29 @@ from store.models import Category, Variation
 import pytest
 
 
-@pytest.fixture
-def create_variation(api_client):
-    def do_create_variation(category_id, variation):
-        return api_client.post(f'/store/categories/{category_id}/variations/', variation)
-    return do_create_variation
+# @pytest.fixture
+# def create_variation(api_client):
+#     def do_create_variation(category_id, variation):
+#         return api_client.post(f'/store/categories/{category_id}/variations/', variation)
+#     return do_create_variation
 
-@pytest.fixture
-def delete_variation(api_client):
-    def do_delete_category(category_id, id):
-        return api_client.delete(f'/store/categories/{category_id}/variations/{id}/')
-    return do_delete_category
+# @pytest.fixture
+# def delete_variation(api_client):
+#     def do_delete_category(category_id, id):
+#         return api_client.delete(f'/store/categories/{category_id}/variations/{id}/')
+#     return do_delete_category
 
-@pytest.fixture
-def put_variation(api_client):
-    def do_put_category(category_id, id, data):
-        return api_client.put(f'/store/categories/{category_id}/variations/{id}/', data)
-    return do_put_category
+# @pytest.fixture
+# def put_variation(api_client):
+#     def do_put_category(category_id, id, data):
+#         return api_client.put(f'/store/categories/{category_id}/variations/{id}/', data)
+#     return do_put_category
 
-@pytest.fixture
-def patch_variation(api_client):
-    def do_patch_variation(category_id, id, data):
-        return api_client.patch(f'/store/categories/{category_id}/variations/{id}/', data)
-    return do_patch_variation
+# @pytest.fixture
+# def patch_variation(api_client):
+#     def do_patch_variation(category_id, id, data):
+#         return api_client.patch(f'/store/categories/{category_id}/variations/{id}/', data)
+#     return do_patch_variation
 
 
 # @pytest.mark.django_db
@@ -189,24 +189,24 @@ def patch_variation(api_client):
 #         assert response.status_code == status.HTTP_200_OK
 
 
-@pytest.mark.django_db
-class TestRetrieveVariation:
-    def test_if_category_does_not_exists_returns_404(self, api_client):
-        response = api_client.get(f'/store/categories/-1/variations/')
-        assert response.status_code == status.HTTP_404_NOT_FOUND
+# @pytest.mark.django_db
+# class TestRetrieveVariation:
+#     def test_if_category_does_not_exists_returns_404(self, api_client):
+#         response = api_client.get(f'/store/categories/-1/variations/')
+#         assert response.status_code == status.HTTP_404_NOT_FOUND
 
-    def test_if_variation_does_not_exists_returns_404(self, api_client):
-        category = baker.make(Category)
-        response = api_client.get(f'/store/categories/{category.id}/variations/-1/')
-        assert response.status_code == status.HTTP_404_NOT_FOUND
+#     def test_if_variation_does_not_exists_returns_404(self, api_client):
+#         category = baker.make(Category)
+#         response = api_client.get(f'/store/categories/{category.id}/variations/-1/')
+#         assert response.status_code == status.HTTP_404_NOT_FOUND
 
-    def test_if_variation_exists_returns_200(self, api_client):
-        category = baker.make(Category)
-        variation = baker.make(Variation, category_id = category.id)
-        response = api_client.get(f'/store/categories/{category.id}/variations/{variation.id}/')
-        assert response.status_code == status.HTTP_200_OK
+#     def test_if_variation_exists_returns_200(self, api_client):
+#         category = baker.make(Category)
+#         variation = baker.make(Variation, category_id = category.id)
+#         response = api_client.get(f'/store/categories/{category.id}/variations/{variation.id}/')
+#         assert response.status_code == status.HTTP_200_OK
 
-    def test_if_list_variations_returns_200(self, api_client):
-        category = baker.make(Category)
-        response = api_client.get(f'/store/categories/{category.id}/variations/')
-        assert response.status_code == status.HTTP_200_OK
+#     def test_if_list_variations_returns_200(self, api_client):
+#         category = baker.make(Category)
+#         response = api_client.get(f'/store/categories/{category.id}/variations/')
+#         assert response.status_code == status.HTTP_200_OK

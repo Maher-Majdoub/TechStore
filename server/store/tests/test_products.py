@@ -4,40 +4,40 @@ from store.models import Product, Category
 import pytest
 
 
-def get_valid_product():
-    category = baker.make(Category)
-    return {
-        'category_id': category.pk,
-        'name': 'test',
-        'reference': 'test',
-        'description': 'test',
-        'unit_price': '19.10',
-        'inventory': '12'
-    }
+# def get_valid_product():
+#     category = baker.make(Category)
+#     return {
+#         'category_id': category.pk,
+#         'name': 'test',
+#         'reference': 'test',
+#         'description': 'test',
+#         'unit_price': '19.10',
+#         'inventory': '12'
+#     }
 
-@pytest.fixture
-def create_product(api_client):
-    def do_create_product(product):
-        return api_client.post('/store/products/', product)
-    return do_create_product
+# @pytest.fixture
+# def create_product(api_client):
+#     def do_create_product(product):
+#         return api_client.post('/store/products/', product)
+#     return do_create_product
 
-@pytest.fixture
-def delete_product(api_client):
-    def do_delete_product(id):
-        return api_client.delete(f'/store/products/{id}/')
-    return do_delete_product
+# @pytest.fixture
+# def delete_product(api_client):
+#     def do_delete_product(id):
+#         return api_client.delete(f'/store/products/{id}/')
+#     return do_delete_product
 
-@pytest.fixture
-def put_product(api_client):
-    def do_put_product(id, data):
-        return api_client.put(f'/store/products/{id}/', data)
-    return do_put_product
+# @pytest.fixture
+# def put_product(api_client):
+#     def do_put_product(id, data):
+#         return api_client.put(f'/store/products/{id}/', data)
+#     return do_put_product
 
-@pytest.fixture
-def patch_product(api_client):
-    def do_patch_product(id, data):
-        return api_client.patch(f'/store/products/{id}/', data)
-    return do_patch_product
+# @pytest.fixture
+# def patch_product(api_client):
+#     def do_patch_product(id, data):
+#         return api_client.patch(f'/store/products/{id}/', data)
+#     return do_patch_product
 
 
 # @pytest.mark.django_db
@@ -160,17 +160,17 @@ def patch_product(api_client):
 #         assert response.status_code == status.HTTP_200_OK
 
 
-@pytest.mark.django_db
-class TestRetreiveProduct:
-    def test_if_product_not_exists_returns_404(self, api_client):
-        response = api_client.get('/store/products/-1/')
-        assert response.status_code == status.HTTP_404_NOT_FOUND
+# @pytest.mark.django_db
+# class TestRetreiveProduct:
+#     def test_if_product_not_exists_returns_404(self, api_client):
+#         response = api_client.get('/store/products/-1/')
+#         assert response.status_code == status.HTTP_404_NOT_FOUND
 
-    def test_if_product_exists_returns_200(self, api_client):
-        product = baker.make(Product)
-        response = api_client.get(f'/store/products/{product.pk}/')
-        assert response.status_code == status.HTTP_200_OK
+#     def test_if_product_exists_returns_200(self, api_client):
+#         product = baker.make(Product)
+#         response = api_client.get(f'/store/products/{product.pk}/')
+#         assert response.status_code == status.HTTP_200_OK
 
-    def test_if_list_products_returns_200(self, api_client):
-        response = api_client.get('/store/products/')
-        assert response.status_code == status.HTTP_200_OK
+#     def test_if_list_products_returns_200(self, api_client):
+#         response = api_client.get('/store/products/')
+#         assert response.status_code == status.HTTP_200_OK

@@ -34,9 +34,10 @@ class CategoryViewSet(ModelViewSet):
     def get_queryset(self):
         queryset = Category.objects.prefetch_related('sub_categories__sub_categories')
 
-        pk = self.kwargs.get('pk')
-        if pk:
-            return queryset.filter(id=pk)
+        print(self.kwargs)
+        slug = self.kwargs.get('slug')
+        if slug:
+            return queryset.filter(slug=slug)
         return queryset.filter(parent_category=None)
     
 
@@ -51,10 +52,10 @@ class VariationViewSet(ModelViewSet):
     http_method_names = ['get', 'options']
 
     def get_queryset(self):
-        return Variation.objects.filter(category=self.kwargs['category_pk'])
+        return Variation.objects.filter(category__slug__iexact=self.kwargs['category_slug'])
     
     def list(self, request, *args, **kwargs):
-        if not Category.objects.filter(id=kwargs['category_pk']).exists():
+        if not Category.objects.filter(slug=kwargs['category_slug']).exists():
             return Response({'detail': 'Category not found.'}, status.HTTP_404_NOT_FOUND)
         return super().list(request, *args, **kwargs)
 
@@ -64,10 +65,10 @@ class ProductConfigurationViewSet(ModelViewSet):
     http_method_names = ['get', 'options']
 
     def get_queryset(self):
-        return ProductConfiguration.objects.filter(product_id=self.kwargs['product_pk'])
+        return ProductConfiguration.objects.filter(product__slug__iexact=self.kwargs['product_slug'])
     
     def list(self, request, *args, **kwargs):
-        if not Product.objects.filter(id=kwargs['product_pk']).exists():
+        if not Product.objects.filter(slug=kwargs['product_slug']).exists():
             return Response({'detail': 'Product not found.'}, status.HTTP_404_NOT_FOUND)
         return super().list(request, *args, **kwargs)
 
@@ -108,10 +109,10 @@ class CategoryProductViewSet(ProductViewSet):
     http_method_names = ['get', 'options']
 
     def get_queryset(self):
-        return super().get_queryset().filter(category_id=self.kwargs['category_pk'])
+        return super().get_queryset().filter(category__slug__iexact=self.kwargs['sub_category_slug'])
 
     def list(self, request, *args, **kwargs):
-        if not Category.objects.filter(id=kwargs['category_pk']).exists():
+        if not Category.objects.filter(slug=kwargs['sub_category_slug']).exists():
             return Response({'detail': 'Category not found.'}, status.HTTP_404_NOT_FOUND)
         return super().list(request, *args, **kwargs)
 
@@ -127,10 +128,10 @@ class ProductDiscountViewSet(ModelViewSet):
     http_method_names = ['get', 'options']
 
     def get_queryset(self):
-        return Discount.objects.filter(product_id=self.kwargs['product_pk'])
+        return Discount.objects.filter(product__slug__iexact=self.kwargs['product_slug'])
     
     def list(self, request, *args, **kwargs):
-        if not Product.objects.filter(id=kwargs['product_pk']).exists():
+        if not Product.objects.filter(slug=kwargs['product_slug']).exists():
             return Response({'detail': 'Product not found.'}, status.HTTP_404_NOT_FOUND)
         return super().list(request, *args, **kwargs)
 
@@ -140,10 +141,10 @@ class ProductImageViewSet(ModelViewSet):
     http_method_names = ['get', 'options']
 
     def get_queryset(self):
-        return ProductImage.objects.filter(product_id=self.kwargs['product_pk'])
+        return ProductImage.objects.filter(product__slug__iexact=self.kwargs['product_slug'])
 
     def list(self, request, *args, **kwargs):
-        if not Product.objects.filter(id=kwargs['product_pk']).exists():
+        if not Product.objects.filter(slug=kwargs['product_slug']).exists():
             return Response({'detail': 'Product not found.'}, status.HTTP_404_NOT_FOUND)
         return super().list(request, *args, **kwargs)
     

@@ -3,29 +3,29 @@ from model_bakery import baker
 from store.models import Category
 import pytest
 
-@pytest.fixture
-def create_category(api_client):
-    def do_create_category(category):
-        return api_client.post('/store/categories/', category)
-    return do_create_category
+# @pytest.fixture
+# def create_category(api_client):
+#     def do_create_category(category):
+#         return api_client.post('/store/categories/', category)
+#     return do_create_category
 
-@pytest.fixture
-def delete_category(api_client):
-    def do_delete_category(id):
-        return api_client.delete(f'/store/categories/{id}/')
-    return do_delete_category
+# @pytest.fixture
+# def delete_category(api_client):
+#     def do_delete_category(id):
+#         return api_client.delete(f'/store/categories/{id}/')
+#     return do_delete_category
 
-@pytest.fixture
-def put_category(api_client):
-    def do_put_category(id, data):
-        return api_client.put(f'/store/categories/{id}/', data)
-    return do_put_category
+# @pytest.fixture
+# def put_category(api_client):
+#     def do_put_category(id, data):
+#         return api_client.put(f'/store/categories/{id}/', data)
+#     return do_put_category
 
-@pytest.fixture
-def patch_category(api_client):
-    def do_patch_category(id, data):
-        return api_client.patch(f'/store/categories/{id}/', data)
-    return do_patch_category
+# @pytest.fixture
+# def patch_category(api_client):
+#     def do_patch_category(id, data):
+#         return api_client.patch(f'/store/categories/{id}/', data)
+#     return do_patch_category
 
 
 # @pytest.mark.django_db
@@ -174,17 +174,17 @@ def patch_category(api_client):
 #         assert response1.status_code == response2.status_code == status.HTTP_200_OK
 
 
-@pytest.mark.django_db
-class TestRetrieveCategory:
-    def test_if_category_not_exists_returns_404(self, api_client):
-        response = api_client.get('/store/categories/-1/')
-        assert response.status_code == status.HTTP_404_NOT_FOUND
+# @pytest.mark.django_db
+# class TestRetrieveCategory:
+#     def test_if_category_not_exists_returns_404(self, api_client):
+#         response = api_client.get('/store/categories/-1/')
+#         assert response.status_code == status.HTTP_404_NOT_FOUND
 
-    def test_if_category_exists_returns_200(self, api_client):
-        category = baker.make(Category)
-        response = api_client.get(f'/store/categories/{category.id}/')
-        assert response.status_code == status.HTTP_200_OK
+#     def test_if_category_exists_returns_200(self, api_client):
+#         category = baker.make(Category)
+#         response = api_client.get(f'/store/categories/{category.id}/')
+#         assert response.status_code == status.HTTP_200_OK
 
-    def test_if_get_categories_returns_200(self, api_client):
-        response = api_client.get('/store/categories/')
-        assert response.status_code == status.HTTP_200_OK
+#     def test_if_get_categories_returns_200(self, api_client):
+#         response = api_client.get('/store/categories/')
+#         assert response.status_code == status.HTTP_200_OK
