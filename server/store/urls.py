@@ -12,7 +12,7 @@ router.register('carts', CartViewSet, 'cart')
 router.register('customers', CustomerViewSet, 'customer')
 
 categories_router = routers.NestedDefaultRouter(router, 'categories', lookup='category')
-categories_router.register('sub_categories', SubCategoryViewSet, basename='category-sub-categories')
+categories_router.register('sub_categories', CategoryViewSet, basename='category-sub-categories')
 categories_router.register('variations', VariationViewSet, 'category-variations')
 
 sub_categories_router = routers.NestedDefaultRouter(categories_router, 'sub_categories', lookup='sub_category')

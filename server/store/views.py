@@ -34,17 +34,16 @@ class CategoryViewSet(ModelViewSet):
     def get_queryset(self):
         queryset = Category.objects.prefetch_related('sub_categories__sub_categories')
 
-        print(self.kwargs)
+        category_slug = self.kwargs.get('category_slug')
         slug = self.kwargs.get('slug')
-        if slug:
-            return queryset.filter(slug=slug)
+        
+        if category_slug:
+            return queryset.filter(parent_category__slug__iexact=self.kwargs['category_slug'])
+        
+        elif slug:
+            return queryset.filter(slug=slug, parent_category=None)
+        
         return queryset.filter(parent_category=None)
-    
-
-class SubCategoryViewSet(CategoryViewSet):
-    def get_queryset(self):
-        return Category.objects.filter(parent_category__slug__iexact=self.kwargs['category_slug']) \
-                        .prefetch_related('sub_categories')
 
 
 class VariationViewSet(ModelViewSet):
