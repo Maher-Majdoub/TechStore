@@ -29,6 +29,7 @@ class CategoryViewSet(ModelViewSet):
     http_method_names = ['get', 'options']
     serializer_class = CategorySerializer
     pagination_class = NoLimitPagination
+    lookup_field = 'slug'
 
     def get_queryset(self):
         queryset = Category.objects.prefetch_related('sub_categories__sub_categories')
@@ -38,6 +39,12 @@ class CategoryViewSet(ModelViewSet):
             return queryset.filter(id=pk)
         return queryset.filter(parent_category=None)
     
+
+class SubCategoryViewSet(CategoryViewSet):
+    def get_queryset(self):
+        return Category.objects.filter(parent_category__slug__iexact=self.kwargs['category_slug']) \
+                        .prefetch_related('sub_categories')
+
 
 class VariationViewSet(ModelViewSet):
     serializer_class = VariationSerializer
@@ -72,6 +79,7 @@ class ProductViewSet(ModelViewSet):
     filterset_fields = ['reference', 'name']
     search_fields = ['reference', 'name']
     ordering_fileds = ['unit_price']
+    lookup_field = 'slug'
 
     def get_queryset(self):
         query = Product.objects.prefetch_related('category', 'configurations__variation', 'discounts', 'images')
