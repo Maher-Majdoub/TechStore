@@ -6,9 +6,10 @@ export interface Product {
   id: number;
   category: {
     id: number;
-    nmae: string;
+    name: string;
   };
   name: string;
+  slug: string;
   reference: string;
   description: string;
   unit_price: number;
