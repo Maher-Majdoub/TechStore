@@ -7,6 +7,7 @@ from .validators import validate_file_size
 class Category(models.Model):
     parent_category = models.ForeignKey('self', on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='sub_categories')
     name = models.CharField(max_length=255, unique=True)
+    slug = models.CharField(max_length=255, unique=True)
     thumbnail = models.ImageField(upload_to='store/images/categories', validators=[validate_file_size])
 
     class Meta:
@@ -36,6 +37,7 @@ class Tag(models.Model):
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products')
     name = models.CharField(max_length=255, unique=True)
+    slug = models.CharField(max_length=255, unique=True)
     reference = models.CharField(max_length=255, unique=True)
     description = models.TextField(null=True)
     unit_price = models.DecimalField(max_digits=8, decimal_places=2, validators=[MinValueValidator(0)])

@@ -66,6 +66,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'id',
             'category', 
             'name', 
+            'slug',
             'reference', 
             'description', 
             'unit_price', 
@@ -96,6 +97,7 @@ class CategoryProductSerializer(ProductSerializer):
         fields = [
             'id',
             'name', 
+            'slug',
             'reference', 
             'description', 
             'unit_price', 
