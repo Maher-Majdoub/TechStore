@@ -21,8 +21,10 @@ class ApiService<T> {
       .then((res) => res.data);
   };
 
-  get = (id: number) => {
-    return apiClient.get<T>(`${this.endpoint}/${id}/`).then((res) => res.data);
+  get = (slug: string) => {
+    return apiClient
+      .get<T>(`${this.endpoint}/${slug}/`)
+      .then((res) => res.data);
   };
 }
 

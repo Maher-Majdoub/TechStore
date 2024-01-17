@@ -5,7 +5,7 @@ import ErrorPage from "./pages/ErrorPage";
 
 const router = createBrowserRouter([
   { path: "/", element: <HomePage /> },
-  { path: "/product/:productId", element: <ProductDetailsPage /> },
+  { path: "/product/:productSlug", element: <ProductDetailsPage /> },
   { path: "/error", element: <ErrorPage /> },
 ]);
 

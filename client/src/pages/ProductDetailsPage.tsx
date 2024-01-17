@@ -2,15 +2,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import useProduct from "../hooks/useProduct";
 
 const ProductDetailsPage = () => {
-  const { productId } = useParams();
+  const { productSlug } = useParams();
   const navigate = useNavigate();
 
-  if (!productId) {
+  if (!productSlug) {
     navigate("/Eror Page");
     return;
   }
 
-  const { data: product, isLoading, error } = useProduct(parseInt(productId));
+  const { data: product, isLoading, error } = useProduct(productSlug);
 
   if (error) return <h1>Cant fetch product</h1>;
 
