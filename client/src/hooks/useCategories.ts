@@ -4,6 +4,7 @@ import ApiService from "../services/apiService";
 export interface Category {
   id: number;
   name: string;
+  slug: string;
   thumbnail: string;
   sub_categories: Category[];
 }
