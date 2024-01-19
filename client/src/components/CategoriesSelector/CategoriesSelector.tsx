@@ -4,6 +4,7 @@ import styles from "./CategoriesSelector.module.css";
 import { useRef, useState } from "react";
 import CategoryCard from "../CategoryCard/CategoryCard";
 import hideOnClickOutSide from "../../services/hideOnClickOutside";
+import { useNavigate } from "react-router-dom";
 
 const CategoriesSelector = () => {
   const { data } = useCategories();
@@ -16,6 +17,8 @@ const CategoriesSelector = () => {
     toggleShow: toggleShowMenu,
   });
 
+  const navigate = useNavigate();
+
   return (
     <div ref={containerRef} className={styles.container}>
       <button className={styles.btn} onClick={() => toggleShowMenu(!showMenu)}>
@@ -27,7 +30,13 @@ const CategoriesSelector = () => {
       <div hidden={!showMenu} className={styles.menuContainer}>
         <ul className={styles.menu}>
           {data?.results.map((parent_category) => (
-            <li key={parent_category.id}>
+            <li
+              key={parent_category.id}
+              onClick={() => {
+                toggleShowMenu(false);
+                navigate(`/categories/${parent_category.slug}`);
+              }}
+            >
               <img
                 src={parent_category.thumbnail}
                 alt={`${parent_category.name} image`}
@@ -38,7 +47,18 @@ const CategoriesSelector = () => {
               <div>
                 <div className={styles.subCategories}>
                   {parent_category.sub_categories.map((category) => (
-                    <CategoryCard key={category.id} category={category} />
+                    <div
+                      key={category.id}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        toggleShowMenu(false);
+                        navigate(
+                          `/categories/${parent_category.slug}/${category.slug}`
+                        );
+                      }}
+                    >
+                      <CategoryCard category={category} />
+                    </div>
                   ))}
                 </div>
               </div>
