@@ -45,7 +45,10 @@ const useProducts = ({ category, subCategory, config }: Props) => {
       : "/products"
   );
   const { data, isLoading, error } = useQuery({
-    queryKey: ["products", config],
+    queryKey:
+      category && subCategory
+        ? ["products", category, subCategory, config]
+        : ["products", config],
     queryFn: () => apiService.getPage(config),
     staleTime: 60 * 60 * 1000, // 1h
   });
