@@ -24,11 +24,15 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ['id', 'name', 'slug', 'thumbnail', 'sub_categories']
     
-
 class SimpleCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ['id', 'name']
+
+class SimpleSubCategorySerializer(SimpleCategorySerializer):
+    parent_category = SimpleCategorySerializer()
+    class Meta(SimpleCategorySerializer.Meta):
+        fields = ['id', 'name', 'parent_category']
 
 class VariationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -56,7 +60,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    category = SimpleCategorySerializer()
+    category = SimpleSubCategorySerializer()
     configurations = ProductConfigurationSerializer(many=True)
     discounts = ProductDiscountSerializer(many=True)
     images = ProductImageSerializer(many=True)
