@@ -7,9 +7,11 @@ export interface Product {
   category: {
     id: number;
     name: string;
+    slug: string;
     parent_category: {
       id: number;
       name: string;
+      slug: string;
     };
   };
   name: string;

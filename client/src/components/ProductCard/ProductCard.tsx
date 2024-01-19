@@ -17,7 +17,9 @@ const ProductCard = ({ product }: Props) => {
     <div
       className={styles.card}
       onClick={() => {
-        navigate(`/products/${product.slug}`);
+        navigate(
+          `/categories/${product.category.parent_category.slug}/${product.category.slug}/${product.slug}`
+        );
       }}
     >
       <div className={styles.actions}>
