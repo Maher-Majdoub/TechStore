@@ -1,3 +1,7 @@
+.container {
+    position: relative;
+}
+
 .card {
     cursor: pointer;
     display: flex;
@@ -5,6 +9,7 @@
     padding: 20px;
     border-radius: 5px;
     transition: .6s;
+    max-width: fit-content;
 }
 
 .card:hover {

@@ -14,55 +14,61 @@ interface Props {
 const ProductCard = ({ product }: Props) => {
   const navigate = useNavigate();
   return (
-    <div
-      className={styles.card}
-      onClick={() => {
-        navigate(
-          `/categories/${product.category.parent_category.slug}/${product.category.slug}/${product.slug}`
-        );
-      }}
-    >
-      <div className={styles.actions}>
-        <div
-          className={styles.action}
-          onClick={(event) => {
-            event.stopPropagation();
-            console.log("add to wish");
-          }}
-        >
-          <FaRegHeart />
-        </div>
-        <div
-          className={styles.action}
-          onClick={(event) => {
-            event.stopPropagation();
-            console.log("add to compare");
-          }}
-        >
-          <FaBalanceScale />
-        </div>
-      </div>
-      {product.inventory > 0 ? <InStock /> : <CheckAvailability />}
-      <img
-        src={product.images[0].image}
-        alt={`${product.name} image`}
-        className={styles.img}
-      />
-      <Review rate={4} total={4} />
-      <span className={styles.prodName}>
-        {product.name.slice(0, 50) + "..."}
-      </span>
-      <span className={styles.prevPrice}>${product.unit_price.toFixed(2)}</span>
-      <span className={styles.currPrice}>${product.unit_price.toFixed(2)}</span>
+    <div className={styles.container}>
       <div
-        className={styles.addToCart}
-        onClick={(event) => {
-          event.stopPropagation();
-          console.log("add to cart");
+        className={styles.card}
+        onClick={() => {
+          navigate(
+            `/categories/${product.category.parent_category.slug}/${product.category.slug}/${product.slug}`
+          );
         }}
       >
-        <GrCart />
-        <span>Add To Cart</span>
+        <div className={styles.actions}>
+          <div
+            className={styles.action}
+            onClick={(event) => {
+              event.stopPropagation();
+              console.log("add to wish");
+            }}
+          >
+            <FaRegHeart />
+          </div>
+          <div
+            className={styles.action}
+            onClick={(event) => {
+              event.stopPropagation();
+              console.log("add to compare");
+            }}
+          >
+            <FaBalanceScale />
+          </div>
+        </div>
+        {product.inventory > 0 ? <InStock /> : <CheckAvailability />}
+        <img
+          src={product.images[0].image}
+          alt={`${product.name} image`}
+          className={styles.img}
+        />
+        <Review rate={4} total={4} />
+        <span className={styles.prodName}>
+          {product.name.slice(0, 50) + "..."}
+        </span>
+        <span className={styles.prevPrice}>
+          ${product.unit_price.toFixed(2)}
+        </span>
+        <span className={styles.currPrice}>
+          ${product.unit_price.toFixed(2)}
+        </span>
+        <div
+          className={styles.addToCart}
+          onClick={(event) => {
+            event.stopPropagation();
+            console.log("add to cart");
+          }}
+        >
+          <GrCart />
+          <span>Add To Cart</span>
+        </div>
       </div>
     </div>
   );

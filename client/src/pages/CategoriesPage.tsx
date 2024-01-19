@@ -11,7 +11,12 @@ const CategoriesPage = () => {
       {isLoading && <p>Loading...</p>}
       <ul>
         {data?.results.map((category) => (
-          <li key={category.id}>
+          <li
+            key={category.id}
+            onClick={() => {
+              navigate(`/categories/${category.slug}/`);
+            }}
+          >
             <img src={category.thumbnail} alt={category.name + " image"} />
             <p>{category.name}</p>
           </li>
