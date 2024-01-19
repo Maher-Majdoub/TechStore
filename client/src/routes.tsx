@@ -12,7 +12,10 @@ const router = createBrowserRouter([
       {
         path: "/categories/",
         element: <CategoriesPage />,
-        children: [{ path: ":categorySlug", element: <SubCategoriesPage /> }],
+      },
+      {
+        path: "/categories/:categorySlug",
+        element: <SubCategoriesPage />,
       },
     ],
   },
