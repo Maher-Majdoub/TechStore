@@ -27,12 +27,12 @@ class CategorySerializer(serializers.ModelSerializer):
 class SimpleCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'slug']
 
 class SimpleSubCategorySerializer(SimpleCategorySerializer):
     parent_category = SimpleCategorySerializer()
     class Meta(SimpleCategorySerializer.Meta):
-        fields = ['id', 'name', 'parent_category']
+        fields = ['id', 'name', 'slug', 'parent_category']
 
 class VariationSerializer(serializers.ModelSerializer):
     class Meta:
