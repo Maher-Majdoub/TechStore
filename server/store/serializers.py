@@ -94,23 +94,7 @@ class ProductTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductTag
         fields = ['id', 'tag', 'product']
-
-
-class CategoryProductSerializer(ProductSerializer):
-    class Meta(ProductSerializer.Meta):
-        fields = [
-            'id',
-            'name', 
-            'slug',
-            'reference', 
-            'description', 
-            'unit_price', 
-            'inventory',
-            'configurations',
-            'discounts',
-            'images',
-        ]
-
+        
 
 class DiscountSerializer(serializers.ModelSerializer):
     product = ProductSerializer()

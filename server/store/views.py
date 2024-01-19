@@ -20,7 +20,7 @@ from .serializers import (
     CategorySerializer, VariationSerializer, ProductConfigurationSerializer, DiscountSerializer,
     ProductImageSerializer, ProductSerializer, CartItemSerializer, CartSerializer, AdressSerializer,
     CustomerSerializer, OrderItemSerializer, OrderSerializer, CompareSerializer, WishSerializer,
-    CategoryProductSerializer, ProductDiscountSerializer, GetCartItemSerializer,
+    ProductDiscountSerializer, GetCartItemSerializer,
     GetCompareSerializer, GetOrderSerializer, GetWishSerializer, TagSerializer, ProductTagSerializer
 )
 
@@ -104,9 +104,6 @@ class ProductTagViewSet(ModelViewSet):
 
 
 class CategoryProductViewSet(ProductViewSet):
-    serializer_class = CategoryProductSerializer
-    http_method_names = ['get', 'options']
-
     def get_queryset(self):
         return super().get_queryset().filter(category__slug__iexact=self.kwargs['sub_category_slug'])
 
