@@ -11,8 +11,11 @@ import {
 } from "react-icons/md";
 import { FaRegHeart, FaBalanceScale, FaRegUserCircle } from "react-icons/fa";
 import CartButton from "../CartButton/CartButton";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
+
   return (
     <header className={styles.header}>
       <div className={styles.topHeader + " container"}>
@@ -36,7 +39,12 @@ const Header = () => {
           <CategoriesSelector />
         </div>
         <div className={styles.options}>
-          <div className={styles.option}>
+          <div
+            className={styles.option}
+            onClick={() => {
+              navigate("/categories");
+            }}
+          >
             <div className={styles.icon}>
               <MdOutlineCategory />
             </div>
