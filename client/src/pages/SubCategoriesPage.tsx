@@ -5,8 +5,9 @@ const SubCategoriesPage = () => {
   const { categorySlug } = useParams();
   const { data, isLoading, error } = useCategories();
 
+  const navigate = useNavigate();
+
   if (error) {
-    const navigate = useNavigate();
     navigate("/error");
   }
 
@@ -25,7 +26,12 @@ const SubCategoriesPage = () => {
       {isLoading && <p>Loading...</p>}
       <ul>
         {subCategories.map((category) => (
-          <li key={category.id}>
+          <li
+            key={category.id}
+            onClick={() => {
+              navigate(`/categories/${categorySlug}/${category.slug}/`);
+            }}
+          >
             <img src={category.thumbnail} alt={category.name + " image"} />
             <p>{category.name}</p>
           </li>

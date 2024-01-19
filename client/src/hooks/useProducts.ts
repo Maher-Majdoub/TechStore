@@ -7,6 +7,10 @@ export interface Product {
   category: {
     id: number;
     name: string;
+    parent_category: {
+      id: number;
+      name: string;
+    };
   };
   name: string;
   slug: string;
@@ -26,9 +30,18 @@ export interface Product {
   }[];
 }
 
-const apiService = new ApiService<Product>("/products");
+interface Props {
+  category?: string;
+  subCategory?: string;
+  config?: AxiosRequestConfig;
+}
 
-const useProducts = (config: AxiosRequestConfig = {}) => {
+const useProducts = ({ category, subCategory, config }: Props) => {
+  const apiService = new ApiService<Product>(
+    category && subCategory
+      ? `/categories/${category}/sub_categories/${subCategory}/products`
+      : "/products"
+  );
   const { data, isLoading, error } = useQuery({
     queryKey: ["products", config],
     queryFn: () => apiService.getPage(config),

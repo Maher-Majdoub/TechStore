@@ -3,6 +3,8 @@ import HomePage from "./pages/HomePage";
 import CategoriesPage from "./pages/CategoriesPage";
 import SubCategoriesPage from "./pages/SubCategoriesPage";
 import Layout from "./components/Layout";
+import ProductsPage from "./pages/ProductsPage";
+import ProductDetailsPage from "./pages/ProductDetailsPage";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +18,14 @@ const router = createBrowserRouter([
       {
         path: "/categories/:categorySlug",
         element: <SubCategoriesPage />,
+      },
+      {
+        path: "/categories/:categorySlug/:SubCategorySlug",
+        element: <ProductsPage />,
+      },
+      {
+        path: "/categories/:categorySlug/:SubCategorySlug/:productSlug",
+        element: <ProductDetailsPage />,
       },
     ],
   },

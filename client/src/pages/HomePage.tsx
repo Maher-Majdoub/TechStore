@@ -7,7 +7,9 @@ import customBuildImage from "../assets/customBuild.jpg";
 const HomePage = () => {
   //const navigate = useNavigate();
   const { data, isLoading, error } = useProducts({
-    params: { page: 1, tag: "new" },
+    config: {
+      params: { page: 1, tag: "new" },
+    },
   });
 
   if (error) {
