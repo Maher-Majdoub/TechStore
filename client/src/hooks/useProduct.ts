@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import ApiService from "../services/apiService";
 import { Product } from "./useProducts";
 
-const apiService = new ApiService<Product>("/products");
+const apiService = new ApiService<Product>("products");
 
 const useProduct = (slug: string) => {
   const { data, isLoading, error } = useQuery({

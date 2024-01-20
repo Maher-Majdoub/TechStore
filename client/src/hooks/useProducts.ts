@@ -41,8 +41,8 @@ interface Props {
 const useProducts = ({ category, subCategory, config }: Props) => {
   const apiService = new ApiService<Product>(
     category && subCategory
-      ? `/categories/${category}/sub_categories/${subCategory}/products`
-      : "/products"
+      ? `categories/${category}/sub_categories/${subCategory}/products`
+      : "products"
   );
   const { data, isLoading, error } = useQuery({
     queryKey:

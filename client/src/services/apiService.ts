@@ -17,13 +17,13 @@ class ApiService<T> {
 
   getPage = (config: AxiosRequestConfig = {}) => {
     return apiClient
-      .get<Response<T>>(this.endpoint, config)
+      .get<Response<T>>(`store/${this.endpoint}`, config)
       .then((res) => res.data);
   };
 
-  get = (slug: string) => {
+  get = (identifier: string, config: AxiosRequestConfig = {}) => {
     return apiClient
-      .get<T>(`${this.endpoint}/${slug}/`)
+      .get<T>(`/store/${this.endpoint}/${identifier}/`, config)
       .then((res) => res.data);
   };
 }

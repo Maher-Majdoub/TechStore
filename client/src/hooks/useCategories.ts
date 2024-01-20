@@ -9,7 +9,7 @@ export interface Category {
   sub_categories: Category[];
 }
 
-const apiService = new ApiService<Category>("/categories");
+const apiService = new ApiService<Category>("categories");
 
 const useCategories = () => {
   const { data, isLoading, error } = useQuery({
