@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button/Button";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   return (
     <main>
       <nav>Home {">"} Login</nav>
@@ -16,11 +18,11 @@ const LoginPage = () => {
         >
           <div>
             <span>User Name</span>
-            <input type="text" placeholder="Your User Name" />
+            <input type="text" placeholder="Your User Name" required />
           </div>
           <div>
             <span>Password</span>
-            <input type="password" placeholder="Your Password" />
+            <input type="password" placeholder="Your Password" required />
           </div>
           <div>
             <Button filled>Sign In</Button>
@@ -36,7 +38,14 @@ const LoginPage = () => {
           <li>Save order history</li>
           <li>Track orders and more</li>
         </ul>
-        <Button filled>Create An Account</Button>
+        <Button
+          onClick={() => {
+            navigate("/signup");
+          }}
+          filled
+        >
+          Create An Account
+        </Button>
       </div>
     </main>
   );

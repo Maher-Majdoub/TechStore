@@ -6,12 +6,15 @@ import Layout from "./components/Layout";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 
 const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
-      { path: "/", element: <LoginPage /> },
+      { path: "/", element: <HomePage /> },
+      { path: "/login", element: <LoginPage /> },
+      { path: "/signup", element: <SignupPage /> },
       {
         path: "/categories/",
         element: <CategoriesPage />,
