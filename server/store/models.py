@@ -167,11 +167,11 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(validators=[MinValueValidator(0)])
 
 class Wish(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='wish_list')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     created_at = models.DateField(auto_now_add=True)
 
 class Compare(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='compare_list')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     created_at = models.DateField(auto_now_add=True)

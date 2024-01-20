@@ -199,14 +199,14 @@ class AdressViewSet(ModelViewSet):
 
 
 class CustomerViewSet(ModelViewSet):
-    queryset = Customer.objects.all().prefetch_related('adresses')
+    queryset = Customer.objects.all().prefetch_related('adresses', 'wish_list', 'compare_list')
     serializer_class = CustomerSerializer
     http_method_names = ["get", "put", "patch", "options"]
     permission_classes = [IsAdminUser]
 
     @action(methods=["GET", "PUT"], detail=False, permission_classes=[IsAuthenticated])
     def me(self, request):
-        customer = Customer.objects.get(user_id=request.user.id)
+        customer = Customer.objects.prefetch_related('adresses', 'wish_list', 'compare_list').get(user_id=request.user.id)
         if request.method == "GET":
             serializer = CustomerSerializer(customer)
 
