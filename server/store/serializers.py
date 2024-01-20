@@ -220,6 +220,7 @@ class GetCompareSerializer(CompareSerializer):
 
 
 class CustomerSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
     membership = serializers.CharField(read_only=True)
     adresses = AdressSerializer(many=True, read_only=True)
     wish_list = GetWishSerializer(many=True, read_only=True)
@@ -229,7 +230,7 @@ class CustomerSerializer(serializers.ModelSerializer):
         model = Customer
         fields = [
             'id',
-            'user_id', 
+            'user', 
             'phone', 
             'birth_date', 
             'membership', 
