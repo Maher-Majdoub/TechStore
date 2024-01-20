@@ -1,11 +1,32 @@
 import { useQuery } from "@tanstack/react-query";
 import ApiService from "../services/apiService";
+import { Product } from "./useProducts";
+
+interface Adress {
+  id: number;
+  is_default: boolean;
+  state: string;
+  city: string;
+  postal_code: number;
+  description: string;
+}
+
+interface Wish {
+  id: number;
+  product: Product;
+  created_at: Date;
+}
+
+interface Compare extends Wish {}
 
 interface Customer {
   id: number;
   phone: string;
   birth_date: string;
   membership: string;
+  adresses: Adress[];
+  wish_list: Wish[];
+  compare_list: Compare[];
 }
 
 const apiService = new ApiService<Customer>("customers");
