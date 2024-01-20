@@ -2,6 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import ApiService from "../services/apiService";
 import { Product } from "./useProducts";
 
+interface User {
+  id: number;
+  username: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+}
+
 interface Adress {
   id: number;
   is_default: boolean;
@@ -21,6 +29,7 @@ interface Compare extends Wish {}
 
 interface Customer {
   id: number;
+  user: User;
   phone: string;
   birth_date: string;
   membership: string;
