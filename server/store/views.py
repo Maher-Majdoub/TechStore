@@ -164,7 +164,7 @@ class CartItemViewSet(ModelViewSet):
         return CartItem.objects.filter(cart_id=self.kwargs['cart_pk']).prefetch_related('product')
 
     def get_serializer_context(self):
-        return {'cart_id': self.kwargs['cart_pk']}
+        return {**super().get_serializer_context(), 'cart_id': self.kwargs['cart_pk']}
     
     def list(self, request, *args, **kwargs):
         if not Cart.objects.filter(id=kwargs['cart_pk']).exists():
@@ -186,7 +186,7 @@ class AdressViewSet(ModelViewSet):
         return Adress.objects.filter(customer=self.kwargs['customer_pk'])
     
     def get_serializer_context(self):
-        return {'customer_id': self.kwargs['customer_pk']}
+        return { **super().get_serializer_context(), 'customer_id': self.kwargs['customer_pk']}
     
     def list(self, request, *args, **kwargs):
         if kwargs['customer_pk'] == 'me':
@@ -206,12 +206,14 @@ class CustomerViewSet(ModelViewSet):
 
     @action(methods=["GET", "PUT"], detail=False, permission_classes=[IsAuthenticated])
     def me(self, request):
+        serializer_context = self.get_serializer_context()
+
         customer = Customer.objects.prefetch_related('adresses', 'wish_list', 'compare_list').get(user_id=request.user.id)
         if request.method == "GET":
-            serializer = CustomerSerializer(customer)
+            serializer = CustomerSerializer(customer, context=serializer_context)
 
         elif request.method == "PUT":
-            serializer = CustomerSerializer(customer, data=request.data)
+            serializer = CustomerSerializer(customer, data=request.data, context=serializer_context)
             serializer.is_valid(raise_exception=True)
             serializer.save()
 
@@ -229,6 +231,7 @@ class OrderViewSet(ModelViewSet):
 
     def get_serializer_context(self):
         return {
+            **super().get_serializer_context(),
             'user': self.request.user,
             'customer': Customer.objects.get(id=self.kwargs['customer_pk']),
         }
@@ -255,7 +258,7 @@ class OrderItemViewSet(ModelViewSet):
         return OrderItem.objects.filter(order=self.kwargs['order_pk']).select_related('product')
 
     def get_serializer_context(self):
-        return {'order_id': self.kwargs['order_pk']}
+        return {**super().get_serializer_context(), 'order_id': self.kwargs['order_pk']}
 
 
 class WishViewSet(ModelViewSet):
@@ -280,8 +283,8 @@ class WishViewSet(ModelViewSet):
         return GetWishSerializer if self.request.method == 'GET' else WishSerializer
 
     def get_serializer_context(self):
-        return {'customer_id': self.kwargs['customer_pk']}
-    
+        return {**super().get_serializer_context(), 'customer_id': self.kwargs['customer_pk']}
+
 
 class CompareViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
@@ -305,4 +308,4 @@ class CompareViewSet(ModelViewSet):
         return GetCompareSerializer if self.request.method == 'GET' else CompareSerializer
 
     def get_serializer_context(self):
-        return {'customer_id': self.kwargs['customer_pk']}
+        return {**super().get_serializer_context(), 'customer_id': self.kwargs['customer_pk']}
