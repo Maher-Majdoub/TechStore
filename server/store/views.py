@@ -199,16 +199,33 @@ class AdressViewSet(ModelViewSet):
 
 
 class CustomerViewSet(ModelViewSet):
-    queryset = Customer.objects.all().prefetch_related('adresses', 'wish_list', 'compare_list')
     serializer_class = CustomerSerializer
     http_method_names = ["get", "put", "patch", "options"]
     permission_classes = [IsAdminUser]
+
+    def get_related_fields(self):
+        return [
+            'adresses',
+            'wish_list__product__category__parent_category',
+            'wish_list__product__images',
+            'wish_list__product__configurations__variation',
+            'wish_list__product__discounts',
+            'compare_list__product__category__parent_category',
+            'compare_list__product__images',
+            'compare_list__product__configurations__variation',
+            'compare_list__product__discounts'
+        ]
+
+    def get_queryset(self):
+        return Customer.objects.all().prefetch_related(*self.get_related_fields())
 
     @action(methods=["GET", "PUT"], detail=False, permission_classes=[IsAuthenticated])
     def me(self, request):
         serializer_context = self.get_serializer_context()
 
-        customer = Customer.objects.prefetch_related('adresses', 'wish_list', 'compare_list').get(user_id=request.user.id)
+        customer = Customer.objects.prefetch_related(*self.get_related_fields()) \
+                                    .get(user_id=request.user.id)
+
         if request.method == "GET":
             serializer = CustomerSerializer(customer, context=serializer_context)
 
