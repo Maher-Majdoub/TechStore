@@ -1,4 +1,5 @@
 import useProducts from "../../hooks/useProducts";
+import Button from "../Button/Button";
 import MiniProductCard from "../MiniProductCart/MiniProductCard";
 import styles from "./Minicart.module.css";
 
@@ -13,9 +14,9 @@ const Minicart = () => {
     <div className={styles.cart}>
       <h3 className={styles.title}>My Cart</h3>
       <span className={styles.subTitle}>{products?.length} items in cart</span>
-      <button className={`${styles.btn} ${styles.viewBtn}`}>
-        View or Edit Your Cart
-      </button>
+      <div className={styles.container}>
+        <Button>View or Edit Your Cart</Button>
+      </div>
       <ul className={styles.productsList}>
         {products?.map((prod) => (
           <li key={prod.id} className={styles.product}>
@@ -32,9 +33,9 @@ const Minicart = () => {
         <span>Subtotal: </span>
         <span>${total}</span>
       </div>
-      <button className={`${styles.btn} ${styles.checkoutBtn}`}>
-        Go To Checkout
-      </button>
+      <div className={styles.container}>
+        <Button>Go To Checkout</Button>
+      </div>
     </div>
   );
 };

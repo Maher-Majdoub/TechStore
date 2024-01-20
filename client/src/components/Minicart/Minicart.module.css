@@ -36,26 +36,6 @@
     font-weight: 400;
 }
 
-.btn {
-    font-size: 14px;
-    font-weight: 600;
-    text-align: center;
-    padding: 10px;
-    border: 3px solid var(--color-3);
-    border-radius: 50px;
-    width: calc(100% - 25px);
-}
-
-.viewBtn {
-    color: var(--color-3);
-    transition: .5s;
-}
-
-.viewBtn:hover {
-    color: var(--color-1);
-    background-color: var(--color-3);
-}
-
 .productsList {
     display: flex;
     flex-direction: column;
@@ -87,12 +67,6 @@
     color: var(--color-7);
 }
 
-.checkoutBtn {
-    background-color: var(--color-3);
-    color: var(--color-1);
-}
-
-.checkoutBtn:hover {
-    background-color: #004be0;
-    border-color: #004be0;
+.container {
+    width: calc(100% - 25px);
 }

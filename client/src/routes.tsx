@@ -5,12 +5,13 @@ import SubCategoriesPage from "./pages/SubCategoriesPage";
 import Layout from "./components/Layout";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
+import LoginPage from "./pages/LoginPage";
 
 const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
-      { path: "/", element: <HomePage /> },
+      { path: "/", element: <LoginPage /> },
       {
         path: "/categories/",
         element: <CategoriesPage />,

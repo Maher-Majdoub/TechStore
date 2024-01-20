@@ -1,3 +1,4 @@
+import Button from "../Button/Button";
 import styles from "./Footer.module.css";
 
 const Footer = () => {
@@ -20,7 +21,7 @@ const Footer = () => {
             placeholder="Your Email"
             className={styles.input}
           />
-          <button className={styles.btn}>Subscribe</button>
+          <Button filled>Subscribe</Button>
         </form>
       </div>
       <div className={styles.copyright + " container"}>

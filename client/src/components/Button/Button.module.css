@@ -1,0 +1,28 @@
+.filled, .hollow {
+    width: 100%;
+    padding: 10px 50px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: .5s;
+}
+
+.filled {
+    color: var(--color-1);
+    background-color: var(--color-3);
+}
+
+.filled:hover {
+    background-color: var(--color-12);
+}
+
+.hollow {
+    color: var(--color-3);
+    border: 3px solid var(--color-3)
+}
+
+.hollow:hover {
+    color: var(--color-1);
+    background-color: var(--color-12);
+    border-color: var(--color-12);
+}
