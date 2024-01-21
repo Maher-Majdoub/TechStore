@@ -1,21 +1,21 @@
-import ProductCard from "../components/ProductCard/ProductCard";
+import { useEffect } from "react";
 import useCustomer from "../hooks/useCustomer";
+import { useNavigate } from "react-router-dom";
 
 const TestAuthenticationPage = () => {
-  const { customer, isLoading, error } = useCustomer();
+  const navigate = useNavigate();
+  const { customer, isLoading, isError } = useCustomer();
+
+  useEffect(() => {
+    if (isError) navigate("/login");
+  }, [isError]);
+
   return (
     <main>
+      {isLoading && <p>Loding...</p>}
       <div>
-        {error && <p>An error occurred while fetching customer.</p>}
-        {isLoading && <p>Loading...</p>}
-        {customer && <p>{customer.id}</p>}
-      </div>
-      <div>
-        <ul>
-          {customer?.wish_list.map((wish) => (
-            <ProductCard key={wish.id} product={wish.product} />
-          ))}
-        </ul>
+        <h1>{customer?.user.email}</h1>
+        <p>yeah we are logged in</p>
       </div>
     </main>
   );

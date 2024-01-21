@@ -26,6 +26,10 @@ class ApiService<T> {
       .get<T>(`/store/${this.endpoint}/${identifier}/`, config)
       .then((res) => res.data);
   };
+
+  post = (data: any, config: AxiosRequestConfig = {}) => {
+    return apiClient.post(this.endpoint, data, config).then((res) => res.data);
+  };
 }
 
 export default ApiService;

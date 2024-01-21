@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import ApiService from "../services/apiService";
 import { Product } from "./useProducts";
+import useAuthorization from "./useAuthorization";
 
 interface User {
   id: number;
@@ -27,7 +28,7 @@ interface Wish {
 
 interface Compare extends Wish {}
 
-interface Customer {
+export interface Customer {
   id: number;
   user: User;
   phone: string;
@@ -41,22 +42,25 @@ interface Customer {
 const apiService = new ApiService<Customer>("customers");
 
 const useCustomer = () => {
+  const access_token = useAuthorization();
+
+  if (!access_token) return { customer: null, isLoading: false, isError: true };
+
   const {
     data: customer,
     isLoading,
-    error,
+    isError,
   } = useQuery({
     queryKey: ["customer"],
     queryFn: () =>
       apiService.get("me", {
         headers: {
-          Authorization:
-            "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE5NDA5MjExLCJpYXQiOjE3MDQ4OTQwMTEsImp0aSI6ImQyNTJiNzI2MWNlZTQzOGNiN2VjMTIzNDYzMGZjNGMzIiwidXNlcl9pZCI6NjAxfQ.e0zoGzRHYBRuZGOjkra0pLtzMdHCpUAZISEI3sfb_QY",
+          Authorization: access_token && `JWT ${access_token}`,
         },
       }),
     staleTime: 60 * 60 * 1000, // 1h
   });
-  return { customer, isLoading, error };
+  return { customer, isLoading, isError };
 };
 
 export default useCustomer;
