@@ -14,7 +14,7 @@ interface Props {
 
 const ProductCard = ({ product }: Props) => {
   const navigate = useNavigate();
-  const { cart, addToCart } = useCart();
+  const { addToCart } = useCart();
 
   return (
     <div className={styles.container}>
