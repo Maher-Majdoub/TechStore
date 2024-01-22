@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button/Button";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import useLogin from "../hooks/useLogin";
 
 const LoginPage = () => {
-  var logged = false;
   const navigate = useNavigate();
   const { login, data, isError } = useLogin();
   const username = useRef<HTMLInputElement>(null);
@@ -13,12 +12,9 @@ const LoginPage = () => {
   if (!isError && data) {
     localStorage.setItem("access_token", data.access);
     localStorage.setItem("refresh_token", data.refresh);
-    logged = true;
+    navigate("/customer");
+    return;
   }
-
-  useEffect(() => {
-    if (logged) navigate("/customer");
-  }, [logged]);
 
   return (
     <main>
