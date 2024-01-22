@@ -6,6 +6,7 @@ import InStock from "../InStock/InStock";
 import Review from "../Review/Review";
 import styles from "./ProductCard.module.css";
 import { useNavigate } from "react-router-dom";
+import useCart from "../../hooks/useCart";
 
 interface Props {
   product: Product;
@@ -13,6 +14,8 @@ interface Props {
 
 const ProductCard = ({ product }: Props) => {
   const navigate = useNavigate();
+  const { cart, addToCart } = useCart();
+
   return (
     <div className={styles.container}>
       <div
@@ -64,6 +67,7 @@ const ProductCard = ({ product }: Props) => {
           onClick={(event) => {
             event.stopPropagation();
             console.log("add to cart");
+            addToCart({ product: product, quantity: 1 });
           }}
         >
           <GrCart />
