@@ -1,4 +1,4 @@
-import MiniProductCard from "../components/MiniProductCart/MiniProductCard";
+import MiniProductCard from "../components/MiniProductCard/MiniProductCard";
 import useCart from "../hooks/useCart";
 
 const TestCartPage = () => {

@@ -29,25 +29,29 @@ body {
   background-color: var(--color-1);
 }
 
-body::-webkit-scrollbar {
-  width: 12px;
+select::-webkit-scrollbar {
+  width: 5px;
 }
 
-body::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+body::-webkit-scrollbar-thumb, select::-webkit-scrollbar-thumb {
   background-color: #888;
   border-radius: 6px;
 }
 
-body::-webkit-scrollbar-track {
+body::-webkit-scrollbar-track, select::-webkit-scrollbar-track {
   background-color: #f1f1f1;
   border-radius: 6px; 
 }
 
-body::-webkit-scrollbar-thumb:hover {
+body::-webkit-scrollbar-thumb:hover, select::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
 
-body::-webkit-scrollbar-thumb:active {
+body::-webkit-scrollbar-thumb:active, select::-webkit-scrollbar-thumb:active {
   background-color: #333;
 }
 

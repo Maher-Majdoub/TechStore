@@ -1,6 +1,6 @@
 import useCart from "../../hooks/useCart";
 import Button from "../Button/Button";
-import MiniProductCard from "../MiniProductCart/MiniProductCard";
+import MiniProductCard from "../MiniProductCard/MiniProductCard";
 import styles from "./Minicart.module.css";
 
 const Minicart = () => {

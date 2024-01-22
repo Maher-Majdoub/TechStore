@@ -24,7 +24,6 @@
 
 }
 
-
 .title {
     color: var(--color-7);
     font-size: 18px;
@@ -45,7 +44,7 @@
 }
 
 .productsList::-webkit-scrollbar {
-    width: 12px;
+    width: 5px;
 }
   
 .productsList::-webkit-scrollbar-thumb {
