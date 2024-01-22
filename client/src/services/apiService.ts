@@ -8,6 +8,10 @@ export interface Response<T> {
   results: T[];
 }
 
+export interface PostResponse<T> {
+  data: T;
+}
+
 class ApiService<T> {
   private endpoint: string;
 
@@ -28,7 +32,9 @@ class ApiService<T> {
   };
 
   post = (data: any, config: AxiosRequestConfig = {}) => {
-    return apiClient.post(this.endpoint, data, config).then((res) => res.data);
+    return apiClient
+      .post<any, PostResponse<T>>(this.endpoint, data, config)
+      .then((res) => res.data);
   };
 }
 

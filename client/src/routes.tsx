@@ -8,6 +8,7 @@ import ProductDetailsPage from "./pages/ProductDetailsPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import TestAuthenticationPage from "./pages/TestAuthenticationPage";
+import TestCartPage from "./pages/TestCartPage";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/categories/:categorySlug/:SubCategorySlug/:productSlug",
         element: <ProductDetailsPage />,
+      },
+      {
+        path: "/cart",
+        element: <TestCartPage />,
       },
     ],
   },

@@ -1,7 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 import ApiService from "../services/apiService";
 
-const apiService = new ApiService("/auth/jwt/create");
+interface Response {
+  access: string;
+  refresh: string;
+}
+
+const apiService = new ApiService<Response>("/auth/jwt/create");
 
 const useLogin = () => {
   const {
