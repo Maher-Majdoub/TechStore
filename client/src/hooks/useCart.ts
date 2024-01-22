@@ -14,11 +14,11 @@ interface Cart {
   items: CartItem[];
 }
 
-interface TPost {
+interface TResponse {
   data: { id: number; product: number; quantity: number };
 }
 
-interface TResponse {
+interface TPost {
   product: Product;
   quantity: number;
 }
@@ -41,7 +41,7 @@ const useCart = () => {
     staleTime: 24 * 60 * 60 * 1000,
   });
 
-  const addToCartMutation = useMutation<TPost, Error, TResponse, Cart>({
+  const addToCartMutation = useMutation<TResponse, Error, TPost, Cart>({
     mutationFn: ({ product, quantity }) => {
       return apiClient.post(`/store/carts/${cart?.id}/items/`, {
         product: product.id,
@@ -109,7 +109,39 @@ const useCart = () => {
     },
   });
 
-  return { cart, isLoading, isError, addToCart: addToCartMutation.mutate };
+  const DeleteFromCartMutation = useMutation<
+    {},
+    Error,
+    { itemId: number },
+    Cart
+  >({
+    mutationFn: ({ itemId }) =>
+      apiClient.delete(`/store/carts/${cart?.id}/items/${itemId}`),
+    onMutate: ({ itemId }) => {
+      const oldCart = queryClient.getQueryData<Cart>(["cart"]);
+      queryClient.setQueryData<Cart>(["cart"], (oldCart) => {
+        if (oldCart === undefined) return undefined;
+        return {
+          id: oldCart.id,
+          items: oldCart.items.filter((item) => item.id !== itemId),
+        };
+      });
+      return oldCart;
+    },
+
+    onError(error, _, cart) {
+      console.error(error);
+      queryClient.setQueryData(["cart"], cart);
+    },
+  });
+
+  return {
+    cart,
+    isLoading,
+    isError,
+    addToCart: addToCartMutation.mutate,
+    deleteFromCart: DeleteFromCartMutation.mutate,
+  };
 };
 
 export default useCart;

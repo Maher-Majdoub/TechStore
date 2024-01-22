@@ -2,11 +2,10 @@ import MiniProductCard from "../components/MiniProductCart/MiniProductCard";
 import useCart from "../hooks/useCart";
 
 const TestCartPage = () => {
-  const { cart, isLoading, isError } = useCart();
+  const { cart, isLoading, isError, deleteFromCart } = useCart();
   if (isError) {
     return <h1>Something Went Wrong!</h1>;
   }
-  console.log(cart);
 
   return (
     <>
@@ -18,7 +17,9 @@ const TestCartPage = () => {
             <div key={item.product.id}>
               <MiniProductCard
                 product={item.product}
-                onDelete={() => {}}
+                onDelete={() => {
+                  deleteFromCart({ itemId: item.id });
+                }}
                 onModify={() => {}}
                 count={item.quantity}
               />
