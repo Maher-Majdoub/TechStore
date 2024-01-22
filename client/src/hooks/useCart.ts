@@ -14,21 +14,18 @@ interface Cart {
   items: CartItem[];
 }
 
-interface AddResponse {
+interface TPost {
   data: { id: number; product: number; quantity: number };
+}
+
+interface TResponse {
+  product: Product;
+  quantity: number;
 }
 
 const fetchCart = async () => {
   const apiService = new ApiService<Cart>("/store/carts/");
   return await apiService.post({});
-  //   const apiService = new ApiService<Cart>("/store/carts/");
-  //   const stored_cart = localStorage.getItem("cart");
-  //   if (stored_cart === null) {
-  //     const newCart = await apiService.post({});
-  //     localStorage.setItem("cart", JSON.stringify(newCart));
-  //     return newCart;
-  //   }
-  // //   return JSON.parse(stored_cart);
 };
 
 const useCart = () => {
@@ -44,26 +41,17 @@ const useCart = () => {
     staleTime: 24 * 60 * 60 * 1000,
   });
 
-  const addToCartMutation = useMutation({
-    mutationFn: ({
-      product,
-      quantity,
-    }: {
-      product: Product;
-      quantity: number;
-    }) => {
-      if (cart)
-        return apiClient.post<any, AddResponse>(
-          `/store/carts/${cart.id}/items/`,
-          {
-            product: product.id,
-            quantity: quantity,
-          }
-        );
-      return apiClient.post<any, AddResponse>("/");
+  const addToCartMutation = useMutation<TPost, Error, TResponse, Cart>({
+    mutationFn: ({ product, quantity }) => {
+      return apiClient.post(`/store/carts/${cart?.id}/items/`, {
+        product: product.id,
+        quantity: quantity,
+      });
     },
 
     onMutate({ product, quantity }) {
+      const oldCart = queryClient.getQueryData<Cart>(["cart"]) || ({} as Cart);
+
       queryClient.setQueryData(["cart"], (oldCart: Cart | undefined) => {
         if (oldCart === undefined) return undefined;
         for (const item of oldCart.items) {
@@ -87,6 +75,8 @@ const useCart = () => {
           ],
         };
       });
+
+      return oldCart;
     },
 
     onSuccess(data) {
@@ -108,6 +98,13 @@ const useCart = () => {
           id: oldCart.id,
           items: newItems,
         };
+      });
+    },
+
+    onError(error, _, oldCart) {
+      queryClient.setQueryData(["cart"], () => {
+        console.error(error);
+        queryClient.setQueryData(["cart"], () => oldCart);
       });
     },
   });
