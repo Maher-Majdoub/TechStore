@@ -1,4 +1,4 @@
-import ProductCard from "../components/ProductCard/ProductCard";
+import MiniProductCard from "../components/MiniProductCart/MiniProductCard";
 import useCart from "../hooks/useCart";
 
 const TestCartPage = () => {
@@ -13,7 +13,14 @@ const TestCartPage = () => {
         <h3>{cart && cart.id}</h3>
         <ul>
           {cart?.items.map((item) => (
-            <ProductCard key={item.id} product={item.product} />
+            <div key={item.product.id}>
+              <MiniProductCard
+                product={item.product}
+                onDelete={() => {}}
+                onModify={() => {}}
+                count={item.quantity}
+              />
+            </div>
           ))}
         </ul>
       </div>

@@ -6,7 +6,7 @@ import apiClient from "../services/apiClient";
 interface CartItem {
   id: number;
   product: Product;
-  quatity: number;
+  quantity: number;
 }
 
 interface Cart {
@@ -58,7 +58,20 @@ const useCart = () => {
 
     onMutate({ product, quantity }) {
       queryClient.setQueryData(["cart"], (oldCart: Cart | undefined) => {
-        if (!oldCart) return undefined;
+        if (oldCart === undefined) return undefined;
+        for (const item of oldCart.items) {
+          if (item.product.id === product.id) {
+            const newItems = oldCart.items.filter(
+              (itm) => itm.product.id !== item.product.id
+            );
+            item.quantity += quantity;
+            newItems.push(item);
+            return {
+              id: oldCart.id,
+              items: newItems,
+            };
+          }
+        }
         return {
           id: oldCart.id,
           items: [
