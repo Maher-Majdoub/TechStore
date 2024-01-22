@@ -14,6 +14,10 @@ interface Cart {
   items: CartItem[];
 }
 
+interface AddResponse {
+  data: { id: number; product: number; quantity: number };
+}
+
 const fetchCart = async () => {
   const apiService = new ApiService<Cart>("/store/carts/");
   return await apiService.post({});
@@ -49,11 +53,14 @@ const useCart = () => {
       quantity: number;
     }) => {
       if (cart)
-        return apiClient.post(`/store/carts/${cart.id}/items/`, {
-          product: product.id,
-          quantity: quantity,
-        });
-      return apiClient.post("/");
+        return apiClient.post<any, AddResponse>(
+          `/store/carts/${cart.id}/items/`,
+          {
+            product: product.id,
+            quantity: quantity,
+          }
+        );
+      return apiClient.post<any, AddResponse>("/");
     },
 
     onMutate({ product, quantity }) {
@@ -78,6 +85,28 @@ const useCart = () => {
             ...oldCart.items,
             { id: -1, product: product, quantity: quantity },
           ],
+        };
+      });
+    },
+
+    onSuccess(data) {
+      queryClient.setQueryData(["cart"], (oldCart: Cart | undefined) => {
+        if (oldCart === undefined) return undefined;
+        const newItems = [] as CartItem[];
+
+        oldCart.items.forEach((item) => {
+          if (item.product.id === data.data.product) {
+            newItems.push({
+              id: data.data.id,
+              product: item.product,
+              quantity: item.quantity,
+            });
+          } else newItems.push(item);
+        });
+
+        return {
+          id: oldCart.id,
+          items: newItems,
         };
       });
     },
