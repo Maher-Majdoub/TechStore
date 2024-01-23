@@ -1,27 +1,35 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Icon from "../Icon/Icon";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import Minicart from "../Minicart/Minicart";
 import styles from "./CartButton.module.css";
+import hideOnClickOutSide from "../../services/hideOnClickOutside";
 
 const CartButton = () => {
-  const [hideCart, toggleHideCart] = useState(true);
+  const [showCart, toggleShowCart] = useState(false);
+  const cartRef = useRef<HTMLDivElement>(null);
+
+  hideOnClickOutSide({
+    ref: cartRef,
+    toggleShow: toggleShowCart,
+  });
+
   return (
-    <div className={styles.container}>
+    <div ref={cartRef} className={styles.container}>
       <Icon
         count={10}
         onClick={() => {
-          toggleHideCart(!hideCart);
+          toggleShowCart(!showCart);
         }}
       >
         <MdOutlineShoppingCart />
       </Icon>
       <div
         className={
-          styles.miniCart + " " + (hideCart ? styles.hiden : styles.shown)
+          styles.miniCart + " " + (!showCart ? styles.hiden : styles.shown)
         }
       >
-        <Minicart />
+        <Minicart toggleShowCart={toggleShowCart} />
       </div>
     </div>
   );

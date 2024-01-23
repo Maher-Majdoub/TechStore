@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
-import useProducts from "../hooks/useProducts";
-import ProductCard from "../components/ProductCard/ProductCard";
+import useProducts from "../../hooks/useProducts";
+import ProductCard from "../../components/ProductCard/ProductCard";
 import styles from "./ProductsPage.module.css";
 
 const ProductsPage = () => {

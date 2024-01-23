@@ -19,7 +19,14 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.topHeader + " container"}>
-        <img src={logo} alt="logo" className={styles.logo} />
+        <img
+          src={logo}
+          alt="logo"
+          className={styles.logo}
+          onClick={() => {
+            navigate("/");
+          }}
+        />
         <SearchBar />
         <div className={styles.actions}>
           <Icon count={10} onClick={() => console.log("hola")}>

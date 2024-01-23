@@ -1,8 +1,8 @@
-import CategoryProducts from "../components/CategoryProduct/CategoryProducts";
-import ProductsDisplayer from "../components/ProductsDisplayer/ProductsDisplayer";
-import useProducts from "../hooks/useProducts";
+import CategoryProducts from "../../components/CategoryProduct/CategoryProducts";
+import ProductsDisplayer from "../../components/ProductsDisplayer/ProductsDisplayer";
+import useProducts from "../../hooks/useProducts";
 import styles from "./HomePage.module.css";
-import customBuildImage from "../assets/customBuild.jpg";
+import customBuildImage from "../../assets/customBuild.jpg";
 
 const HomePage = () => {
   //const navigate = useNavigate();

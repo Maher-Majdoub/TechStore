@@ -1,0 +1,36 @@
+.title {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.actions {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.actions > div {
+    display: flex;
+    gap: 10px
+}
+
+.btn {
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: red;
+    padding: 5px 15px;
+    background-color: var(--color-7);
+    color: var(--color-1);
+}
+
+.btn.light {
+    background-color: var(--color-1);
+    color: var(--color-5);
+    border: 2px solid var(--color-5)
+}
+
+.btn.light:hover {
+    color: var(--color-10);
+    border-color: var(--color-10);
+}

@@ -41,7 +41,6 @@ const StandardCartItem = ({ item, onDelete }: Props) => {
       <td className={styles.td}>
         <div className={styles.actions}>
           <ActionBtn action="delete" onClick={onDelete} />
-          <ActionBtn action="modify" onClick={() => {}} />
         </div>
       </td>
     </tr>

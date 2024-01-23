@@ -1,10 +1,16 @@
+import { useNavigate } from "react-router-dom";
 import useCart from "../../hooks/useCart";
 import Button from "../Button/Button";
 import MiniProductCard from "../MiniProductCard/MiniProductCard";
 import styles from "./Minicart.module.css";
 
-const Minicart = () => {
-  const { cart, isLoading, isError, deleteFromCart } = useCart();
+const Minicart = ({
+  toggleShowCart,
+}: {
+  toggleShowCart(val: boolean): void;
+}) => {
+  const { cart, isError, deleteFromCart } = useCart();
+  const navigate = useNavigate();
 
   if (isError) {
     return <h1>Something Went Wrong</h1>;
@@ -18,14 +24,20 @@ const Minicart = () => {
 
   return (
     <>
-      {isLoading}
       <div className={styles.cart}>
         <h3 className={styles.title}>My Cart</h3>
         <span className={styles.subTitle}>
           {cart?.items.length} items in cart
         </span>
         <div className={styles.container}>
-          <Button>View or Edit Your Cart</Button>
+          <Button
+            onClick={() => {
+              toggleShowCart(false);
+              navigate("/cart");
+            }}
+          >
+            View or Edit Your Cart
+          </Button>
         </div>
         <ul className={styles.productsList}>
           {cart?.items?.map((item) => (
@@ -36,7 +48,10 @@ const Minicart = () => {
                 onDelete={() => {
                   deleteFromCart({ itemId: item.id });
                 }}
-                onModify={() => {}}
+                onModify={() => {
+                  toggleShowCart(false);
+                  navigate("/cart");
+                }}
               />
             </li>
           ))}
