@@ -3,13 +3,13 @@ import ApiService from "../services/apiService";
 import { Product } from "./useProducts";
 import apiClient from "../services/apiClient";
 
-interface CartItem {
+export interface CartItem {
   id: number;
   product: Product;
   quantity: number;
 }
 
-interface Cart {
+export interface Cart {
   id: string;
   items: CartItem[];
 }

@@ -1,0 +1,39 @@
+.prodImage {
+    width: 50px;
+}
+
+.prodName {
+    font-size: 14px;
+    font-weight: 400;
+    max-width: 250px;
+    text-align: start;
+}
+
+.flxBx {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 20px
+}
+
+.td {
+    text-align: center;
+    padding: 20px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.qty {
+    width: 60px;
+    height: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: #d9d9d981;
+    padding-left: 10px;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}

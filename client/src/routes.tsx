@@ -8,7 +8,7 @@ import ProductDetailsPage from "./pages/ProductDetailsPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import TestAuthenticationPage from "./pages/TestAuthenticationPage";
-import TestCartPage from "./pages/TestCartPage";
+import CartPage from "./pages/CartPage";
 
 const router = createBrowserRouter([
   {
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/cart",
-        element: <TestCartPage />,
+        element: <CartPage />,
       },
     ],
   },

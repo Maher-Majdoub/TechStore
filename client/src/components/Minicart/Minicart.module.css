@@ -21,7 +21,6 @@
     width: 20px;
     transform:translateY(-50%) rotateZ(45deg);
     box-shadow: var(--shadow-3);
-
 }
 
 .title {
@@ -44,7 +43,7 @@
 }
 
 .productsList::-webkit-scrollbar {
-    width: 5px;
+    width: 8px;
 }
   
 .productsList::-webkit-scrollbar-thumb {

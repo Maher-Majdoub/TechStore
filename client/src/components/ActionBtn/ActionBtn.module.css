@@ -1,0 +1,15 @@
+.btn {
+    font-size: 18px;
+    width: 25px;
+    height: 25px;
+    display: grid;
+    place-items: center;
+    color: var(--color-6);
+    border: 2px solid var(--color-6);
+    border-radius: 50%;
+}
+
+.btn:hover {
+    color: var(--color-10);
+    border-color: var(--color-10);
+}

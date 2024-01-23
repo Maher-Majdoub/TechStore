@@ -1,7 +1,6 @@
 import { Product } from "../../hooks/useProducts";
-import { TiPencil } from "react-icons/ti";
-import { LiaTimesSolid } from "react-icons/lia";
 import styles from "./MiniProductCard.module.css";
+import ActionBtn from "../ActionBtn/ActionBtn";
 
 interface Props {
   product: Product;
@@ -23,12 +22,8 @@ const MiniProductCard = ({ product, count, onDelete, onModify }: Props) => {
         {product.name.slice(0, 60) + "..."}
       </span>
       <div className={styles.actions}>
-        <button onClick={onDelete} className={styles.action}>
-          <LiaTimesSolid />
-        </button>
-        <button onClick={onModify} className={styles.action}>
-          <TiPencil />
-        </button>
+        <ActionBtn action="delete" onClick={onDelete} />
+        <ActionBtn action="modify" onClick={onModify} />
       </div>
     </div>
   );
