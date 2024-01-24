@@ -1,0 +1,104 @@
+.summary {
+    background-color: #F5F7FF;
+    height: fit-content;
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-radius: 10px;
+    max-width: 400px;
+}
+
+.title {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.section  {
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+.sectionTitle {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.sectionContent {
+    display: flex;
+    flex-direction: column;
+    gap: 15px
+}
+
+.label {
+    display: flex;
+    flex-direction: column;
+    gap: 3px
+}
+
+.label > h6 {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.label > div {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 10px;
+}
+
+.label > div > div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.label > div > div > span:first-child {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.label > div > div > span:last-child {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.inputSection {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.inputSection > span {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.inputSection > input {
+    border: 2px solid var(--color-5);
+    border-radius: 2px;
+    font-size: 14px;
+    padding: 10px
+}
+
+.infos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-top: 1px solid var(--color-10);
+    padding: 10px 0;
+    margin-top: 10px;
+}
+
+.infos > div {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.total {
+    font-size: 17px;
+}

@@ -3,6 +3,15 @@
     font-weight: 600;
 }
 
+.flxBx {
+    display: flex;
+    gap: 20px
+}
+
+.cartData {
+    flex: 1;
+}
+
 .actions {
     margin: 10px 0;
     display: flex;
