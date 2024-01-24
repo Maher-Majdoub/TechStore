@@ -1,0 +1,28 @@
+.sectionSelectors {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px 0;
+    background-color: var(--color-13);
+    min-width: 300px;
+}
+
+.sectionSelector {
+    padding: 10px 20px;
+    color: var(--color-10);
+    font-size: 15px;
+}
+
+.sectionSelector:hover, .sectionSelector.selected {
+    font-weight: 600;
+    color: var(--color-7);
+    border-left: 3px solid var(--color-3);
+    padding-left: 17px;
+    background-color: #e0e0e0;
+}
+
+.content {
+    display: flex;
+    gap: 30px;
+    margin: 20px 0
+}

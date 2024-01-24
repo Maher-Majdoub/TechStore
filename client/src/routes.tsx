@@ -7,8 +7,8 @@ import ProductsPage from "./pages/ProductsPage/ProductsPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
-import TestAuthenticationPage from "./pages/TestAuthenticationPage";
 import CartPage from "./pages/CartPage/CartPage";
+import UserAccountPage from "./pages/UserAccountPage/UserAccountPage";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
       { path: "/", element: <HomePage /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/signup", element: <SignupPage /> },
-      { path: "/customer", element: <TestAuthenticationPage /> },
+      { path: "/customer", element: <UserAccountPage /> },
       {
         path: "/categories/",
         element: <CategoriesPage />,

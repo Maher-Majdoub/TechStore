@@ -36,7 +36,11 @@ const Header = () => {
             <FaRegHeart />
           </Icon>
           <CartButton />
-          <Icon onClick={() => console.log("hola")}>
+          <Icon
+            onClick={() => {
+              navigate("/customer");
+            }}
+          >
             <FaRegUserCircle fontWeight={100} />
           </Icon>
         </div>
