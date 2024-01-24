@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/Button/Button";
 import { useRef } from "react";
 import useLogin from "../hooks/useLogin";
+import Navigator from "../components/Navigator/Navigator";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const LoginPage = () => {
 
   return (
     <main>
-      <nav>Home {">"} Login</nav>
+      <Navigator />
       <h2>Customer Login</h2>
       <div>
         <h5>Registered Customers</h5>

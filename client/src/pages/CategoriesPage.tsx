@@ -1,3 +1,4 @@
+import Navigator from "../components/Navigator/Navigator";
 import useCategories from "../hooks/useCategories";
 import { useNavigate } from "react-router-dom";
 
@@ -9,19 +10,22 @@ const CategoriesPage = () => {
   return (
     <>
       {isLoading && <p>Loading...</p>}
-      <ul>
-        {data?.results.map((category) => (
-          <li
-            key={category.id}
-            onClick={() => {
-              navigate(`/categories/${category.slug}/`);
-            }}
-          >
-            <img src={category.thumbnail} alt={category.name + " image"} />
-            <p>{category.name}</p>
-          </li>
-        ))}
-      </ul>
+      <main>
+        <Navigator />
+        <ul>
+          {data?.results.map((category) => (
+            <li
+              key={category.id}
+              onClick={() => {
+                navigate(`/categories/${category.slug}/`);
+              }}
+            >
+              <img src={category.thumbnail} alt={category.name + " image"} />
+              <p>{category.name}</p>
+            </li>
+          ))}
+        </ul>
+      </main>
     </>
   );
 };

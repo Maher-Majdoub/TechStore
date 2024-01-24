@@ -1,9 +1,10 @@
 import Button from "../components/Button/Button";
+import Navigator from "../components/Navigator/Navigator";
 
 const SignUpPage = () => {
   return (
     <main>
-      <nav>Home {">"} Register</nav>
+      <Navigator />
       <h2>Create An Account</h2>
       <div>
         <form

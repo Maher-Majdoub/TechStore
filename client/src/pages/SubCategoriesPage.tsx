@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import useCategories, { Category } from "../hooks/useCategories";
+import Navigator from "../components/Navigator/Navigator";
 
 const SubCategoriesPage = () => {
   const { categorySlug } = useParams();
@@ -24,19 +25,22 @@ const SubCategoriesPage = () => {
   return (
     <>
       {isLoading && <p>Loading...</p>}
-      <ul>
-        {subCategories.map((category) => (
-          <li
-            key={category.id}
-            onClick={() => {
-              navigate(`/categories/${categorySlug}/${category.slug}/`);
-            }}
-          >
-            <img src={category.thumbnail} alt={category.name + " image"} />
-            <p>{category.name}</p>
-          </li>
-        ))}
-      </ul>
+      <main>
+        <Navigator />
+        <ul>
+          {subCategories.map((category) => (
+            <li
+              key={category.id}
+              onClick={() => {
+                navigate(`/categories/${categorySlug}/${category.slug}/`);
+              }}
+            >
+              <img src={category.thumbnail} alt={category.name + " image"} />
+              <p>{category.name}</p>
+            </li>
+          ))}
+        </ul>
+      </main>
     </>
   );
 };

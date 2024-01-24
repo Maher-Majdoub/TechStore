@@ -3,6 +3,7 @@ import CartItemsList from "../../components/CartItemsList/CartItemsList";
 import useCart from "../../hooks/useCart";
 import styles from "./CartPage.module.css";
 import CartSummary from "../../components/CartSummary/CartSummary";
+import Navigator from "../../components/Navigator/Navigator";
 
 const CartPage = () => {
   const { cart, isLoading, isError } = useCart();
@@ -17,9 +18,7 @@ const CartPage = () => {
       {isLoading && <p>isLoading...</p>}
       {cart && (
         <>
-          <div>
-            <p>Home {">"} Shopping Cart</p>
-          </div>
+          <Navigator />
           <h2 className={styles.title}>Shopping Cart</h2>
           <div className={styles.flxBx}>
             <div className={styles.cartData}>

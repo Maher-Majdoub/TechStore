@@ -1,0 +1,19 @@
+.container, .container > div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.endpoint {
+    cursor: pointer;
+    font-size: 14px;
+    transition: .5s;
+}
+
+.endpoint:not(.currEndpoint):hover {
+    font-weight: 600;
+}
+
+.currEndpoint {
+    color: var(--color-5)
+}

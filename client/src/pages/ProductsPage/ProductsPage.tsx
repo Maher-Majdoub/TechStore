@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import useProducts from "../../hooks/useProducts";
 import ProductCard from "../../components/ProductCard/ProductCard";
+import Navigator from "../../components/Navigator/Navigator";
 import styles from "./ProductsPage.module.css";
 import {
   FaArrowUp,
@@ -40,6 +41,7 @@ const ProductsPage = () => {
 
   return (
     <main className={styles.main + " container"}>
+      <Navigator />
       {isLoading && <p>Loading...</p>}
       <div className={styles.filters}>
         <div className={styles.filter}>

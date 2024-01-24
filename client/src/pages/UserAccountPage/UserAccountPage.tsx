@@ -6,6 +6,7 @@ import Addresses from "../../components/Addresses/Addresses";
 import Ordres from "../../components/Orders/Ordres";
 import WishList from "../../components/WishList/WishList";
 import CompareList from "../../components/CompareList/CompareList";
+import Navigator from "../../components/Navigator/Navigator";
 
 enum Section {
   dashBoard,
@@ -22,7 +23,7 @@ const UserAccountPage = () => {
   return (
     <>
       <main className={styles.container + " container"}>
-        <div>Home {">"} My Dashboard</div>
+        <Navigator />
         <h1 className={styles.title}>My Dashboard</h1>
         <div className={styles.content}>
           <ul className={styles.sectionSelectors}>
