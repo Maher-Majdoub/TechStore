@@ -2,6 +2,7 @@
     background-color: var(--color-7);
     color: var(--color-1);
     padding: 15px 0;
+    overflow: hidden;
 }
 
 .newsLister {

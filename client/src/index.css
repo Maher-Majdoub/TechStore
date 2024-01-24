@@ -73,6 +73,7 @@ ul {
 body {
   width: 1700px;
   margin: auto;
+  scroll-behavior: smooth;
 }
 
 .container {
@@ -82,7 +83,7 @@ body {
 
 @media only screen and (max-width: 1800px) {
   body {
-    width: 100vw;
+    width: 100%
   }
 }
 
