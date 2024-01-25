@@ -73,10 +73,10 @@
 .mainContent {
     display: flex;
     align-items: center;
+    background-color: var(--color-13);
 }
 
 .selectedSection {
-    background-color: var(--color-13);
     width: 100%;
 }
 

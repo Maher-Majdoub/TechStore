@@ -6,6 +6,7 @@ import { useState } from "react";
 import AboutProduct from "../../components/AboutProduct/AboutProduct";
 import ProductDetails from "../../components/ProductDetails/ProductDetails";
 import ProductSpecs from "../../components/ProductSpecs/ProductSpecs";
+import { Product } from "../../hooks/useProducts";
 
 const ProductDetailsPage = () => {
   const { productSlug } = useParams();
@@ -79,9 +80,11 @@ const ProductDetailsPage = () => {
             </div>
           </div>
         </div>
-        <div className={styles.mainContent}>
+        <div className={styles.mainContent + " container"}>
           <div className={styles.selectedSection}>
-            {selectedSection === "about" && <AboutProduct />}
+            {selectedSection === "about" && (
+              <AboutProduct product={product || ({} as Product)} />
+            )}
             {selectedSection === "details" && <ProductDetails />}
             {selectedSection === "specs" && <ProductSpecs />}
           </div>

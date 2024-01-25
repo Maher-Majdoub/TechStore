@@ -1,0 +1,49 @@
+.container {
+    padding: 0 50px;
+}
+
+.navigator {
+    font-size: 10px;
+}
+
+.content {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.prodName {
+    font-size: 32px;
+}
+
+.goToReview {
+    color: var(--color-3);
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.goToReview:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--color-3);
+}
+
+.prodDesc {
+    font-weight: 300;
+    font-size: 20px;
+}
+
+.details {
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.question {
+    display: flex;
+    gap: 5px
+}
+
+.question > span:first-of-type {
+    font-weight: 600;
+}

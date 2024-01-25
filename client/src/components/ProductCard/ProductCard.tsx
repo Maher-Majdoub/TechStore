@@ -54,7 +54,7 @@ const ProductCard = ({ product }: Props) => {
         />
         <Review rate={4} total={4} />
         <span className={styles.prodName}>
-          {product.name.slice(0, 50) + "..."}
+          {product.description.slice(0, 50) + "..."}
         </span>
         <span className={styles.prevPrice}>
           ${product.unit_price.toFixed(2)}

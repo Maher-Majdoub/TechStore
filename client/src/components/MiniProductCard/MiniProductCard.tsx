@@ -19,7 +19,7 @@ const MiniProductCard = ({ product, count, onDelete, onModify }: Props) => {
         className={styles.img}
       />
       <span className={styles.prodName}>
-        {product.name.slice(0, 60) + "..."}
+        {product.description.slice(0, 60) + "..."}
       </span>
       <div className={styles.actions}>
         <ActionBtn action="delete" onClick={onDelete} />
