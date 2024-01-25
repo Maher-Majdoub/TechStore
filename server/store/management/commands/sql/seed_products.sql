@@ -1,16 +1,16 @@
 INSERT INTO `store_product` (`id`, `name`, `slug`, `reference`, `description`, `unit_price`, `inventory`, `category_id`) values 
-	(1, 'BEASTCOM Q3 | AMD Ryzen 5 6X 4,20GHz 12 Threads | 4K Vega Radeon Graphique | 16Go RAM | 1To SSD', 'beastcom-q3-|-amd-ryzen-5-6x-4,20ghz-12-threads-|-4k-vega-radeon-graphique-|-16go-ram-|-1to-ssd','0ADlqjdjKF', NULL, 679.0, 12, 9),
-	(2, 'Tochka 2 | AMD 5 5600X | RTX 4060 OC | 16GB | 500GB NVMe', 'tochka-2-|-amd-5-5600x-|-rtx-4060-oc-|-16gb-|-500gb-nvme','GZA7EgHTqK', NULL, 1249, 12, 9),
-	(3, 'Eclipse 6 | AMD 5 5600X | RTX 3060 OC 12GB | 16GB | 500GB NVMe', 'eclipse-6-|-amd-5-5600x-|-rtx-3060-oc-12gb-|-16gb-|-500gb-nvme','GUhIfuexWG', NULL, 959.99, 13, 9),
-	(4, 'Madara 5 | I7-11700 | RTX 3060 | 32GB RAM | 500 NVMe', 'madara-5-|-i7-11700-|-rtx-3060-|-32gb-ram-|-500-nvme','DFBa4RfPfq', NULL, 829.99, 13, 9),
-	(5, 'Legacy 10 | I5-13500 | RTX 3060 | 16GB RAM | 500 NVMe', 'legacy-10-|-i5-13500-|-rtx-3060-|-16gb-ram-|-500-nvme','uOWUDQUSP3', NULL, 839.99, 13, 9),
-	(6, 'Legacy 9 | I7-11700 | RTX 3050 | 32GB RAM | 500 NVMe', 'legacy-9-|-i7-11700-|-rtx-3050-|-32gb-ram-|-500-nvme','Za4WBE6E4n', NULL, 819.99, 13, 9),
-	(7, 'Madara 6 | I5-13400F | RTX 4060 | 32GB RAM | 500 NVMe', 'madara-6-|-i5-13400f-|-rtx-4060-|-32gb-ram-|-500-nvme','lMT8QWifwP', NULL, 809.99, 13, 9),
-	(8, 'Legacy 8 | I5-13400F | RTX 3060 | 32GB RAM | 500 NVMe', 'legacy-8-|-i5-13400f-|-rtx-3060-|-32gb-ram-|-500-nvme','RwRekzeTY5', NULL, 809.99, 13, 9),
-	(9, 'Legacy 7 | i5-12400F | RTX 4060 | 32 GB RAM | 500 NVMe', 'legacy-7-|-i5-12400f-|-rtx-4060-|-32-gb-ram-|-500-nvme','9gh7T8E914', NULL, 809.99, 13, 9),
-	(10, 'Madara 4 | I5-13400F | RTX 4060 | 16GB RAM | 500 NVMe', 'madara-4-|-i5-13400f-|-rtx-4060-|-16gb-ram-|-500-nvme','CFtbBnNnbi', NULL, 799.99, 13, 9),
-	(11, 'Madara 3 | I7-11700 | RTX 3060 | 16GB RAM | 500 NVMe', 'madara-3-|-i7-11700-|-rtx-3060-|-16gb-ram-|-500-nvme','JcnujDm4C1', NULL, 789.99, 13, 9),
-	(12, 'Tochka 1 | Ryzen 5 5600G | RTX 4060 OC | 16GB Ram | 500 NVMe', 'tochka-1-|-ryzen-5-5600g-|-rtx-4060-oc-|-16gb-ram-|-500-nvme','dzELEW0Y85', NULL, 769.99, 13, 9);
+	(1, 'BEASTCOM Q3', 'beastcom-q3','aAuzW1yNRE', 'BEASTCOM Q3 | AMD Ryzen 5 6X 4,20GHz 12 Threads | 4K Vega Radeon Graphique | 16Go RAM | 1To SSD', 679.0, 12, 9),
+	(2, 'Tochka 2', 'tochka-2','1fx7r5RY97', 'Tochka 2 | AMD 5 5600X | RTX 4060 OC | 16GB | 500GB NVMe', 1249, 12, 9),
+	(3, 'Eclipse 6', 'eclipse-6','XbrpwjU1Lg', 'Eclipse 6 | AMD 5 5600X | RTX 3060 OC 12GB | 16GB | 500GB NVMe', 959.99, 13, 9),
+	(4, 'Madara 5', 'madara-5','ELqDn9b44t', 'Madara 5 | I7-11700 | RTX 3060 | 32GB RAM | 500 NVMe', 829.99, 13, 9),
+	(5, 'Legacy 10', 'legacy-10','XSOCXaAzpE', 'Legacy 10 | I5-13500 | RTX 3060 | 16GB RAM | 500 NVMe', 839.99, 13, 9),
+	(6, 'Legacy 9', 'legacy-9','zQJtqwHDZm', 'Legacy 9 | I7-11700 | RTX 3050 | 32GB RAM | 500 NVMe', 819.99, 13, 9),
+	(7, 'Madara 6', 'madara-6','JtCGALfhyw', 'Madara 6 | I5-13400F | RTX 4060 | 32GB RAM | 500 NVMe', 809.99, 13, 9),
+	(8, 'Legacy 8', 'legacy-8','Ae1gHuU7ND', 'Legacy 8 | I5-13400F | RTX 3060 | 32GB RAM | 500 NVMe', 809.99, 13, 9),
+	(9, 'Legacy 7', 'legacy-7','G8ybtunS1O', 'Legacy 7 | i5-12400F | RTX 4060 | 32 GB RAM | 500 NVMe', 809.99, 13, 9),
+	(10, 'Madara 4', 'madara-4','QTbum8Pe7V', 'Madara 4 | I5-13400F | RTX 4060 | 16GB RAM | 500 NVMe', 799.99, 13, 9),
+	(11, 'Madara 3', 'madara-3','cZtqSWRLKG', 'Madara 3 | I7-11700 | RTX 3060 | 16GB RAM | 500 NVMe', 789.99, 13, 9),
+	(12, 'Tochka 1', 'tochka-1','zCcfMXVGum', 'Tochka 1 | Ryzen 5 5600G | RTX 4060 OC | 16GB Ram | 500 NVMe', 769.99, 13, 9);
 
 INSERT INTO `store_productconfiguration` (`id`, `variation_id`, `product_id`, `value`) values 
 	(1, 1, 1, 'AMD Ryzen 5 6X 4.20GHz 12Threads '),
