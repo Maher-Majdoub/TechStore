@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.swiper {
+    width: 290px
+}
+
+.img {
+    width: 255px;
+    height: 444px;
+    object-fit: contain;
+}
