@@ -87,8 +87,97 @@
     font-size: 10px;
 }
 
+.prodInfos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.prodName {
+    font-size: 32px;
+}
+
+.goToReview {
+    color: var(--color-3);
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.goToReview:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--color-3);
+}
+
+.prodDesc {
+    font-weight: 300;
+    font-size: 20px;
+}
+
+.details {
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.question {
+    display: flex;
+    gap: 5px
+}
+
+.question > span:first-of-type {
+    font-weight: 600;
+}
+
+.productDetailsList {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.productDetailsList > li  {
+    padding-left: 13px;
+    font-size: 14px;
+    font-weight: 200px;
+    position: relative;
+}
+
+.productDetailsList > li::before {
+    content: '';
+    position: absolute;
+    left: -2px;
+    top: 50%;
+    height: 5px;
+    width: 5px;
+    background-color: var(--color-7);
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.productSpecsTable {
+    border: 1px solid var(--color-6);
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.productSpecsTable tr:nth-child(odd) {
+    background-color: var(--color-1);
+}
+
+.productSpecsTable tr:nth-child(even) {
+    background-color: var(--color-13);
+}
+
+.productSpecsTable  td{
+    border: none;
+    padding: 10px 15px;
+}
+
+.productSpecsTable tr > td:last-child {
+    color: var(--color-10)
+}
+
+
 .productImagesSection {
     background-color: red;
     width: 100%;
-    height: 300px;
 }

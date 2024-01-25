@@ -1,12 +1,8 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useProduct from "../../hooks/useProduct";
 import styles from "./ProductDetails.module.css";
 import Button from "../../components/Button/Button";
 import { useState } from "react";
-import AboutProduct from "../../components/AboutProduct/AboutProduct";
-import ProductDetails from "../../components/ProductDetails/ProductDetails";
-import ProductSpecs from "../../components/ProductSpecs/ProductSpecs";
-import { Product } from "../../hooks/useProducts";
 import Navigator from "../../components/Navigator/Navigator";
 
 const ProductDetailsPage = () => {
@@ -86,11 +82,43 @@ const ProductDetailsPage = () => {
             <div className={styles.navigator}>
               <Navigator />
             </div>
-            {selectedSection === "about" && (
-              <AboutProduct product={product || ({} as Product)} />
-            )}
-            {selectedSection === "details" && <ProductDetails />}
-            {selectedSection === "specs" && <ProductSpecs />}
+            <div className={styles.prodInfos}>
+              <h1 className={styles.prodName}>{product?.name}</h1>
+              <span className={styles.goToReview}>
+                Be the first to review this product
+              </span>
+              <div>
+                {selectedSection === "about" && (
+                  <p className={styles.prodDesc}>{product?.description}</p>
+                )}
+                {selectedSection === "details" && (
+                  <ul className={styles.productDetailsList}>
+                    {product?.configurations.map((conf) => (
+                      <li key={conf.id}>{conf.value}</li>
+                    ))}
+                  </ul>
+                )}
+                {selectedSection === "specs" && (
+                  <table className={styles.productSpecsTable}>
+                    <tbody>
+                      {product?.configurations.map((conf) => (
+                        <tr key={conf.id}>
+                          <td>{conf.variation}</td>
+                          <td>{conf.value}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+              <div className={styles.details}>
+                <div className={styles.question}>
+                  <span>Have a Qustion?</span>
+                  <Link to="/contact-us">Contact Us</Link>
+                </div>
+                <span>{product?.reference}</span>
+              </div>
+            </div>
           </div>
           <div className={styles.productImagesSection}></div>
         </div>
