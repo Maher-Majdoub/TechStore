@@ -72,12 +72,19 @@
 
 .mainContent {
     display: flex;
-    align-items: center;
     background-color: var(--color-13);
 }
 
 .selectedSection {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 25px 50px;
     width: 100%;
+}
+
+.navigator {
+    font-size: 10px;
 }
 
 .productImagesSection {

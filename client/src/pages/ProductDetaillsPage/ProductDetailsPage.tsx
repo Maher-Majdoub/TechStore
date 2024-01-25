@@ -7,6 +7,7 @@ import AboutProduct from "../../components/AboutProduct/AboutProduct";
 import ProductDetails from "../../components/ProductDetails/ProductDetails";
 import ProductSpecs from "../../components/ProductSpecs/ProductSpecs";
 import { Product } from "../../hooks/useProducts";
+import Navigator from "../../components/Navigator/Navigator";
 
 const ProductDetailsPage = () => {
   const { productSlug } = useParams();
@@ -82,6 +83,9 @@ const ProductDetailsPage = () => {
         </div>
         <div className={styles.mainContent + " container"}>
           <div className={styles.selectedSection}>
+            <div className={styles.navigator}>
+              <Navigator />
+            </div>
             {selectedSection === "about" && (
               <AboutProduct product={product || ({} as Product)} />
             )}
