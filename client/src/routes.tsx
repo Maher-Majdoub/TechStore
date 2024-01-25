@@ -4,7 +4,7 @@ import CategoriesPage from "./pages/CategoriesPage/CategoriesPage";
 import SubCategoriesPage from "./pages/SubCategoriesPage/SubCategoriesPage";
 import Layout from "./components/Layout";
 import ProductsPage from "./pages/ProductsPage/ProductsPage";
-import ProductDetailsPage from "./pages/ProductDetailsPage";
+import ProductDetailsPage from "./pages/ProductDetaillsPage/ProductDetailsPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import CartPage from "./pages/CartPage/CartPage";

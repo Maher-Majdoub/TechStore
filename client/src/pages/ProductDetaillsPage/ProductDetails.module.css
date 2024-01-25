@@ -1,0 +1,87 @@
+.topSection {
+    border-bottom: 1px solid var(--color-5);
+    padding: 6px 0;
+}
+
+.topSection > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flxBx {
+    display: flex;
+    align-items: center;
+    gap: 15px
+}
+
+.navSelector {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-10);
+    position: relative;
+    transition: .5s;
+}
+
+.navSelector:before {
+    content: '';
+    background-color: var(--color-3);
+    height: 2px;
+    width: 0;
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    transition: .5s;
+}
+
+.navSelector.selected, .navSelector:hover {
+    color: var(--color-7);
+}
+.navSelector.selected::before, .navSelector:hover::before {
+    width: 100%;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.price > span {
+    text-wrap: nowrap;
+    font-size: 14px;
+}
+
+.price > span:last-child {
+    font-weight: 600;
+}
+
+.input {
+    background-color: var(--color-13);
+    font-size: 13px;
+    font-weight: 600;
+    height: 29px;
+    width: 50px;
+    text-align: center;
+}
+
+.addToCartBtn > button {
+    font-size: 12px;
+    padding: 8px 20px;
+}
+
+.mainContent {
+    display: flex;
+    align-items: center;
+}
+
+.selectedSection {
+    background-color: var(--color-13);
+    width: 100%;
+}
+
+.productImagesSection {
+    background-color: red;
+    width: 100%;
+    height: 300px;
+}
