@@ -1,0 +1,44 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-13);
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.link {
+    padding: 10px 20px;
+    background-color: var(--color-1);
+    border: 1px solid var(--color-5);
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 250px;
+    cursor: pointer;
+}
+
+.arrow {
+    font-size: 20px;
+}
+
+.link:hover .arrow {
+    animation: animateArrow 1s alternate infinite;
+}
+
+@keyframes animateArrow {
+    100% {
+        transform: translateX(10px);
+    }
+}
+
+.image {
+    height: 400px;
+}

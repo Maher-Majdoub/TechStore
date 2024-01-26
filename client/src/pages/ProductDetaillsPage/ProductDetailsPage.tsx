@@ -8,6 +8,7 @@ import ProductImagesDisplayer from "../../components/ProductImagesDisplayer/Prod
 import { Product } from "../../hooks/useProducts";
 import ActionBtn from "../../components/ActionBtn/ActionBtn";
 import useCart from "../../hooks/useCart";
+import SupportSection from "../../components/SupportSection/SupportSection";
 
 const ProductDetailsPage = () => {
   const { productSlug } = useParams();
@@ -149,6 +150,7 @@ const ProductDetailsPage = () => {
               </div>
             </div>
           </div>
+          <SupportSection />
         </main>
       )}
     </>
