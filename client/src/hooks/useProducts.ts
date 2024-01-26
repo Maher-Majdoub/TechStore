@@ -2,34 +2,48 @@ import { useQuery } from "@tanstack/react-query";
 import ApiService from "../services/apiService";
 import { AxiosRequestConfig } from "axios";
 
-export interface Product {
+interface ProductCategory {
   id: number;
-  category: {
+  name: string;
+  slug: string;
+  parent_category: {
     id: number;
     name: string;
     slug: string;
-    parent_category: {
-      id: number;
-      name: string;
-      slug: string;
-    };
   };
+}
+
+interface ProductConfiguration {
+  id: number;
+  variation: string;
+  value: string;
+}
+
+interface ProductImage {
+  id: number;
+  image: string;
+}
+
+export interface ProductInfo {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+}
+
+export interface Product {
+  id: number;
+  category: ProductCategory;
   name: string;
   slug: string;
   reference: string;
   description: string;
   unit_price: number;
   inventory: number;
-  configurations: {
-    id: number;
-    variation: string;
-    value: string;
-  }[];
+  configurations: ProductConfiguration[];
   dicounts: string[];
-  images: {
-    id: number;
-    image: string;
-  }[];
+  images: ProductImage[];
+  infos: ProductInfo[];
 }
 
 interface Props {
