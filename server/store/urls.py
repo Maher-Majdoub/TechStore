@@ -23,11 +23,13 @@ products_router = routers.NestedDefaultRouter(router, 'products', lookup='produc
 products_router.register('configurations', ProductConfigurationViewSet, 'product-configurations')
 products_router.register('discounts', ProductDiscountViewSet, 'product-discounts')
 products_router.register('images', ProductImageViewSet, 'product-images')
+products_router.register('infos', ProductInfoViewSet, 'product-infos')
 
 sub_categories_products_router = routers.NestedDefaultRouter(sub_categories_router, 'products', lookup='product')
 sub_categories_products_router.register('configurations', ProductConfigurationViewSet, 'product-configurations')
 sub_categories_products_router.register('discounts', ProductDiscountViewSet, 'product-discounts')
 sub_categories_products_router.register('images', ProductImageViewSet, 'product-images')
+sub_categories_products_router.register('infos', ProductInfoViewSet, 'product-infos')
 
 carts_router = routers.NestedDefaultRouter(router, 'carts', lookup='cart')
 carts_router.register('items', CartItemViewSet, 'cart-items')

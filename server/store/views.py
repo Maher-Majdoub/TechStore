@@ -13,14 +13,14 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .pagination import NoLimitPagination
 from .models import (
     Category, Variation, ProductConfiguration, Discount, 
-    ProductImage, Product,CartItem, Cart, Adress, 
+    ProductImage, Product,CartItem, Cart, Adress, ProductInfo,
     Customer, OrderItem, Order, Compare, Wish, ProductTag, Tag
 )
 from .serializers import (
     CategorySerializer, VariationSerializer, ProductConfigurationSerializer, DiscountSerializer,
     ProductImageSerializer, ProductSerializer, CartItemSerializer, CartSerializer, AdressSerializer,
     CustomerSerializer, OrderItemSerializer, OrderSerializer, CompareSerializer, WishSerializer,
-    ProductDiscountSerializer, GetCartItemSerializer,
+    ProductDiscountSerializer, GetCartItemSerializer, ProductInfoSerializer,
     GetCompareSerializer, GetOrderSerializer, GetWishSerializer, TagSerializer, ProductTagSerializer
 )
 
@@ -72,6 +72,14 @@ class ProductConfigurationViewSet(ModelViewSet):
         return super().list(request, *args, **kwargs)
 
 
+class ProductInfoViewSet(ModelViewSet):
+    serializer_class = ProductInfoSerializer
+    http_method_names = ['get', 'options']
+
+    def get_queryset(self):
+        return ProductInfo.objects.filter(product__slug=self.kwargs['product_slug'])
+
+
 class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
     http_method_names = ['get', 'options']
@@ -82,7 +90,7 @@ class ProductViewSet(ModelViewSet):
     lookup_field = 'slug'
 
     def get_queryset(self):
-        query = Product.objects.prefetch_related('category', 'configurations__variation', 'discounts', 'images')
+        query = Product.objects.prefetch_related('category', 'configurations__variation', 'discounts', 'images', 'infos')
         tag_name = self.request.GET.get('tag')
         if tag_name:
             return query.filter(tags__tag__name=tag_name)

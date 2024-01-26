@@ -68,6 +68,14 @@ class ProductTag(models.Model):
     def __str__(self) -> str:
         return f'{self.tag.name}: {self.product.name}'
 
+
+class ProductInfo(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="infos")
+    image =  models.ImageField(upload_to='store/images/products/infos', validators=[validate_file_size])
+    title = models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
+
+
 class Discount(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='discounts')
     rate = models.DecimalField(max_digits=3, decimal_places=2)

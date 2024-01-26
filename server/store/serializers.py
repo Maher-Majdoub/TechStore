@@ -5,7 +5,8 @@ from rest_framework.validators import ValidationError
 from .models import (
     Category, Variation, ProductConfiguration, Discount, 
     ProductImage, Product,CartItem, Cart, Adress, 
-    Customer, OrderItem, Order, Compare, Wish, ProductTag, Tag
+    Customer, OrderItem, Order, Compare, Wish, ProductTag, Tag,
+    ProductInfo
 )
 from .tasks import notify_customer
 from core.serializers import UserSerializer
@@ -59,11 +60,17 @@ class ProductImageSerializer(serializers.ModelSerializer):
         fields = ['id', 'image']
 
 
+class ProductInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductInfo
+        fields = ['id', 'title', 'description', 'image']
+
 class ProductSerializer(serializers.ModelSerializer):
     category = SimpleSubCategorySerializer()
     configurations = ProductConfigurationSerializer(many=True)
     discounts = ProductDiscountSerializer(many=True)
     images = ProductImageSerializer(many=True)
+    infos = ProductInfoSerializer(many=True)
     class Meta:
         model = Product
         fields = [
@@ -78,6 +85,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'configurations',
             'discounts',
             'images',
+            'infos'
         ]
 
 

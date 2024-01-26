@@ -3,7 +3,10 @@ from django.contrib.admin import ModelAdmin as BaseModelAdmin, TabularInline as 
 from django.db.models import Q
 from django.utils.html import format_html
 from rangefilter.filters import NumericRangeFilter
-from .models import Product, Category, Variation, ProductConfiguration, Discount, ProductImage, Tag, ProductTag
+from .models import ( 
+    Product, Category, Variation, ProductConfiguration,
+    Discount, ProductImage, Tag, ProductTag, ProductInfo
+)
 
 
 class ModelAdmin(BaseModelAdmin):
@@ -97,7 +100,6 @@ class DiscountInline(TabularInline):
     model = Discount
 
     def save_model(self, request, obj, form, change):
-        print('holla')
         super().save_model(request, obj, form, change)
 
 class ImageInline(TabularInline):
@@ -113,6 +115,11 @@ class ImageInline(TabularInline):
             'all': ['store/style.css'],
         }
 
+
+class InfoInline(TabularInline):
+    model = ProductInfo
+
+
 @admin.register(Product)
 class ProductAdmin(ModelAdmin):
     list_per_page = 10
@@ -121,7 +128,7 @@ class ProductAdmin(ModelAdmin):
         ('unit_price', NumericRangeFilter),
         ('inventory', NumericRangeFilter),
     ]
-    inlines = [ConfigurationInline, DiscountInline, ImageInline]
+    inlines = [ConfigurationInline, DiscountInline, ImageInline, InfoInline]
 
     def save_model(self, request, obj: Product, form, change) -> None:
         if Category.objects.filter(parent_category_id=obj.category.pk).exists():
