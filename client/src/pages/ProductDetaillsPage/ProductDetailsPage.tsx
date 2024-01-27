@@ -10,6 +10,7 @@ import ActionBtn from "../../components/ActionBtn/ActionBtn";
 import useCart from "../../hooks/useCart";
 import SupportSection from "../../components/SupportSection/SupportSection";
 import ProductInfoSection from "../../components/ProductInfoSection/ProductInfoSection";
+import LinksSection from "../../components/LinksSection/LinksSection";
 
 const ProductDetailsPage = () => {
   const { productSlug } = useParams();
@@ -153,6 +154,7 @@ const ProductDetailsPage = () => {
           </div>
           <ProductInfoSection infos={product.infos} />
           <SupportSection />
+          <LinksSection />
         </main>
       )}
     </>
