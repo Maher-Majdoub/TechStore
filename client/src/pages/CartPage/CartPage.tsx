@@ -4,6 +4,7 @@ import useCart from "../../hooks/useCart";
 import styles from "./CartPage.module.css";
 import CartSummary from "../../components/CartSummary/CartSummary";
 import Navigator from "../../components/Navigator/Navigator";
+import LinksSection from "../../components/LinksSection/LinksSection";
 
 const CartPage = () => {
   const { cart, isLoading, isError } = useCart();
@@ -14,10 +15,10 @@ const CartPage = () => {
   }
 
   return (
-    <main className={styles.container + " container"}>
+    <main className={styles.container}>
       {isLoading && <p>isLoading...</p>}
       {cart && (
-        <>
+        <div className="container">
           <Navigator />
           <h2 className={styles.title}>Shopping Cart</h2>
           <div className={styles.flxBx}>
@@ -42,8 +43,11 @@ const CartPage = () => {
             </div>
             <CartSummary />
           </div>
-        </>
+        </div>
       )}
+      <div>
+        <LinksSection />
+      </div>
     </main>
   );
 };

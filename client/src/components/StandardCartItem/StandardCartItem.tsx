@@ -19,7 +19,7 @@ const StandardCartItem = ({ item, onDelete }: Props) => {
             alt={item.product.name + " image"}
             className={styles.prodImage}
           />
-          <p className={styles.prodName}>{item.product.name}</p>
+          <p className={styles.prodName}>{item.product.description}</p>
         </div>
       </td>
       <td className={styles.td}>${item.product.unit_price}</td>
