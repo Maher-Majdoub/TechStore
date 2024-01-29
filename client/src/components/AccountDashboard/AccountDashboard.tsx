@@ -3,7 +3,9 @@ import styles from "./AccountDashboard.module.css";
 
 const AccountDashboard = () => {
   const { customer } = useCustomer();
-  let hasDefaultShippingAdress = false;
+  const defaultShippingAdress = customer?.adresses.find(
+    (adress) => adress.is_default
+  );
   return (
     <>
       {customer && (
@@ -42,13 +44,9 @@ const AccountDashboard = () => {
               </div>
               <div className={styles.sectionContainer}>
                 <h4>Default Shipping Address</h4>
-                {customer.adresses.map((address) => {
-                  if (address.is_default) {
-                    hasDefaultShippingAdress = true;
-                    return <span>{address.city}</span>;
-                  }
-                })}
-                {!hasDefaultShippingAdress && (
+                {defaultShippingAdress ? (
+                  <span>{defaultShippingAdress.description}</span>
+                ) : (
                   <span>You have not set a default shipping address.</span>
                 )}
                 <span className={styles.link}>Edit Address</span>
