@@ -85,7 +85,7 @@ class ProductViewSet(ModelViewSet):
     http_method_names = ['get', 'options']
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ['reference', 'name']
-    search_fields = ['reference', 'name']
+    search_fields = ['reference', 'name', 'category__name', 'category__parent_category__name']
     ordering_fileds = ['unit_price']
     lookup_field = 'slug'
 
