@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import useProducts from "../../hooks/useProducts";
 import ProductCard from "../../components/ProductCard/ProductCard";
@@ -12,6 +12,8 @@ import {
 } from "react-icons/fa";
 
 const ProductsPage = () => {
+  const location = useLocation();
+  const search = new URLSearchParams(location.search).get("search");
   const { categorySlug, SubCategorySlug } = useParams();
   const [sortDirectionAsc, setSortDirectionAsc] = useState(true);
   const [sortBy, setSortBy] = useState<null | "name" | "unit_price">(
@@ -27,6 +29,7 @@ const ProductsPage = () => {
       params: {
         page: page,
         ordering: `${!sortDirectionAsc ? "-" : ""}${sortBy}`,
+        search: search,
       },
     },
   });

@@ -1,12 +1,13 @@
-import useCategories from "../../hooks/useCategories";
 import { IoSearch } from "react-icons/io5";
 import styles from "./SeachBar.module.css";
+import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
 const SearchBar = () => {
-  const { data } = useCategories();
-
+  const navigate = useNavigate();
+  const searchRef = useRef<HTMLInputElement>(null);
   const handleSubmition = () => {
-    console.log("search");
+    navigate(`/products?search=${searchRef.current?.value}`);
   };
 
   return (
@@ -18,22 +19,11 @@ const SearchBar = () => {
       className={styles.form}
     >
       <input
+        ref={searchRef}
         type="text"
         placeholder="Search for product..."
         className={styles.input}
       />
-      <select name="category" id="category_selector" className={styles.select}>
-        <option value={""}>All Categories</option>
-        {data?.results.map((parent_category) => (
-          <optgroup key={parent_category.id} label={parent_category.name}>
-            {parent_category.sub_categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </optgroup>
-        ))}
-      </select>
       <button className={styles.btn}>
         <span>
           <IoSearch />

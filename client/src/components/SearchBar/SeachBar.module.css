@@ -17,11 +17,6 @@
     border-right: 1px solid var(--color-10);
 }
 
-.select {
-    height: 100%;
-    margin: 0 5px;
-}
-
 .btn {
     display: flex;
     align-items: center;
