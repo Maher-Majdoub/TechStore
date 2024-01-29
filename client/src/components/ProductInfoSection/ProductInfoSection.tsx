@@ -12,7 +12,7 @@ const ProductInfoSection = ({ infos }: Props) => {
     <div className={styles.container + " container"}>
       <Swiper pagination modules={[Pagination]}>
         {infos.map((info) => (
-          <SwiperSlide>
+          <SwiperSlide key={info.id}>
             <div className={styles.content}>
               <div className={styles.notes}>
                 <h3 className={styles.title}>{info.title}</h3>
