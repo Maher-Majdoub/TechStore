@@ -5,7 +5,7 @@ import AddressDisplayer from "./AddressDisplayer";
 import styles from "./styles.module.css";
 
 const AddressBook = () => {
-  const { customer } = useCustomer();
+  const { customer, deleteAddress } = useCustomer();
   const defaultShippingAddress = customer?.addresses.find(
     (address) => address.is_default_shipping_address
   );
@@ -58,7 +58,12 @@ const AddressBook = () => {
                     <td>{address.city}</td>
                     <td>{address.postal_code}</td>
                     <td className={styles.actions}>
-                      <ActionBtn action="delete" onClick={() => {}} />
+                      <ActionBtn
+                        action="delete"
+                        onClick={() => {
+                          deleteAddress({ addressId: address.id || -1 });
+                        }}
+                      />
                       <ActionBtn action="modify" onClick={() => {}} />
                     </td>
                   </tr>

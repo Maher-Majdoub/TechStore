@@ -61,7 +61,10 @@ const useCustomer = () => {
       isLoading: false,
       isError: true,
       addAddress: () => {},
+      deleteAddress: () => {},
     };
+
+  const AUTHORIZATION = `JWT ${access_token}`;
 
   const {
     data: customer,
@@ -83,8 +86,8 @@ const useCustomer = () => {
       console.log(address);
 
       return apiClient
-        .post("xstore/customers/me/addresses/", address, {
-          headers: { Authorization: `JWT ${access_token}` },
+        .post("store/customers/me/addresses/", address, {
+          headers: { Authorization: AUTHORIZATION },
         })
         .then((res) => res.data);
     },
@@ -122,11 +125,45 @@ const useCustomer = () => {
     },
   });
 
+  const DeleteAddressMutation = useMutation<
+    {},
+    Error,
+    { addressId: number },
+    Customer
+  >({
+    mutationFn: ({ addressId }) =>
+      apiClient
+        .delete(`store/customers/me/addresses/${addressId}`, {
+          headers: { Authorization: AUTHORIZATION },
+        })
+        .then((res) => res.data),
+
+    onMutate: ({ addressId }) => {
+      const oldCustomer = queryClient.getQueryData<Customer>(["customer"]);
+      queryClient.setQueryData<Customer>(["customer"], (oldCustomer) => {
+        if (oldCustomer === undefined) return undefined;
+        return {
+          ...oldCustomer,
+          addresses: oldCustomer.addresses.filter(
+            (address) => address.id !== addressId
+          ),
+        };
+      });
+      return oldCustomer;
+    },
+
+    onError: (error, _, oldCustomer) => {
+      console.error(error);
+      queryClient.setQueryData<Customer>(["customer"], oldCustomer);
+    },
+  });
+
   return {
     customer,
     isLoading,
     isError,
     addAddress: AddAddressMutation.mutate,
+    deleteAddress: DeleteAddressMutation.mutate,
   };
 };
 
