@@ -1,0 +1,10 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+.form > input {
+    background-color: var(--color-13);
+    padding: 5px;
+}

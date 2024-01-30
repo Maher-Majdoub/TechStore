@@ -1,7 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import ApiService from "../services/apiService";
 import { Product } from "./useProducts";
 import useAuthorization from "./useAuthorization";
+import apiClient from "../services/apiClient";
 
 interface User {
   id: number;
@@ -53,7 +54,13 @@ const apiService = new ApiService<Customer>("customers");
 const useCustomer = () => {
   const access_token = useAuthorization();
 
-  if (!access_token) return { customer: null, isLoading: false, isError: true };
+  if (!access_token)
+    return {
+      customer: null,
+      isLoading: false,
+      isError: true,
+      addAddress: () => {},
+    };
 
   const {
     data: customer,
@@ -64,12 +71,29 @@ const useCustomer = () => {
     queryFn: () =>
       apiService.get("me", {
         headers: {
-          Authorization: access_token && `JWT ${access_token}`,
+          Authorization: `JWT ${access_token}`,
         },
       }),
     staleTime: 60 * 60 * 1000, // 1h
   });
-  return { customer, isLoading, isError };
+
+  const AddAddressMutation = useMutation<Address, Error, Address>({
+    mutationFn: (address) => {
+      console.log(address);
+
+      return apiClient.post("store/customers/me/addresses/", address, {
+        headers: { Authorization: `JWT ${access_token}` },
+      });
+    },
+    onSuccess: () => console.log("okkk"),
+  });
+
+  return {
+    customer,
+    isLoading,
+    isError,
+    addAddress: AddAddressMutation.mutate,
+  };
 };
 
 export default useCustomer;
