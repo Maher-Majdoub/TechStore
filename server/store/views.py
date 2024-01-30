@@ -191,11 +191,15 @@ class AddressViewSet(ModelViewSet):
         return super().create(request, *args, **kwargs)
 
     def get_queryset(self):
+        if self.kwargs['customer_pk'] == 'me':
+            customer = Customer.objects.only('id').get(user_id=self.request.user.id)
+            self.kwargs['customer_pk'] = customer.pk
+
         return Address.objects.filter(customer=self.kwargs['customer_pk'])
     
     def get_serializer_context(self):
         return { **super().get_serializer_context(), 'customer_id': self.kwargs['customer_pk']}
-    
+
     def list(self, request, *args, **kwargs):
         if kwargs['customer_pk'] == 'me':
             customer = Customer.objects.only('id').get(user_id=request.user.id)
@@ -250,6 +254,10 @@ class OrderViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
+        if self.kwargs['customer_pk'] == 'me':
+            customer = Customer.objects.only('id').get(user_id=self.request.user.id)
+            self.kwargs['customer_pk'] = customer.pk
+            
         return Order.objects.filter(customer=self.kwargs['customer_pk']) \
                             .prefetch_related('customer', 'items__product')
 
