@@ -3,9 +3,13 @@ import styles from "./AccountDashboard.module.css";
 
 const AccountDashboard = () => {
   const { customer } = useCustomer();
-  const defaultShippingAdress = customer?.adresses.find(
-    (adress) => adress.is_default
+  const defaultShippingAddress = customer?.addresses.find(
+    (address) => address.is_default_shipping_address
   );
+  const defaultBillingAdress = customer?.addresses.find(
+    (address) => address.is_default_billing_address
+  );
+
   return (
     <>
       {customer && (
@@ -39,16 +43,20 @@ const AccountDashboard = () => {
             <div className={styles.sectionsContainer}>
               <div className={styles.sectionContainer}>
                 <h4>Default Billing Address</h4>
-                <span>You have not set a default billing address.</span>
+                <span>
+                  {defaultBillingAdress
+                    ? defaultBillingAdress.street_number
+                    : "You have not set a default billing address."}
+                </span>
                 <span className={styles.link}>Edit Address</span>
               </div>
               <div className={styles.sectionContainer}>
                 <h4>Default Shipping Address</h4>
-                {defaultShippingAdress ? (
-                  <span>{defaultShippingAdress.description}</span>
-                ) : (
-                  <span>You have not set a default shipping address.</span>
-                )}
+                <span>
+                  {defaultShippingAddress
+                    ? defaultShippingAddress.street_number
+                    : "You have not set a default shipping address."}
+                </span>
                 <span className={styles.link}>Edit Address</span>
               </div>
             </div>

@@ -11,13 +11,22 @@ interface User {
   last_name: string;
 }
 
-interface Adress {
+interface Address {
   id: number;
-  is_default: boolean;
+  first_name: string;
+  last_name: string;
+  company: string;
+  phone_number: string;
+  addresss: string;
+  country: string;
   state: string;
   city: string;
+  region: string;
+  street_number: number;
   postal_code: number;
   description: string;
+  is_default_billing_address: boolean;
+  is_default_shipping_address: boolean;
 }
 
 interface Wish {
@@ -34,7 +43,7 @@ export interface Customer {
   phone: string;
   birth_date: string;
   membership: string;
-  adresses: Adress[];
+  addresses: Address[];
   wish_list: Wish[];
   compare_list: Compare[];
 }
