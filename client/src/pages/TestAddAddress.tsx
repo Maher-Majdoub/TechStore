@@ -22,7 +22,6 @@ const TestAddAddress = () => {
 
   const handleSubmition = () => {
     const address: Address = {
-      id: 1,
       address: addressRef.current?.value || "",
       city: cityRef.current?.value || "",
       company: companyRef.current?.value || "",

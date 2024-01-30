@@ -15,7 +15,7 @@ const AddressDisplayer = ({ address, name }: Props) => {
           <span>
             {address.first_name} {address.last_name}
           </span>
-          <span>{address.addresss}</span>
+          <span>{address.address}</span>
           <span>
             {address.state}, {address.postal_code}
           </span>

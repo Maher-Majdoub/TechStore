@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import ApiService from "../services/apiService";
 import { Product } from "./useProducts";
 import useAuthorization from "./useAuthorization";
@@ -13,7 +13,7 @@ interface User {
 }
 
 export interface Address {
-  id: number;
+  id?: number;
   first_name: string;
   last_name: string;
   company: string;
@@ -53,6 +53,7 @@ const apiService = new ApiService<Customer>("customers");
 
 const useCustomer = () => {
   const access_token = useAuthorization();
+  const queryClient = useQueryClient();
 
   if (!access_token)
     return {
@@ -81,11 +82,44 @@ const useCustomer = () => {
     mutationFn: (address) => {
       console.log(address);
 
-      return apiClient.post("store/customers/me/addresses/", address, {
-        headers: { Authorization: `JWT ${access_token}` },
+      return apiClient
+        .post("xstore/customers/me/addresses/", address, {
+          headers: { Authorization: `JWT ${access_token}` },
+        })
+        .then((res) => res.data);
+    },
+
+    onMutate: (address) => {
+      const oldCustomer = queryClient.getQueryData<Customer>(["customer"]);
+      queryClient.setQueryData<Customer>(["customer"], (oldCustomer) => {
+        if (oldCustomer === undefined) return undefined;
+        return {
+          ...oldCustomer,
+          addresses: [...oldCustomer.addresses, { ...address, id: -1 }],
+        };
+      });
+      return oldCustomer;
+    },
+
+    onSuccess: (address) => {
+      queryClient.setQueryData<Customer>(["customer"], (oldCustomer) => {
+        if (oldCustomer === undefined) return undefined;
+        const newAddresses = [] as Address[];
+        oldCustomer.addresses.forEach((a) => {
+          if (a.id === -1) newAddresses.push(address);
+          else newAddresses.push(a);
+        });
+        return {
+          ...oldCustomer,
+          addresses: newAddresses,
+        };
       });
     },
-    onSuccess: () => console.log("okkk"),
+
+    onError: (error, _, oldCustomer) => {
+      console.log(error);
+      queryClient.setQueryData(["customer"], () => oldCustomer);
+    },
   });
 
   return {
