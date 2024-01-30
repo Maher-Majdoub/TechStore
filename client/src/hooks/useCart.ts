@@ -102,10 +102,8 @@ const useCart = () => {
     },
 
     onError(error, _, oldCart) {
-      queryClient.setQueryData(["cart"], () => {
-        console.error(error);
-        queryClient.setQueryData(["cart"], () => oldCart);
-      });
+      console.error(error);
+      queryClient.setQueryData(["cart"], () => oldCart);
     },
   });
 
