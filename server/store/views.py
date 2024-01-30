@@ -13,15 +13,15 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .pagination import NoLimitPagination
 from .models import (
     Category, Variation, ProductConfiguration, Discount, 
-    ProductImage, Product,CartItem, Cart, Adress, ProductInfo,
-    Customer, OrderItem, Order, Compare, Wish, ProductTag, Tag
+    ProductImage, Product,CartItem, Cart, Address, ProductInfo,
+    Customer, OrderItem, Order, Compare, Wish, ProductTag, Tag,
 )
 from .serializers import (
     CategorySerializer, VariationSerializer, ProductConfigurationSerializer, DiscountSerializer,
-    ProductImageSerializer, ProductSerializer, CartItemSerializer, CartSerializer, AdressSerializer,
+    ProductImageSerializer, ProductSerializer, CartItemSerializer, CartSerializer, AddressSerializer,
     CustomerSerializer, OrderItemSerializer, OrderSerializer, CompareSerializer, WishSerializer,
     ProductDiscountSerializer, GetCartItemSerializer, ProductInfoSerializer,
-    GetCompareSerializer, GetOrderSerializer, GetWishSerializer, TagSerializer, ProductTagSerializer
+    GetCompareSerializer, GetOrderSerializer, GetWishSerializer, TagSerializer, ProductTagSerializer,
 )
 
 
@@ -180,8 +180,8 @@ class CartItemViewSet(ModelViewSet):
         return super().list(request, *args, **kwargs)
     
 
-class AdressViewSet(ModelViewSet):
-    serializer_class = AdressSerializer
+class AddressViewSet(ModelViewSet):
+    serializer_class = AddressSerializer
     permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
@@ -191,7 +191,7 @@ class AdressViewSet(ModelViewSet):
         return super().create(request, *args, **kwargs)
 
     def get_queryset(self):
-        return Adress.objects.filter(customer=self.kwargs['customer_pk'])
+        return Address.objects.filter(customer=self.kwargs['customer_pk'])
     
     def get_serializer_context(self):
         return { **super().get_serializer_context(), 'customer_id': self.kwargs['customer_pk']}
@@ -214,7 +214,7 @@ class CustomerViewSet(ModelViewSet):
     def get_related_fields(self):
         return [
             'user',
-            'adresses',
+            'addresses',
             'wish_list__product__category__parent_category',
             'wish_list__product__images',
             'wish_list__product__configurations__variation',
@@ -250,7 +250,8 @@ class OrderViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Order.objects.filter(customer=self.kwargs['customer_pk']).prefetch_related('items__product')
+        return Order.objects.filter(customer=self.kwargs['customer_pk']) \
+                            .prefetch_related('customer', 'items__product')
 
     def get_serializer_class(self):
         return GetOrderSerializer if  self.request.method == 'GET' else OrderSerializer

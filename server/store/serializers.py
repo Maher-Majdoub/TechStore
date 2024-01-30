@@ -4,7 +4,7 @@ from rest_framework import serializers
 from rest_framework.validators import ValidationError
 from .models import (
     Category, Variation, ProductConfiguration, Discount, 
-    ProductImage, Product,CartItem, Cart, Adress, 
+    ProductImage, Product,CartItem, Cart, Address, 
     Customer, OrderItem, Order, Compare, Wish, ProductTag, Tag,
     ProductInfo
 )
@@ -89,6 +89,18 @@ class ProductSerializer(serializers.ModelSerializer):
         ]
 
 
+class SimpleProductSerializer(ProductSerializer):
+    class Meta(ProductSerializer.Meta):
+        fields = [
+            'id',
+            'name', 
+            'slug',
+            'reference', 
+            'description', 
+            'unit_price', 
+        ]
+
+
 class TagSerializer(serializers.ModelSerializer):
     # products = ProductSerializer(many=True)
     class Meta:
@@ -141,27 +153,37 @@ class CartSerializer(serializers.ModelSerializer):
         fields = ['id', 'items']
 
 
-class AdressSerializer(serializers.ModelSerializer):
+class AddressSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Adress
+        model = Address
         fields = [
             'id',
-            'is_default',
+            'first_name',
+            'last_name',
+            'company',
+            'phone_number',
+            'address',
+            'country',
             'state',
             'city',
+            'region',
             'street_number',
             'postal_code',
             'description',
+            'is_default_billing_address',
+            'is_default_shipping_address'
         ]
 
     def create(self, validated_data):
-        if validated_data['is_default']:
-            Adress.objects.filter(customer=self.context['customer_id']).update(is_default=False)
-        return Adress.objects.create(customer=self.context['customer_id'], **validated_data)
+        if validated_data['is_default_billing_address']:
+            Address.objects.filter(customer=self.context['customer_id']).update(is_default_billing_address=False)
+        if validated_data['is_default_shipping_address']:
+            Address.objects.filter(customer=self.context['customer_id']).update(is_default_shipping_address=False)
+        return Address.objects.create(customer=self.context['customer_id'], **validated_data)
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    product = ProductSerializer(read_only=True)
+    product = SimpleProductSerializer(read_only=True)
     class Meta:
         model = OrderItem
         fields = [
@@ -176,16 +198,19 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 class GetOrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
+    shipping_address = AddressSerializer()
+    billing_address = AddressSerializer()
+
     class Meta:
         model = Order
         fields = [
             'id', 
-            'customer_id',
             'created_at',
             'status',
             'payment_method',
             'payment_status',
-            'shipping_adress',
+            'billing_address',
+            'shipping_address',
             'shipping_method',
             'items',
         ]
@@ -230,7 +255,7 @@ class GetCompareSerializer(CompareSerializer):
 class CustomerSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     membership = serializers.CharField(read_only=True)
-    adresses = AdressSerializer(many=True, read_only=True)
+    addresses = AddressSerializer(many=True, read_only=True)
     wish_list = GetWishSerializer(many=True, read_only=True)
     compare_list = GetCompareSerializer(many=True, read_only=True)
 
@@ -242,7 +267,7 @@ class CustomerSerializer(serializers.ModelSerializer):
             'phone', 
             'birth_date', 
             'membership', 
-            'adresses',
+            'addresses',
             'wish_list',
             'compare_list'
         ]
@@ -254,8 +279,9 @@ class OrderSerializer(GetOrderSerializer):
     class Meta(GetOrderSerializer.Meta):
         fields = [
             'cart_id',
+            'billing_address',
             'payment_method',
-            'shipping_adress',
+            'shipping_address',
             'shipping_method'
         ]
 
@@ -275,13 +301,15 @@ class OrderSerializer(GetOrderSerializer):
         cart_id = self.validated_data['cart_id']
         customer_id = self.context['customer'].id
         payment_method = self.validated_data['payment_method']
-        shipping_adress = self.validated_data['shipping_adress']
+        billing_address = self.validated_data['billing_address']
+        shipping_address = self.validated_data['shipping_address']
         shipping_method = self.validated_data['shipping_method']
 
         order = Order.objects.create(
             customer_id = customer_id,
             payment_method = payment_method,
-            shipping_adress = shipping_adress,
+            billing_address = billing_address,
+            shipping_address = shipping_address,
             shipping_method = shipping_method,
         )
 
@@ -317,14 +345,15 @@ class OrderSerializer(GetOrderSerializer):
         OrderItem.objects.bulk_create(order_items)
         Cart.objects.get(pk=cart_id).delete()
 
-        notify_customer.delay(
-            user = UserSerializer(self.context['user']).data,
-            customer = CustomerSerializer(self.context['customer']).data,
-            order = GetOrderSerializer(order).data,
-            total_price = total_price,
-            order_items = [OrderItemSerializer(order_item).data for order_item in order_items],
-            shipping_adress = AdressSerializer(order.shipping_adress).data,
-            email = self.context['user'].email
-        )
+        # notify_customer.delay(
+        #     user = UserSerializer(self.context['user']).data,
+        #     customer = CustomerSerializer(self.context['customer']).data,
+        #     order = GetOrderSerializer(order).data,
+        #     total_price = total_price,
+        #     order_items = [OrderItemSerializer(order_item).data for order_item in order_items],
+        #     #billing adress
+        #     shipping_address = AddressSerializer(order.shipping_address).data,
+        #     email = self.context['user'].email
+        # )
         
         return order

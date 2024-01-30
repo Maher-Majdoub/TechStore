@@ -3,7 +3,7 @@ from templated_mail.mail import BaseEmailMessage
 from celery import shared_task
 
 @shared_task
-def notify_customer(user, customer, order, total_price, order_items, shipping_adress, email):
+def notify_customer(user, customer, order, total_price, order_items, shipping_address, email):
     try:
         message = BaseEmailMessage(
             template_name = 'emails/order_confirm.html',
@@ -12,7 +12,7 @@ def notify_customer(user, customer, order, total_price, order_items, shipping_ad
                 'customer': customer,
                 'order': order,
                 'total_price': total_price,
-                'shipping_adress': shipping_adress,
+                'shipping_adress': shipping_address,
                 'order_items': order_items,
             }
         )

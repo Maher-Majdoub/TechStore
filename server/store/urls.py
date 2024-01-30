@@ -35,7 +35,7 @@ carts_router = routers.NestedDefaultRouter(router, 'carts', lookup='cart')
 carts_router.register('items', CartItemViewSet, 'cart-items')
 
 customers_router = routers.NestedDefaultRouter(router, 'customers', lookup='customer')
-customers_router.register('adresses', AdressViewSet, 'customer-adresses')
+customers_router.register('addresses', AddressViewSet, 'customer-addresses')
 customers_router.register('orders', OrderViewSet, 'customer-orders')
 customers_router.register('wishlist', WishViewSet, 'customer-wishlist')
 customers_router.register('comparelist', CompareViewSet, 'customer-comparelist')

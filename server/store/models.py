@@ -118,15 +118,23 @@ class Customer(models.Model):
         return f'{self.user.first_name} {self.user.last_name}'
 
 
-class Adress(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name= 'adresses')
-    is_default = models.BooleanField(default=False)
+class Address(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='addresses')
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    company = models.CharField(max_length=255, null=True, blank=True)
+    phone_number = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    country = models.CharField(max_length=255)
     state = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     region = models.CharField(max_length=255)
     street_number = models.CharField(max_length=255)
     postal_code = models.SmallIntegerField()
     description = models.TextField(null=True)
+    is_default_billing_address = models.BooleanField(default=False)
+    is_default_shipping_address = models.BooleanField(default=False)
+
 
     def __str__(self) -> str:
         return self.state + ' ' + self.city + self.region + ' ' + self.street_number
@@ -162,9 +170,10 @@ class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=3, choices=ORDER_STATUS_CHOICES, default=ORDER_STATUS_CHOICES[0][0])
+    billing_address = models.ForeignKey(Address, on_delete=models.PROTECT, related_name='billing_orders', null=True)
     payment_method = models.CharField(max_length=3, choices=PAYMENT_METHOD_CHOICES, default=PAYMENT_METHOD_CHOICES[0][0])
     payment_status = models.CharField(max_length=1, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_STATUS_CHOICES[0][0])
-    shipping_adress = models.ForeignKey(Adress, on_delete=models.PROTECT)
+    shipping_address = models.ForeignKey(Address, on_delete=models.PROTECT, related_name='shipping_orders', null=True)
     shipping_method = models.CharField(max_length=2, choices=SHIPING_METHOD_CHOICES, default=SHIPING_METHOD_CHOICES[0][0])
 
 class OrderItem(models.Model):
