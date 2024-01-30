@@ -11,13 +11,13 @@ interface User {
   last_name: string;
 }
 
-interface Address {
+export interface Address {
   id: number;
   first_name: string;
   last_name: string;
   company: string;
   phone_number: string;
-  addresss: string;
+  address: string;
   country: string;
   state: string;
   city: string;

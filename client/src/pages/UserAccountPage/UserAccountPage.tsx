@@ -1,13 +1,13 @@
 import styles from "./UserAccountPage.module.css";
 import { useState } from "react";
 import AccountInformation from "../../components/AccountInformation/AccountInformation";
-import AccountDashboard from "../../components/AccountDashboard/AccountDashboard";
-import Addresses from "../../components/Addresses/Addresses";
+import AccountDashboard from "../../components/UserPageComponents/AccountDashboard";
 import Ordres from "../../components/Orders/Ordres";
 import WishList from "../../components/WishList/WishList";
 import CompareList from "../../components/CompareList/CompareList";
 import Navigator from "../../components/Navigator/Navigator";
 import LinksSection from "../../components/LinksSection/LinksSection";
+import AddressBook from "../../components/UserPageComponents/AddressBook";
 
 enum Section {
   dashBoard = "My Dashboard",
@@ -93,7 +93,7 @@ const UserAccountPage = () => {
             <div className={styles.section}>
               {selectedSection === Section.dashBoard && <AccountDashboard />}
               {selectedSection === Section.info && <AccountInformation />}
-              {selectedSection === Section.addresses && <Addresses />}
+              {selectedSection === Section.addresses && <AddressBook />}
               {selectedSection === Section.orders && <Ordres />}
               {selectedSection === Section.wishList && <WishList />}
               {selectedSection === Section.compareList && <CompareList />}
