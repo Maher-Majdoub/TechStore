@@ -6,7 +6,7 @@ const AccountDashboard = () => {
   const defaultShippingAddress = customer?.addresses.find(
     (address) => address.is_default_shipping_address
   );
-  const defaultBillingAdress = customer?.addresses.find(
+  const defaultBillingAddress = customer?.addresses.find(
     (address) => address.is_default_billing_address
   );
 
@@ -43,20 +43,44 @@ const AccountDashboard = () => {
             <div className={styles.sectionsContainer}>
               <div className={styles.sectionContainer}>
                 <h4>Default Billing Address</h4>
-                <span>
-                  {defaultBillingAdress
-                    ? defaultBillingAdress.street_number
-                    : "You have not set a default billing address."}
-                </span>
+                {defaultBillingAddress ? (
+                  <div className={styles.vFlxBx}>
+                    <span>
+                      {defaultBillingAddress.first_name}{" "}
+                      {defaultBillingAddress.last_name}
+                    </span>
+                    <span>{defaultBillingAddress.addresss}</span>
+                    <span>
+                      {defaultBillingAddress.state},{" "}
+                      {defaultBillingAddress.postal_code}
+                    </span>
+                    <span>{defaultBillingAddress.country}</span>
+                    <span>T: {defaultBillingAddress.phone_number}</span>
+                  </div>
+                ) : (
+                  <span>You have not set a default billing address.</span>
+                )}
                 <span className={styles.link}>Edit Address</span>
               </div>
               <div className={styles.sectionContainer}>
                 <h4>Default Shipping Address</h4>
-                <span>
-                  {defaultShippingAddress
-                    ? defaultShippingAddress.street_number
-                    : "You have not set a default shipping address."}
-                </span>
+                {defaultShippingAddress ? (
+                  <div className={styles.vFlxBx}>
+                    <span>
+                      {defaultShippingAddress.first_name}{" "}
+                      {defaultShippingAddress.last_name}
+                    </span>
+                    <span>{defaultShippingAddress.addresss}</span>
+                    <span>
+                      {defaultShippingAddress.state},{" "}
+                      {defaultShippingAddress.postal_code}
+                    </span>
+                    <span>{defaultShippingAddress.country}</span>
+                    <span>T: {defaultShippingAddress.phone_number}</span>
+                  </div>
+                ) : (
+                  <span>You have not set a default shipping address.</span>
+                )}
                 <span className={styles.link}>Edit Address</span>
               </div>
             </div>
