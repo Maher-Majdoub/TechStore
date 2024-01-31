@@ -4,11 +4,6 @@ import { Product } from "./useProducts";
 import useAuthorization from "./useAuthorization";
 import apiClient from "../services/apiClient";
 
-interface User {
-  id: number;
-  username: string;
-}
-
 export interface Address {
   id?: number;
   first_name: string;
@@ -37,7 +32,6 @@ interface Compare extends Wish {}
 
 export interface Customer {
   id: number;
-  user: User;
   first_name: string;
   last_name: string;
   email: string;

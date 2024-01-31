@@ -59,10 +59,6 @@ const AccountInformation = () => {
             </div>
             <div className={styles.infos}>
               <div className={styles.info}>
-                <span>User Name: </span>
-                <span>{customer.user.username}</span>
-              </div>
-              <div className={styles.info}>
                 <span>First Name: </span>
                 <span>{customer.first_name}</span>
               </div>
