@@ -110,7 +110,10 @@ class Customer(models.Model):
     ]
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    phone = models.CharField(max_length=255, null=True)
+    first_name = models.CharField(max_length=255, null=True, blank=True)
+    last_name = models.CharField(max_length=255, null=True, blank=True)
+    email = models.CharField(max_length=255, null=True, blank=True)
+    phone = models.CharField(max_length=255, null=True, blank=True)
     birth_date = models.DateField(null=True)
     membership = models.CharField(max_length=1, choices=MEMBERSHIP_CHOICES, default=MEMBERSHIP_CHOICES[0][0])
 

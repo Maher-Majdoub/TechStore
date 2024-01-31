@@ -1,10 +1,9 @@
 from django.contrib.auth.models import AbstractUser
-from django.db import models
 
 
 class User(AbstractUser):
-    email = models.EmailField(unique=True)
+    first_name = None
+    last_name = None
 
     def __str__(self) -> str:
-        return f'{self.first_name} {self.last_name}'
-    
+        return self.username
