@@ -134,7 +134,7 @@ class Address(models.Model):
     region = models.CharField(max_length=255)
     street_number = models.CharField(max_length=255)
     postal_code = models.SmallIntegerField()
-    description = models.TextField(null=True)
+    description = models.TextField(null=True, blank=True)
     is_default_billing_address = models.BooleanField(default=False)
     is_default_shipping_address = models.BooleanField(default=False)
 
