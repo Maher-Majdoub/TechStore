@@ -34,15 +34,15 @@ const AccountInformation = () => {
               </div>
               <div className={styles.info}>
                 <span>First Name: </span>
-                <span>{customer.user.first_name}</span>
+                <span>{customer.first_name}</span>
               </div>
               <div className={styles.info}>
                 <span>Last Name: </span>
-                <span>{customer.user.last_name}</span>
+                <span>{customer.last_name}</span>
               </div>
               <div className={styles.info}>
                 <span>Email: </span>
-                <span>{customer.user.email}</span>
+                <span>{customer.email}</span>
               </div>
               <div className={styles.info}>
                 <span>Phone: </span>
@@ -124,21 +124,15 @@ const AccountInformation = () => {
                   <div className={styles.inputGroups}>
                     <div className={styles.inputGroup}>
                       <span>First Name</span>
-                      <input
-                        type="text"
-                        defaultValue={customer.user.first_name}
-                      />
+                      <input type="text" defaultValue={customer.first_name} />
                     </div>
                     <div className={styles.inputGroup}>
                       <span>Last Name</span>
-                      <input
-                        type="text"
-                        defaultValue={customer.user.last_name}
-                      />
+                      <input type="text" defaultValue={customer.last_name} />
                     </div>
                     <div className={styles.inputGroup}>
                       <span>Email</span>
-                      <input type="text" defaultValue={customer.user.email} />
+                      <input type="text" defaultValue={customer.email} />
                     </div>
                     <div className={styles.inputGroup}>
                       <span>Phone</span>

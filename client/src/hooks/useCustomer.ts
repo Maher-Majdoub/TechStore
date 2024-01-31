@@ -7,9 +7,6 @@ import apiClient from "../services/apiClient";
 interface User {
   id: number;
   username: string;
-  email: string;
-  first_name: string;
-  last_name: string;
 }
 
 export interface Address {
@@ -41,6 +38,9 @@ interface Compare extends Wish {}
 export interface Customer {
   id: number;
   user: User;
+  first_name: string;
+  last_name: string;
+  email: string;
   phone: string;
   birth_date: string;
   membership: string;

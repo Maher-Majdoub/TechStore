@@ -26,8 +26,8 @@ const AccountDashboard = ({ displayAddressBook }: Props) => {
             <div className={styles.sectionsContainer}>
               <div className={styles.sectionContainer}>
                 <h4>Contact Information</h4>
-                <span>{`${customer.user.first_name} ${customer.user.last_name}`}</span>
-                <span>{customer.user.email}</span>
+                <span>{`${customer.first_name} ${customer.last_name}`}</span>
+                <span>{customer.email}</span>
                 <div className={styles.flxBx}>
                   <span className={styles.link}>Edit</span>
                   <span className={styles.link}>Change Password</span>
