@@ -63,6 +63,10 @@ const useCustomer = () => {
       addAddress: () => {},
       deleteAddress: () => {},
       editAddress: () => {},
+      changePassword: () => {},
+      isChangingPasswordPending: false,
+      isPasswordChangingError: false,
+      isPasswordChangingSuccess: false,
     };
 
   const AUTHORIZATION = `JWT ${access_token}`;
@@ -217,6 +221,25 @@ const useCustomer = () => {
     },
   });
 
+  const {
+    mutate: changePassword,
+    isSuccess: isChangingPasswordSuccess,
+    isPending: isChangingPasswordPending,
+    isError: isChangingPasswordError,
+  } = useMutation<{}, Error, { currentPassword: string; newPassword: string }>({
+    mutationFn: ({ currentPassword, newPassword }) =>
+      apiClient
+        .post(
+          "/auth/users/set_password/",
+          {
+            current_password: currentPassword,
+            new_password: newPassword,
+          },
+          { headers: { Authorization: AUTHORIZATION } }
+        )
+        .then((res) => res.data),
+  });
+
   return {
     customer,
     isLoading,
@@ -224,6 +247,10 @@ const useCustomer = () => {
     addAddress: AddAddressMutation.mutate,
     deleteAddress: DeleteAddressMutation.mutate,
     editAddress: EditAddressMutation.mutate,
+    changePassword,
+    isChangingPasswordSuccess,
+    isChangingPasswordPending,
+    isChangingPasswordError,
   };
 };
 

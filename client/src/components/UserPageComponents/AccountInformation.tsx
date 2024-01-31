@@ -3,7 +3,13 @@ import useCustomer from "../../hooks/useCustomer";
 import styles from "./styles.module.css";
 
 const AccountInformation = () => {
-  const { customer } = useCustomer();
+  const {
+    customer,
+    changePassword,
+    isChangingPasswordSuccess,
+    isChangingPasswordPending,
+    isChangingPasswordError,
+  } = useCustomer();
   const membershipVals: { [shortcut: string]: string } = {
     G: "Gold",
     S: "Silver",
@@ -16,8 +22,17 @@ const AccountInformation = () => {
   const newUserNameRef = useRef<HTMLInputElement>(null);
 
   const handleChangeUserName = () => {};
-  const handleChangePassword = () => {};
+  const handleChangePassword = () => {
+    if (oldPasswordRef.current && newPasswordRef.current)
+      changePassword({
+        currentPassword: oldPasswordRef.current.value,
+        newPassword: newPasswordRef.current.value,
+      });
+  };
   const handleChangePersonalInfos = () => {};
+
+  if (isChangingPasswordSuccess) console.log("pass changed");
+  if (isChangingPasswordError) console.error("error while changing password");
 
   return (
     <>
@@ -108,6 +123,7 @@ const AccountInformation = () => {
                       <input ref={confirmPasswordRef} type="text" required />
                     </div>
                   </div>
+                  {isChangingPasswordPending && <span>changing pass...</span>}
                   <div className={styles.btnContainer}>
                     <button className={styles.link}>Change Password</button>
                   </div>
