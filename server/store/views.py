@@ -217,7 +217,6 @@ class CustomerViewSet(ModelViewSet):
 
     def get_related_fields(self):
         return [
-            'user',
             'addresses',
             'wish_list__product__category__parent_category',
             'wish_list__product__images',
