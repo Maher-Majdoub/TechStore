@@ -180,6 +180,13 @@ class AddressSerializer(serializers.ModelSerializer):
         if validated_data['is_default_shipping_address']:
             Address.objects.filter(customer=self.context['customer_id']).update(is_default_shipping_address=False)
         return Address.objects.create(customer=self.context['customer_id'], **validated_data)
+    
+    def update(self, instance, validated_data):
+        if validated_data.get('is_default_billing_address'):
+            Address.objects.filter(customer=self.context['customer_id']).update(is_default_billing_address=False)
+        if validated_data.get('is_default_shipping_address'):
+            Address.objects.filter(customer=self.context['customer_id']).update(is_default_shipping_address=False)
+        return super().update(instance, validated_data)
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
