@@ -37,7 +37,12 @@ const ChangeUserNameForm = () => {
         <div className={styles.inputGroups}>
           <div className={styles.inputGroup}>
             <span className={styles.required}>Current Password</span>
-            <input ref={currentPasswordRef} type="password" required />
+            <input
+              ref={currentPasswordRef}
+              type="password"
+              required
+              autoComplete="current-password"
+            />
           </div>
           <div className={styles.inputGroup}>
             <span className={styles.required}>New Username</span>

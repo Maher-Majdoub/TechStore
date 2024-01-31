@@ -36,16 +36,31 @@ const ChangePasswordForm = () => {
       >
         <div className={styles.inputGroups}>
           <div className={styles.inputGroup}>
-            <span className={styles.required}>Old Password</span>
-            <input ref={oldPasswordRef} type="password" required />
+            <span className={styles.required}>Current Password</span>
+            <input
+              ref={oldPasswordRef}
+              type="password"
+              required
+              autoComplete="current-password"
+            />
           </div>
           <div className={styles.inputGroup}>
             <span className={styles.required}>New Password</span>
-            <input ref={newPasswordRef} type="password" required />
+            <input
+              ref={newPasswordRef}
+              type="password"
+              required
+              autoComplete="new-password"
+            />
           </div>
           <div className={styles.inputGroup}>
             <span className={styles.required}>Confirm Password</span>
-            <input ref={confirmPasswordRef} type="password" required />
+            <input
+              ref={confirmPasswordRef}
+              type="password"
+              required
+              autoComplete="new-password"
+            />
           </div>
         </div>
         {isChangingPasswordPending && <span>changing pass...</span>}
