@@ -1,17 +1,14 @@
-import { useRef } from "react";
 import useCustomer from "../../hooks/useCustomer";
 import styles from "./styles.module.css";
+import ChangeUserNameForm from "./ChangeUserNameForm";
+import ChangePasswordFrom from "./ChangePasswordForm";
 
 const AccountInformation = () => {
   const {
     customer,
-    changePassword,
     isChangingPasswordSuccess,
-    isChangingPasswordPending,
     isChangingPasswordError,
-    changeUsername,
     isChangingUsernameSuccess,
-    isChangingUsernamePending,
     isChangingUsernameError,
   } = useCustomer();
   const membershipVals: { [shortcut: string]: string } = {
@@ -20,27 +17,6 @@ const AccountInformation = () => {
     B: "Bronze",
   };
 
-  const oldPasswordRef = useRef<HTMLInputElement>(null);
-  const newPasswordRef = useRef<HTMLInputElement>(null);
-  const confirmPasswordRef = useRef<HTMLInputElement>(null);
-  const currentPasswordRef = useRef<HTMLInputElement>(null);
-  const newUserNameRef = useRef<HTMLInputElement>(null);
-
-  const handleChangeUserName = () => {
-    if (currentPasswordRef.current && newUserNameRef.current) {
-      changeUsername({
-        currentPassword: currentPasswordRef.current.value,
-        newUsername: newUserNameRef.current.value,
-      });
-    }
-  };
-  const handleChangePassword = () => {
-    if (oldPasswordRef.current && newPasswordRef.current)
-      changePassword({
-        currentPassword: oldPasswordRef.current.value,
-        newPassword: newPasswordRef.current.value,
-      });
-  };
   const handleChangePersonalInfos = () => {};
 
   if (isChangingPasswordSuccess) console.log("pass changed");
@@ -90,66 +66,10 @@ const AccountInformation = () => {
             </div>
             <div className={styles.sectionsContainer}>
               <div className={styles.sectionContainer}>
-                <h4>Change Username</h4>
-                <form
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    handleChangeUserName();
-                  }}
-                >
-                  <div className={styles.inputGroups}>
-                    <div className={styles.inputGroup}>
-                      <span className={styles.required}>Current Password</span>
-                      <input
-                        ref={currentPasswordRef}
-                        type="password"
-                        required
-                      />
-                    </div>
-                    <div className={styles.inputGroup}>
-                      <span className={styles.required}>New Username</span>
-                      <input ref={newUserNameRef} type="text" required />
-                    </div>
-                    {isChangingUsernamePending && (
-                      <span>changing username....</span>
-                    )}
-                    <div className={styles.btnContainer}>
-                      <button className={styles.link}>Change Username</button>
-                    </div>
-                  </div>
-                </form>
+                <ChangeUserNameForm />
               </div>
               <div className={styles.sectionContainer}>
-                <h4>Change Password</h4>
-                <form
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    handleChangePassword();
-                  }}
-                >
-                  <div className={styles.inputGroups}>
-                    <div className={styles.inputGroup}>
-                      <span className={styles.required}>Old Password</span>
-                      <input ref={oldPasswordRef} type="password" required />
-                    </div>
-                    <div className={styles.inputGroup}>
-                      <span className={styles.required}>New Password</span>
-                      <input ref={newPasswordRef} type="password" required />
-                    </div>
-                    <div className={styles.inputGroup}>
-                      <span className={styles.required}>Confirm Password</span>
-                      <input
-                        ref={confirmPasswordRef}
-                        type="password"
-                        required
-                      />
-                    </div>
-                  </div>
-                  {isChangingPasswordPending && <span>changing pass...</span>}
-                  <div className={styles.btnContainer}>
-                    <button className={styles.link}>Change Password</button>
-                  </div>
-                </form>
+                <ChangePasswordFrom />
               </div>
               <div className={styles.sectionContainer}>
                 <h4>Change Personal Infos</h4>
