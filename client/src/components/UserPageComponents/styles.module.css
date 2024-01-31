@@ -50,6 +50,12 @@
     font-weight: 600;
 }
 
+.centerChildren {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
 .link {
     cursor: pointer;
     color: var(--color-3);

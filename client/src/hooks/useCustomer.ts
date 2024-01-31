@@ -62,6 +62,7 @@ const useCustomer = () => {
       isError: true,
       addAddress: () => {},
       deleteAddress: () => {},
+      editAddress: () => {},
     };
 
   const AUTHORIZATION = `JWT ${access_token}`;
@@ -158,12 +159,49 @@ const useCustomer = () => {
     },
   });
 
+  const EditAddressMutation = useMutation<
+    Address,
+    Error,
+    { id: number; newAddress: Address },
+    Customer
+  >({
+    mutationFn: ({ id, newAddress }) =>
+      apiClient
+        .put(`/store/customers/me/addresses/${id}/`, newAddress, {
+          headers: { Authorization: AUTHORIZATION },
+        })
+        .then((res) => res.data),
+
+    onMutate: ({ id, newAddress }) => {
+      const oldCustomer = queryClient.getQueryData<Customer>(["customer"]);
+      queryClient.setQueryData<Customer>(["customer"], (oldCustomer) => {
+        if (oldCustomer === undefined) return undefined;
+        const newAddresses = [] as Address[];
+        oldCustomer.addresses.map((address) => {
+          if (address.id === id) newAddresses.push({ id: id, ...newAddress });
+          else newAddresses.push(address);
+        });
+        return {
+          ...oldCustomer,
+          addresses: newAddresses,
+        };
+      });
+      return oldCustomer;
+    },
+
+    onError: (error, _, oldCustomer) => {
+      console.log(error);
+      queryClient.setQueryData<Customer>(["customer"], oldCustomer);
+    },
+  });
+
   return {
     customer,
     isLoading,
     isError,
     addAddress: AddAddressMutation.mutate,
     deleteAddress: DeleteAddressMutation.mutate,
+    editAddress: EditAddressMutation.mutate,
   };
 };
 

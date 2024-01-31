@@ -5,10 +5,12 @@ import useCustomer, { Address } from "../../hooks/useCustomer";
 
 interface Props {
   afterSubmition(): void;
+  address?: Address;
 }
 
-const AddAddress = ({ afterSubmition }: Props) => {
-  const { addAddress } = useCustomer();
+const AddEditAddress = ({ afterSubmition, address }: Props) => {
+  const { addAddress, editAddress } = useCustomer();
+
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
   const companyRef = useRef<HTMLInputElement>(null);
@@ -41,7 +43,7 @@ const AddAddress = ({ afterSubmition }: Props) => {
       is_default_billing_ref.current &&
       is_default_shipping_ref.current
     ) {
-      const address: Address = {
+      const newAddress: Address = {
         first_name: firstNameRef.current.value,
         last_name: lastNameRef.current.value,
         company: companyRef.current.value,
@@ -57,7 +59,9 @@ const AddAddress = ({ afterSubmition }: Props) => {
         is_default_billing_address: is_default_billing_ref.current.checked,
         is_default_shipping_address: is_default_shipping_ref.current.checked,
       };
-      addAddress(address);
+      address
+        ? editAddress({ id: address.id || -1, newAddress: newAddress })
+        : addAddress(newAddress);
       afterSubmition();
     }
   };
@@ -79,19 +83,38 @@ const AddAddress = ({ afterSubmition }: Props) => {
             <div className={styles.inputGroups}>
               <div className={styles.inputGroup}>
                 <span className={styles.required}>First Name</span>
-                <input ref={firstNameRef} type="text" required />
+                <input
+                  ref={firstNameRef}
+                  type="text"
+                  defaultValue={address?.first_name}
+                  required
+                />
               </div>
               <div className={styles.inputGroup}>
                 <span className={styles.required}>Last Name</span>
-                <input ref={lastNameRef} type="text" required />
+                <input
+                  ref={lastNameRef}
+                  type="text"
+                  defaultValue={address?.last_name}
+                  required
+                />
               </div>
               <div className={styles.inputGroup}>
                 <span>Company</span>
-                <input ref={companyRef} type="text" />
+                <input
+                  ref={companyRef}
+                  type="text"
+                  defaultValue={address?.company}
+                />
               </div>
               <div className={styles.inputGroup}>
                 <span className={styles.required}>Phone Number</span>
-                <input ref={phoneNumberRef} type="text" required />
+                <input
+                  ref={phoneNumberRef}
+                  type="text"
+                  defaultValue={address?.phone_number}
+                  required
+                />
               </div>
             </div>
           </div>
@@ -102,41 +125,81 @@ const AddAddress = ({ afterSubmition }: Props) => {
             <div className={styles.inputGroups}>
               <div className={styles.inputGroup}>
                 <span className={styles.required}>Address</span>
-                <input ref={addressRef} type="text" required />
+                <input
+                  ref={addressRef}
+                  type="text"
+                  defaultValue={address?.address}
+                  required
+                />
               </div>
               <div className={styles.inputGroup}>
                 <span className={styles.required}>Country</span>
-                <input ref={countryRef} type="text" required />
+                <input
+                  ref={countryRef}
+                  type="text"
+                  defaultValue={address?.country}
+                  required
+                />
               </div>
               <div className={styles.inputGroup}>
                 <span className={styles.required}>State</span>
-                <input ref={stateRef} type="text" required />
+                <input
+                  ref={stateRef}
+                  type="text"
+                  defaultValue={address?.state}
+                  required
+                />
               </div>
               <div className={styles.inputGroup}>
                 <span className={styles.required}>City</span>
-                <input ref={cityRef} type="text" required />
+                <input
+                  ref={cityRef}
+                  type="text"
+                  defaultValue={address?.city}
+                  required
+                />
               </div>
               <div className={styles.inputGroup}>
                 <span className={styles.required}>Region</span>
-                <input ref={regionRef} type="text" required />
+                <input
+                  ref={regionRef}
+                  type="text"
+                  defaultValue={address?.region}
+                  required
+                />
               </div>
               <div className={styles.inputGroup}>
                 <span className={styles.required}>Street Number</span>
-                <input ref={streetNumberRef} type="text" required />
+                <input
+                  ref={streetNumberRef}
+                  type="text"
+                  defaultValue={address?.street_number}
+                  required
+                />
               </div>
               <div className={styles.inputGroup}>
                 <span className={styles.required}>Postal Code</span>
-                <input ref={postalCodeRef} type="text" required />
+                <input
+                  ref={postalCodeRef}
+                  type="text"
+                  defaultValue={address?.postal_code}
+                  required
+                />
               </div>
               <div className={styles.inputGroup}>
                 <span>Description</span>
-                <input ref={descriptionRef} type="text" />
+                <input
+                  ref={descriptionRef}
+                  type="text"
+                  defaultValue={address?.description}
+                />
               </div>
               <label htmlFor="defaultBillingAddress" className={styles.flxBx}>
                 <input
                   ref={is_default_billing_ref}
                   type="checkbox"
                   id="defaultBillingAddress"
+                  defaultChecked={address?.is_default_billing_address}
                 />
                 <span>Use as default billing address</span>
               </label>
@@ -145,6 +208,7 @@ const AddAddress = ({ afterSubmition }: Props) => {
                   ref={is_default_shipping_ref}
                   type="checkbox"
                   id="defaultShippingAddress"
+                  defaultChecked={address?.is_default_shipping_address}
                 />
                 <span>Use as default shipping address</span>
               </label>
@@ -159,4 +223,4 @@ const AddAddress = ({ afterSubmition }: Props) => {
   );
 };
 
-export default AddAddress;
+export default AddEditAddress;

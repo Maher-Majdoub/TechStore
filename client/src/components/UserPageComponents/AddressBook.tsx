@@ -1,10 +1,10 @@
 import { useState } from "react";
-import useCustomer from "../../hooks/useCustomer";
+import useCustomer, { Address } from "../../hooks/useCustomer";
 import ActionBtn from "../ActionBtn/ActionBtn";
 import Button from "../Button/Button";
 import AddressDisplayer from "./AddressDisplayer";
 import styles from "./styles.module.css";
-import AddAddress from "./AddAddress";
+import AddAddress from "./AddEditAddress";
 
 const AddressBook = () => {
   const { customer, deleteAddress } = useCustomer();
@@ -15,7 +15,11 @@ const AddressBook = () => {
     (address) => address.is_default_billing_address
   );
 
-  const [section, setSection] = useState<"main" | "addAddress">("main");
+  const [section, setSection] = useState<"main" | "addAddress" | "editAddress">(
+    "main"
+  );
+
+  const [addressToEdit, setAddressToEdit] = useState({} as Address);
 
   return (
     <>
@@ -31,10 +35,18 @@ const AddressBook = () => {
                   <AddressDisplayer
                     address={defaultBillingAddress}
                     name="billing address"
+                    onEdit={() => {
+                      setAddressToEdit(defaultBillingAddress as Address);
+                      setSection("editAddress");
+                    }}
                   />
                   <AddressDisplayer
                     address={defaultShippingAddress}
                     name="shipping address"
+                    onEdit={() => {
+                      setAddressToEdit(defaultShippingAddress as Address);
+                      setSection("editAddress");
+                    }}
                   />
                 </div>
               </div>
@@ -71,7 +83,13 @@ const AddressBook = () => {
                               deleteAddress({ addressId: address.id || -1 });
                             }}
                           />
-                          <ActionBtn action="modify" onClick={() => {}} />
+                          <ActionBtn
+                            action="modify"
+                            onClick={() => {
+                              setAddressToEdit(address);
+                              setSection("editAddress");
+                            }}
+                          />
                         </td>
                       </tr>
                     ))}
@@ -94,6 +112,14 @@ const AddressBook = () => {
               afterSubmition={() => {
                 setSection("main");
               }}
+            />
+          )}
+          {section == "editAddress" && (
+            <AddAddress
+              afterSubmition={() => {
+                setSection("main");
+              }}
+              address={addressToEdit}
             />
           )}
         </div>
