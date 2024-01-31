@@ -97,9 +97,21 @@ const useCustomer = () => {
       const oldCustomer = queryClient.getQueryData<Customer>(["customer"]);
       queryClient.setQueryData<Customer>(["customer"], (oldCustomer) => {
         if (oldCustomer === undefined) return undefined;
+        const oldAddresses = [] as Address[];
+        oldCustomer.addresses.map((a) => {
+          oldAddresses.push({
+            ...a,
+            is_default_billing_address: address.is_default_billing_address
+              ? false
+              : a.is_default_billing_address,
+            is_default_shipping_address: address.is_default_shipping_address
+              ? false
+              : a.is_default_shipping_address,
+          });
+        });
         return {
           ...oldCustomer,
-          addresses: [...oldCustomer.addresses, { ...address, id: -1 }],
+          addresses: [...oldAddresses, { ...address, id: -1 }],
         };
       });
       return oldCustomer;
@@ -179,7 +191,17 @@ const useCustomer = () => {
         const newAddresses = [] as Address[];
         oldCustomer.addresses.map((address) => {
           if (address.id === id) newAddresses.push({ id: id, ...newAddress });
-          else newAddresses.push(address);
+          else
+            newAddresses.push({
+              ...address,
+              is_default_billing_address: newAddress.is_default_billing_address
+                ? false
+                : address.is_default_billing_address,
+              is_default_shipping_address:
+                newAddress.is_default_shipping_address
+                  ? false
+                  : address.is_default_shipping_address,
+            });
         });
         return {
           ...oldCustomer,
