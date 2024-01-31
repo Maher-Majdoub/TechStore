@@ -3,11 +3,19 @@ import styles from "./styles.module.css";
 import useCustomer from "../../hooks/useCustomer";
 
 const ChangePasswordForm = () => {
-  const { changePassword, isChangingPasswordPending } = useCustomer();
+  const {
+    changePassword,
+    isChangingPasswordSuccess,
+    isChangingPasswordPending,
+    isChangingPasswordError,
+  } = useCustomer();
 
   const oldPasswordRef = useRef<HTMLInputElement>(null);
   const newPasswordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
+
+  if (isChangingPasswordSuccess) console.log("pass changed");
+  if (isChangingPasswordError) console.error("error while changing password");
 
   const handleChangePassword = () => {
     if (oldPasswordRef.current && newPasswordRef.current)

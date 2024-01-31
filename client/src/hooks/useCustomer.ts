@@ -30,13 +30,16 @@ interface Wish {
 
 interface Compare extends Wish {}
 
-export interface Customer {
-  id: number;
+interface PersonalInfos {
   first_name: string;
   last_name: string;
   email: string;
   phone: string;
   birth_date: string;
+}
+
+export interface Customer extends PersonalInfos {
+  id: number;
   membership: string;
   addresses: Address[];
   wish_list: Wish[];
@@ -65,6 +68,10 @@ const useCustomer = () => {
       isChangingUsernameSuccess: false,
       isChangingUsernamePending: false,
       isChangingUsernameError: false,
+      changePersonalInfos: () => {},
+      isChangingPersonalInfosSuccess: false,
+      isChangingPersonalInfosPending: false,
+      isChangingPersonalInfosError: false,
     };
 
   const AUTHORIZATION = `JWT ${access_token}`;
@@ -253,6 +260,24 @@ const useCustomer = () => {
         .then((res) => res.data),
   });
 
+  const {
+    mutate: changePersonalInfos,
+    isSuccess: isChangingPersonalInfosSuccess,
+    isPending: isChangingPersonalInfosPending,
+    isError: isChangingPersonalInfosError,
+  } = useMutation<{}, Error, PersonalInfos, Customer>({
+    mutationFn: (infos) =>
+      apiClient.put("/store/customers/me/", infos, {
+        headers: { Authorization: AUTHORIZATION },
+      }),
+    onMutate: () => {
+      return queryClient.getQueryData(["customer"]);
+    },
+    onSuccess: (_, infos, oldCustomer) => {
+      queryClient.setQueryData(["customer"], { ...oldCustomer, ...infos });
+    },
+  });
+
   return {
     customer,
     isLoading,
@@ -268,6 +293,10 @@ const useCustomer = () => {
     isChangingUsernameSuccess,
     isChangingUsernamePending,
     isChangingUsernameError,
+    changePersonalInfos,
+    isChangingPersonalInfosSuccess,
+    isChangingPersonalInfosPending,
+    isChangingPersonalInfosError,
   };
 };
 

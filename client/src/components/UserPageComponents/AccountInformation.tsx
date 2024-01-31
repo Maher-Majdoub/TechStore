@@ -2,28 +2,15 @@ import useCustomer from "../../hooks/useCustomer";
 import styles from "./styles.module.css";
 import ChangeUserNameForm from "./ChangeUserNameForm";
 import ChangePasswordFrom from "./ChangePasswordForm";
+import ChangePersonalInfosForm from "./ChangePersonalInfosForm";
 
 const AccountInformation = () => {
-  const {
-    customer,
-    isChangingPasswordSuccess,
-    isChangingPasswordError,
-    isChangingUsernameSuccess,
-    isChangingUsernameError,
-  } = useCustomer();
+  const { customer } = useCustomer();
   const membershipVals: { [shortcut: string]: string } = {
     G: "Gold",
     S: "Silver",
     B: "Bronze",
   };
-
-  const handleChangePersonalInfos = () => {};
-
-  if (isChangingPasswordSuccess) console.log("pass changed");
-  if (isChangingPasswordError) console.error("error while changing password");
-
-  if (isChangingUsernameSuccess) console.log("username changed");
-  if (isChangingUsernameError) console.error("error while changing username");
 
   return (
     <>
@@ -72,41 +59,7 @@ const AccountInformation = () => {
                 <ChangePasswordFrom />
               </div>
               <div className={styles.sectionContainer}>
-                <h4>Change Personal Infos</h4>
-                <form
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    handleChangePersonalInfos();
-                  }}
-                >
-                  <div className={styles.inputGroups}>
-                    <div className={styles.inputGroup}>
-                      <span>First Name</span>
-                      <input type="text" defaultValue={customer.first_name} />
-                    </div>
-                    <div className={styles.inputGroup}>
-                      <span>Last Name</span>
-                      <input type="text" defaultValue={customer.last_name} />
-                    </div>
-                    <div className={styles.inputGroup}>
-                      <span>Email</span>
-                      <input type="text" defaultValue={customer.email} />
-                    </div>
-                    <div className={styles.inputGroup}>
-                      <span>Phone</span>
-                      <input type="text" defaultValue={customer.phone} />
-                    </div>
-                    <div className={styles.inputGroup}>
-                      <span>Birth Date</span>
-                      <input type="date" defaultValue={customer.birth_date} />
-                    </div>
-                  </div>
-                  <div className={styles.btnContainer}>
-                    <button className={styles.link}>
-                      Change Personal Infos
-                    </button>
-                  </div>
-                </form>
+                <ChangePersonalInfosForm />
               </div>
             </div>
           </div>

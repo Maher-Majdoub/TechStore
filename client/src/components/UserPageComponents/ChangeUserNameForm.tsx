@@ -3,10 +3,18 @@ import useCustomer from "../../hooks/useCustomer";
 import styles from "./styles.module.css";
 
 const ChangeUserNameForm = () => {
-  const { changeUsername, isChangingUsernamePending } = useCustomer();
+  const {
+    changeUsername,
+    isChangingUsernameSuccess,
+    isChangingUsernamePending,
+    isChangingUsernameError,
+  } = useCustomer();
 
   const currentPasswordRef = useRef<HTMLInputElement>(null);
   const newUserNameRef = useRef<HTMLInputElement>(null);
+
+  if (isChangingUsernameSuccess) console.log("username changed");
+  if (isChangingUsernameError) console.error("error while changing username");
 
   const handleChangeUserName = () => {
     if (currentPasswordRef.current && newUserNameRef.current) {
