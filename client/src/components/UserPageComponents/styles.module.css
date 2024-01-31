@@ -33,7 +33,6 @@
 .sectionContainer {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     font-size: 14px;
     font-weight: 300;
 }
@@ -92,7 +91,7 @@
 }
 
 .btnContainer {
-    width: 250px;
+    width: fit-content;
     margin: 20px 0 20px auto
 }
 
@@ -129,3 +128,21 @@
     border: 1px solid var(--color-5);
     padding: 5px;
 }
+
+.infos {
+    display: flex;
+    flex-direction: column;
+    gap: 5px
+}
+
+.info {
+    display: flex;
+    font-size: 16px;
+}
+
+.info > span:first-child {
+    width: 120px;
+    font-weight: 600;
+    justify-self: end;
+}
+

@@ -1,6 +1,6 @@
 import styles from "./UserAccountPage.module.css";
 import { useState } from "react";
-import AccountInformation from "../../components/AccountInformation/AccountInformation";
+import AccountInformation from "../../components/UserPageComponents/AccountInformation";
 import AccountDashboard from "../../components/UserPageComponents/AccountDashboard";
 import Ordres from "../../components/Orders/Ordres";
 import WishList from "../../components/WishList/WishList";
