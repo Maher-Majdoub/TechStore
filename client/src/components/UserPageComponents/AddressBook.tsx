@@ -89,7 +89,13 @@ const AddressBook = () => {
               </div>
             </div>
           )}
-          {section === "addAddress" && <AddAddress />}
+          {section === "addAddress" && (
+            <AddAddress
+              afterSubmition={() => {
+                setSection("main");
+              }}
+            />
+          )}
         </div>
       )}
     </>

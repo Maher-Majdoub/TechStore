@@ -23,7 +23,7 @@ export interface Address {
   state: string;
   city: string;
   region: string;
-  street_number: number;
+  street_number: string;
   postal_code: number;
   description: string;
   is_default_billing_address: boolean;

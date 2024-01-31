@@ -1,8 +1,14 @@
 import { useRef } from "react";
 import styles from "./styles.module.css";
 import Button from "../Button/Button";
+import useCustomer, { Address } from "../../hooks/useCustomer";
 
-const AddAddress = () => {
+interface Props {
+  afterSubmition(): void;
+}
+
+const AddAddress = ({ afterSubmition }: Props) => {
+  const { addAddress } = useCustomer();
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
   const companyRef = useRef<HTMLInputElement>(null);
@@ -18,7 +24,43 @@ const AddAddress = () => {
   const is_default_billing_ref = useRef<HTMLInputElement>(null);
   const is_default_shipping_ref = useRef<HTMLInputElement>(null);
 
-  const handleSubmition = () => {};
+  const handleSubmition = () => {
+    if (
+      firstNameRef.current &&
+      lastNameRef.current &&
+      companyRef.current &&
+      phoneNumberRef.current &&
+      addressRef.current &&
+      countryRef.current &&
+      stateRef.current &&
+      cityRef.current &&
+      regionRef.current &&
+      streetNumberRef.current &&
+      postalCodeRef.current &&
+      descriptionRef.current &&
+      is_default_billing_ref.current &&
+      is_default_shipping_ref.current
+    ) {
+      const address: Address = {
+        first_name: firstNameRef.current.value,
+        last_name: lastNameRef.current.value,
+        company: companyRef.current.value,
+        phone_number: phoneNumberRef.current.value,
+        address: addressRef.current.value,
+        country: countryRef.current.value,
+        state: stateRef.current.value,
+        city: cityRef.current.value,
+        region: regionRef.current.value,
+        street_number: streetNumberRef.current.value,
+        postal_code: parseInt(postalCodeRef.current.value),
+        description: descriptionRef.current.value,
+        is_default_billing_address: is_default_billing_ref.current.checked,
+        is_default_shipping_address: is_default_shipping_ref.current.checked,
+      };
+      addAddress(address);
+      afterSubmition();
+    }
+  };
 
   return (
     <div className={styles.container}>
