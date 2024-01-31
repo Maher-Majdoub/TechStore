@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 interface Props {
   address?: Address;
   name: string;
-  onEdit(): void;
+  onEdit?(): void;
 }
 
 const AddressDisplayer = ({ address, name, onEdit }: Props) => {
@@ -24,9 +24,11 @@ const AddressDisplayer = ({ address, name, onEdit }: Props) => {
             <span>{address.country}</span>
             <span>T: {address.phone_number}</span>
           </div>
-          <div onClick={onEdit}>
-            <span className={styles.link}>Edit Address</span>
-          </div>
+          {onEdit && (
+            <div onClick={onEdit}>
+              <span className={styles.link}>Edit Address</span>
+            </div>
+          )}
         </>
       ) : (
         <div className={styles.centerChildren}>

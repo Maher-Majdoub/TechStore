@@ -91,7 +91,13 @@ const UserAccountPage = () => {
               </li>
             </ul>
             <div className={styles.section}>
-              {selectedSection === Section.dashBoard && <AccountDashboard />}
+              {selectedSection === Section.dashBoard && (
+                <AccountDashboard
+                  displayAddressBook={() => {
+                    setSelectedSection(Section.addresses);
+                  }}
+                />
+              )}
               {selectedSection === Section.info && <AccountInformation />}
               {selectedSection === Section.addresses && <AddressBook />}
               {selectedSection === Section.orders && <Ordres />}

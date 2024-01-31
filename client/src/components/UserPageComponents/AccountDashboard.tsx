@@ -2,7 +2,11 @@ import useCustomer from "../../hooks/useCustomer";
 import AddressDisplayer from "./AddressDisplayer";
 import styles from "./styles.module.css";
 
-const AccountDashboard = () => {
+interface Props {
+  displayAddressBook(): void;
+}
+
+const AccountDashboard = ({ displayAddressBook }: Props) => {
   const { customer } = useCustomer();
   const defaultShippingAddress = customer?.addresses.find(
     (address) => address.is_default_shipping_address
@@ -39,7 +43,9 @@ const AccountDashboard = () => {
           <div>
             <div className={`${styles.titleContainer} ${styles.flxBx}`}>
               <h2>Address Book</h2>
-              <span className={styles.link}>Manage Addresses</span>
+              <div onClick={displayAddressBook}>
+                <span className={styles.link}>Manage Addresses</span>
+              </div>
             </div>
             <div className={styles.sectionsContainer}>
               <AddressDisplayer
