@@ -9,6 +9,10 @@ const AccountInformation = () => {
     isChangingPasswordSuccess,
     isChangingPasswordPending,
     isChangingPasswordError,
+    changeUsername,
+    isChangingUsernameSuccess,
+    isChangingUsernamePending,
+    isChangingUsernameError,
   } = useCustomer();
   const membershipVals: { [shortcut: string]: string } = {
     G: "Gold",
@@ -19,9 +23,17 @@ const AccountInformation = () => {
   const oldPasswordRef = useRef<HTMLInputElement>(null);
   const newPasswordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
+  const currentPasswordRef = useRef<HTMLInputElement>(null);
   const newUserNameRef = useRef<HTMLInputElement>(null);
 
-  const handleChangeUserName = () => {};
+  const handleChangeUserName = () => {
+    if (currentPasswordRef.current && newUserNameRef.current) {
+      changeUsername({
+        currentPassword: currentPasswordRef.current.value,
+        newUsername: newUserNameRef.current.value,
+      });
+    }
+  };
   const handleChangePassword = () => {
     if (oldPasswordRef.current && newPasswordRef.current)
       changePassword({
@@ -33,6 +45,9 @@ const AccountInformation = () => {
 
   if (isChangingPasswordSuccess) console.log("pass changed");
   if (isChangingPasswordError) console.error("error while changing password");
+
+  if (isChangingUsernameSuccess) console.log("username changed");
+  if (isChangingUsernameError) console.error("error while changing username");
 
   return (
     <>
@@ -88,13 +103,20 @@ const AccountInformation = () => {
                 >
                   <div className={styles.inputGroups}>
                     <div className={styles.inputGroup}>
+                      <span className={styles.required}>Current Password</span>
+                      <input
+                        ref={currentPasswordRef}
+                        type="password"
+                        required
+                      />
+                    </div>
+                    <div className={styles.inputGroup}>
                       <span className={styles.required}>New Username</span>
                       <input ref={newUserNameRef} type="text" required />
                     </div>
-                    <div className={styles.inputGroup}>
-                      <span className={styles.required}>Confirm Username</span>
-                      <input ref={newUserNameRef} type="text" required />
-                    </div>
+                    {isChangingUsernamePending && (
+                      <span>changing username....</span>
+                    )}
                     <div className={styles.btnContainer}>
                       <button className={styles.link}>Change Username</button>
                     </div>
@@ -112,15 +134,19 @@ const AccountInformation = () => {
                   <div className={styles.inputGroups}>
                     <div className={styles.inputGroup}>
                       <span className={styles.required}>Old Password</span>
-                      <input ref={oldPasswordRef} type="text" required />
+                      <input ref={oldPasswordRef} type="password" required />
                     </div>
                     <div className={styles.inputGroup}>
                       <span className={styles.required}>New Password</span>
-                      <input ref={newPasswordRef} type="text" required />
+                      <input ref={newPasswordRef} type="password" required />
                     </div>
                     <div className={styles.inputGroup}>
                       <span className={styles.required}>Confirm Password</span>
-                      <input ref={confirmPasswordRef} type="text" required />
+                      <input
+                        ref={confirmPasswordRef}
+                        type="password"
+                        required
+                      />
                     </div>
                   </div>
                   {isChangingPasswordPending && <span>changing pass...</span>}
