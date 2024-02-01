@@ -13,7 +13,7 @@ const Process = ({ name, count, done }: Props) => {
       <div className={styles.statusContainer}>
         <div className={styles.line}></div>
         <div className={styles.status}>
-          {count && <span>{count}</span>}
+          {count && !done && <span>{count}</span>}
           {done && <MdOutlineDone />}
         </div>
         <div className={styles.line}></div>
