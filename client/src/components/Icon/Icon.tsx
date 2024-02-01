@@ -11,7 +11,7 @@ const Icon = ({ children, onClick, count }: Props) => {
   return (
     <div onClick={onClick} className={styles.container}>
       {children}
-      {count && <span className={styles.cnt}>{count}</span>}
+      {count !== undefined && <span className={styles.cnt}>{count}</span>}
     </div>
   );
 };

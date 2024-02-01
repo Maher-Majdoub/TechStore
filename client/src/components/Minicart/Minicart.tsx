@@ -29,47 +29,51 @@ const Minicart = ({
         <span className={styles.subTitle}>
           {cart?.items.length} items in cart
         </span>
-        <div className={styles.container}>
-          <Button
-            onClick={() => {
-              toggleShowCart(false);
-              navigate("/cart");
-            }}
-          >
-            View or Edit Your Cart
-          </Button>
-        </div>
-        <ul className={styles.productsList}>
-          {cart?.items?.map((item) => (
-            <li key={item.product.id} className={styles.product}>
-              <MiniProductCard
-                product={item.product}
-                count={item.quantity}
-                onDelete={() => {
-                  deleteFromCart({ itemId: item.id });
-                }}
-                onModify={() => {
+        {cart?.items && cart.items.length > 0 && (
+          <>
+            <div className={styles.container}>
+              <Button
+                onClick={() => {
                   toggleShowCart(false);
                   navigate("/cart");
                 }}
-              />
-            </li>
-          ))}
-        </ul>
-        <div className={styles.subTotal}>
-          <span>Subtotal: </span>
-          <span>${total.toFixed(2)}</span>
-        </div>
-        <div className={styles.container}>
-          <Button
-            onClick={() => {
-              toggleShowCart(false);
-              navigate("/cart/checkout");
-            }}
-          >
-            Go To Checkout
-          </Button>
-        </div>
+              >
+                View or Edit Your Cart
+              </Button>
+            </div>
+            <ul className={styles.productsList}>
+              {cart?.items?.map((item) => (
+                <li key={item.product.id} className={styles.product}>
+                  <MiniProductCard
+                    product={item.product}
+                    count={item.quantity}
+                    onDelete={() => {
+                      deleteFromCart({ itemId: item.id });
+                    }}
+                    onModify={() => {
+                      toggleShowCart(false);
+                      navigate("/cart");
+                    }}
+                  />
+                </li>
+              ))}
+            </ul>
+            <div className={styles.subTotal}>
+              <span>Subtotal: </span>
+              <span>${total.toFixed(2)}</span>
+            </div>
+            <div className={styles.container}>
+              <Button
+                onClick={() => {
+                  toggleShowCart(false);
+                  navigate("/cart/checkout");
+                }}
+              >
+                Go To Checkout
+              </Button>
+            </div>
+          </>
+        )}
       </div>
     </>
   );

@@ -4,6 +4,7 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import Minicart from "../Minicart/Minicart";
 import styles from "./CartButton.module.css";
 import hideOnClickOutSide from "../../services/hideOnClickOutside";
+import useCart from "../../hooks/useCart";
 
 const CartButton = () => {
   const [showCart, toggleShowCart] = useState(false);
@@ -14,10 +15,12 @@ const CartButton = () => {
     toggleShow: toggleShowCart,
   });
 
+  const { cart } = useCart();
+
   return (
     <div ref={cartRef} className={styles.container}>
       <Icon
-        count={10}
+        count={cart?.items.length}
         onClick={() => {
           toggleShowCart(!showCart);
         }}
