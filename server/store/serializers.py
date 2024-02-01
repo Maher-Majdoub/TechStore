@@ -280,10 +280,11 @@ class CustomerSerializer(serializers.ModelSerializer):
         ]
 
 
-class OrderSerializer(GetOrderSerializer):
+class OrderSerializer(serializers.ModelSerializer):
     cart_id = serializers.UUIDField()
 
     class Meta(GetOrderSerializer.Meta):
+        model= Order
         fields = [
             'cart_id',
             'billing_address',
