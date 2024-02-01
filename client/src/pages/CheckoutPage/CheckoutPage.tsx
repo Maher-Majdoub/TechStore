@@ -7,6 +7,7 @@ import { MdOutlineDone } from "react-icons/md";
 import Button from "../../components/Button/Button";
 import LinksSection from "../../components/LinksSection/LinksSection";
 import OrderSummary from "../../components/OrderSummary/OrderSummary";
+import AddEditAddress from "../../components/UserPageComponents/AddEditAddress";
 
 const CheckoutPage = () => {
   const { customer } = useCustomer();
@@ -21,8 +22,30 @@ const CheckoutPage = () => {
     "standard" | "pickupFromStore"
   >("standard");
 
+  const [showAddAddressForm, setShowAddAddressForm] = useState(false);
+
   return (
     <main className={styles.container + " container"}>
+      {showAddAddressForm && (
+        <div
+          className={styles.addAddressContainer}
+          onClick={() => {
+            setShowAddAddressForm(false);
+          }}
+        >
+          <div
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          >
+            <AddEditAddress
+              afterSubmition={() => {
+                setShowAddAddressForm(false);
+              }}
+            />
+          </div>
+        </div>
+      )}
       <div className={styles.navContainer}>
         <Navigator />
       </div>
@@ -69,7 +92,13 @@ const CheckoutPage = () => {
                 ))}
               </div>
               <div className={styles.btnContainer}>
-                <Button>Add Address</Button>
+                <Button
+                  onClick={() => {
+                    setShowAddAddressForm(true);
+                  }}
+                >
+                  Add Address
+                </Button>
               </div>
             </div>
             <div>

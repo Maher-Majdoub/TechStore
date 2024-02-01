@@ -2,9 +2,29 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
-
 .navContainer {
     font-size: 20px;
+}
+
+.addAddressContainer {
+    height: 100vh;
+    width: 100%;
+    padding: 20px 50px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(66, 66, 66, 0.792);
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+}
+
+.addAddressContainer form {
+    padding: 50px;
+    width: fit-content;
+    height: fit-content;
+    background-color: white;
 }
 
 .head {
