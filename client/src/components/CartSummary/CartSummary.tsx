@@ -2,17 +2,19 @@ import { useState } from "react";
 import useCart from "../../hooks/useCart";
 import Button from "../Button/Button";
 import styles from "./CartSummary.module.css";
+import { useNavigate } from "react-router-dom";
 
 const CartSummary = () => {
+  const navigate = useNavigate();
   const { cart } = useCart();
   const [shippingMethod, setShippingMethod] = useState<
     "standard" | "pickupFromStore"
   >("standard");
 
-  var total = 0;
-  if (cart?.items)
-    for (const item of cart.items)
-      total += item.quantity * item.product.unit_price;
+  let total = 0;
+  cart?.items.map((item) => {
+    total += item.quantity * item.product.unit_price;
+  });
   return (
     <div className={styles.summary}>
       <h4 className={styles.title}>Summary</h4>
@@ -95,7 +97,14 @@ const CartSummary = () => {
           </span>
         </div>
       </div>
-      <Button filled>Proceed To Checkout</Button>
+      <Button
+        filled
+        onClick={() => {
+          navigate("/cart/checkout");
+        }}
+      >
+        Proceed To Checkout
+      </Button>
     </div>
   );
 };

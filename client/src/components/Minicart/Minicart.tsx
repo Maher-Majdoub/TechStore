@@ -61,7 +61,14 @@ const Minicart = ({
           <span>${total.toFixed(2)}</span>
         </div>
         <div className={styles.container}>
-          <Button>Go To Checkout</Button>
+          <Button
+            onClick={() => {
+              toggleShowCart(false);
+              navigate("/cart/checkout");
+            }}
+          >
+            Go To Checkout
+          </Button>
         </div>
       </div>
     </>
