@@ -29,7 +29,7 @@ const Ordres = () => {
                     <tr key={order.id}>
                       <td>{order.id}</td>
                       <td>{new Date(order.created_at).toLocaleDateString()}</td>
-                      <td>$5550</td>
+                      <td>${order.total.toFixed(2)}</td>
                       <td>{order.status}</td>
                       <td>{order.payment_method}</td>
                       <td>{order.payment_status}</td>

@@ -56,6 +56,7 @@ export interface Order {
   billing_address: Address;
   shipping_address: Address;
   shipping_method: ShippingMethod;
+  total: number;
   items: OrderItem[];
 }
 
