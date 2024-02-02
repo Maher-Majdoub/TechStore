@@ -1,18 +1,35 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Address } from "./useCustomer";
 import ApiService from "../services/apiService";
 import useAuthorization from "./useAuthorization";
+import apiClient from "../services/apiClient";
 
 export enum OrderStatus {
-  COD = "Cash On Delivery",
+  Pending = "PE",
+  Processing = "PR",
+  Shiped = "S",
+  OutForDelivery = "OFD",
+  Canceled = "C",
+  Failed = "F",
+  AwaitingPayment = "AP",
+}
+
+export enum PaymentMethod {
+  CashOnDelivery = "COD",
+  CreditCart = "CC",
+  PayPal = "PP",
 }
 
 export enum PaymentStatus {
-  P = "Pending",
+  Pending = "P",
+  Confirmed = "C",
+  Declined = "D",
 }
 
 export enum ShippingMethod {
-  SS = "standard shipping",
+  StandardShipping = "SS",
+  FreeShipping = "FS",
+  PickupInStore = "PS",
 }
 
 interface OrderItem {
@@ -34,6 +51,7 @@ export interface Order {
   id: number;
   created_at: Date;
   status: OrderStatus;
+  payment_method: PaymentMethod;
   payment_status: PaymentStatus;
   billing_address: Address;
   shipping_address: Address;
@@ -41,9 +59,18 @@ export interface Order {
   items: OrderItem[];
 }
 
+interface CreateOrder {
+  cart_id: string;
+  billing_address: number;
+  payment_method: PaymentMethod;
+  shipping_address: number;
+  shipping_method: ShippingMethod;
+}
+
 const UseOrder = () => {
   const access_token = useAuthorization();
   const apiService = new ApiService<Order>("customers/me/orders/");
+  const AUTHORIZATION = `JWT ${access_token}`;
 
   const {
     data: orders,
@@ -52,12 +79,34 @@ const UseOrder = () => {
   } = useQuery({
     queryFn: () =>
       apiService.getPage({
-        headers: { Authorization: `JWT ${access_token}` },
+        headers: { Authorization: AUTHORIZATION },
       }),
     queryKey: ["orders"],
   });
 
-  return { orders, isFetchingOrdersLoading, isFetchingOrdersError };
+  const {
+    mutate: createOrder,
+    isSuccess: isCreateOrderSuccess,
+    isPending: isCreateOrderPending,
+    isError: isCreateOrderEror,
+  } = useMutation<{}, Error, CreateOrder>({
+    mutationFn: (order) =>
+      apiClient
+        .post("/store/customers/me/orders/", order, {
+          headers: { Authorization: AUTHORIZATION },
+        })
+        .then((res) => res.data),
+  });
+
+  return {
+    orders,
+    isFetchingOrdersLoading,
+    isFetchingOrdersError,
+    createOrder,
+    isCreateOrderSuccess,
+    isCreateOrderPending,
+    isCreateOrderEror,
+  };
 };
 
 export default UseOrder;

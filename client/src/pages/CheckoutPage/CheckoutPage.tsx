@@ -5,10 +5,14 @@ import Navigator from "../../components/Navigator/Navigator";
 import Process from "../../components/Process/Process";
 import SelectPaymentMethod from "../../components/CheckoutPageComponents/SelectPaymentMethod";
 import { useNavigate } from "react-router-dom";
+import { Address } from "../../hooks/useCustomer";
 
 interface Props {
   selectedSection: "selectShippingMethod" | "selectPaymentMethod";
 }
+
+let selectedShippingAddress = {} as Address;
+let shippingMethod = "";
 
 const CheckoutPage = ({ selectedSection }: Props) => {
   const navigate = useNavigate();
@@ -30,13 +34,20 @@ const CheckoutPage = ({ selectedSection }: Props) => {
       </div>
       {selectedSection === "selectShippingMethod" && (
         <SelectShippingMethod
-          onSubmit={(selectedAddress, shippingMethod) => {
-            console.log(selectedAddress, shippingMethod);
+          onSubmit={(selectedShippingAdd, shippingMeth) => {
+            console.log(selectedShippingAdd, shippingMeth);
+            selectedShippingAddress = selectedShippingAdd;
+            shippingMethod = shippingMeth;
             navigate("/cart/checkout/payment");
           }}
         />
       )}
-      {selectedSection === "selectPaymentMethod" && <SelectPaymentMethod />}
+      {selectedSection === "selectPaymentMethod" && (
+        <SelectPaymentMethod
+          selectedShippingAddress={selectedShippingAddress}
+          shippingMethod={shippingMethod}
+        />
+      )}
       <LinksSection />
     </main>
   );
