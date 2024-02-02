@@ -38,7 +38,7 @@ const Header = () => {
           <CartButton />
           <Icon
             onClick={() => {
-              navigate("/customer");
+              navigate("/customer/account_dashboard");
             }}
           >
             <FaRegUserCircle fontWeight={100} />

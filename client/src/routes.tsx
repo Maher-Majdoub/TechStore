@@ -18,7 +18,12 @@ const router = createBrowserRouter([
       { path: "/", element: <HomePage /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/signup", element: <SignupPage /> },
-      { path: "/customer", element: <UserAccountPage /> },
+      { path: "/customer/account_dashboard", element: <UserAccountPage /> },
+      { path: "/customer/account_information", element: <UserAccountPage /> },
+      { path: "/customer/address_book", element: <UserAccountPage /> },
+      { path: "/customer/orders", element: <UserAccountPage /> },
+      { path: "/customer/wishlist", element: <UserAccountPage /> },
+      { path: "/customer/compare_products", element: <UserAccountPage /> },
       { path: "/products", element: <ProductsPage /> },
       {
         path: "/categories/",

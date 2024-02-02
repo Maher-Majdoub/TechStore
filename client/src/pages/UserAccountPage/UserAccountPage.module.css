@@ -5,7 +5,8 @@
 
 .title {
     font-size: 32px;
-    font-weight: 600
+    font-weight: 600;
+    text-transform: capitalize;
 }
 
 .sectionSelectors {

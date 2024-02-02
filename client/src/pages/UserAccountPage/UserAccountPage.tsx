@@ -1,5 +1,4 @@
 import styles from "./UserAccountPage.module.css";
-import { useState } from "react";
 import AccountInformation from "../../components/UserPageComponents/AccountInformation";
 import AccountDashboard from "../../components/UserPageComponents/AccountDashboard";
 import OrdersList from "../../components/UserPageComponents/OrdersList";
@@ -9,104 +8,98 @@ import Navigator from "../../components/Navigator/Navigator";
 import LinksSection from "../../components/LinksSection/LinksSection";
 import AddressBook from "../../components/UserPageComponents/AddressBook";
 import useLocation from "../../hooks/useLocation";
-
-enum Section {
-  dashBoard = "My Dashboard",
-  info = "Account Information",
-  addresses = "Address Book",
-  orders = "My Orders",
-  wishList = "My Wish List",
-  compareList = "Compare Products",
-}
+import { useNavigate } from "react-router-dom";
 
 const UserAccountPage = () => {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
-  console.log(pathname);
+  const endpoints = pathname.split("/");
+  const endpoint = endpoints[endpoints.length - 1];
 
-  const [selectedSection, setSelectedSection] = useState(Section.dashBoard);
+  console.log(endpoint);
 
   return (
     <>
       <main className=" container">
         <Navigator />
         <div className={styles.container}>
-          <h1 className={styles.title}>{selectedSection}</h1>
+          <h1 className={styles.title}>{endpoint.replace("_", " ")}</h1>
           <div className={styles.content}>
             <ul className={styles.sectionSelectors}>
               <li
                 className={`${styles.sectionSelector} ${
-                  selectedSection === Section.dashBoard ? styles.selected : ""
+                  endpoint === "account_dashboard" ? styles.selected : ""
                 }`}
                 onClick={() => {
-                  setSelectedSection(Section.dashBoard);
+                  navigate("/customer/account_dashboard");
                 }}
               >
                 Account DashBoard
               </li>
               <li
                 className={`${styles.sectionSelector} ${
-                  selectedSection === Section.info ? styles.selected : ""
+                  endpoint === "account_information" ? styles.selected : ""
                 }`}
                 onClick={() => {
-                  setSelectedSection(Section.info);
+                  navigate("/customer/account_information");
                 }}
               >
                 Account Information
               </li>
               <li
                 className={`${styles.sectionSelector} ${
-                  selectedSection === Section.addresses ? styles.selected : ""
+                  endpoint === "address_book" ? styles.selected : ""
                 }`}
                 onClick={() => {
-                  setSelectedSection(Section.addresses);
+                  navigate("/customer/address_book");
                 }}
               >
                 Address Book
               </li>
               <li
                 className={`${styles.sectionSelector} ${
-                  selectedSection === Section.orders ? styles.selected : ""
+                  endpoint === "orders" ? styles.selected : ""
                 }`}
                 onClick={() => {
-                  setSelectedSection(Section.orders);
+                  navigate("/customer/orders");
                 }}
               >
                 My Orders
               </li>
               <li
                 className={`${styles.sectionSelector} ${
-                  selectedSection === Section.wishList ? styles.selected : ""
+                  endpoint === "wishlist" ? styles.selected : ""
                 }`}
                 onClick={() => {
-                  setSelectedSection(Section.wishList);
+                  navigate("/customer/wishlist");
                 }}
               >
                 My Wish List
               </li>
               <li
                 className={`${styles.sectionSelector} ${
-                  selectedSection === Section.compareList ? styles.selected : ""
+                  endpoint === "compare_products" ? styles.selected : ""
                 }`}
                 onClick={() => {
-                  setSelectedSection(Section.compareList);
+                  navigate("/customer/compare_products");
                 }}
               >
                 Compare Products
               </li>
             </ul>
             <div className={styles.section}>
-              {selectedSection === Section.dashBoard && (
+              {endpoint === "account_dashboard" && (
                 <AccountDashboard
                   displayAddressBook={() => {
-                    setSelectedSection(Section.addresses);
+                    //setSelectedSection(Section.addresses);
                   }}
                 />
               )}
-              {selectedSection === Section.info && <AccountInformation />}
-              {selectedSection === Section.addresses && <AddressBook />}
-              {selectedSection === Section.orders && <OrdersList />}
-              {selectedSection === Section.wishList && <WishList />}
-              {selectedSection === Section.compareList && <CompareList />}
+              {endpoint === "account_information" && <AccountInformation />}
+              {endpoint === "address_book" && <AddressBook />}
+              {endpoint === "orders" && <OrdersList />}
+              {endpoint === "wishlist" && <WishList />}
+              {endpoint === "compare_products" && <CompareList />}
             </div>
           </div>
           <LinksSection />
