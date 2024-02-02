@@ -2,12 +2,13 @@ import styles from "./UserAccountPage.module.css";
 import { useState } from "react";
 import AccountInformation from "../../components/UserPageComponents/AccountInformation";
 import AccountDashboard from "../../components/UserPageComponents/AccountDashboard";
-import Ordres from "../../components/UserPageComponents/Ordres";
+import OrdersList from "../../components/UserPageComponents/OrdersList";
 import WishList from "../../components/WishList/WishList";
 import CompareList from "../../components/CompareList/CompareList";
 import Navigator from "../../components/Navigator/Navigator";
 import LinksSection from "../../components/LinksSection/LinksSection";
 import AddressBook from "../../components/UserPageComponents/AddressBook";
+import useLocation from "../../hooks/useLocation";
 
 enum Section {
   dashBoard = "My Dashboard",
@@ -19,6 +20,9 @@ enum Section {
 }
 
 const UserAccountPage = () => {
+  const { pathname } = useLocation();
+  console.log(pathname);
+
   const [selectedSection, setSelectedSection] = useState(Section.dashBoard);
 
   return (
@@ -100,7 +104,7 @@ const UserAccountPage = () => {
               )}
               {selectedSection === Section.info && <AccountInformation />}
               {selectedSection === Section.addresses && <AddressBook />}
-              {selectedSection === Section.orders && <Ordres />}
+              {selectedSection === Section.orders && <OrdersList />}
               {selectedSection === Section.wishList && <WishList />}
               {selectedSection === Section.compareList && <CompareList />}
             </div>

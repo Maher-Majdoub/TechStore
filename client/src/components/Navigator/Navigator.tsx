@@ -1,6 +1,7 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaChevronRight } from "react-icons/fa";
 import styles from "./Navigator.module.css";
+import useLocation from "../../hooks/useLocation";
 
 const getNavEndpoint = (value: string, endpoints: string[]) => {
   let navEndpoint = "";
@@ -12,12 +13,7 @@ const getNavEndpoint = (value: string, endpoints: string[]) => {
 };
 
 const Navigator = () => {
-  let { pathname } = useLocation();
-  pathname = pathname.trim();
-
-  if (pathname[0] === "/") pathname = pathname.slice(1);
-  if (pathname[pathname.length - 1] === "/")
-    pathname = pathname.slice(0, pathname.length - 1);
+  const { pathname } = useLocation();
 
   const endpoints = pathname.split("/");
   const navigate = useNavigate();

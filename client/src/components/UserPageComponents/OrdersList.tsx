@@ -1,7 +1,7 @@
 import UseOrder from "../../hooks/useOrder";
 import styles from "./styles.module.css";
 
-const Ordres = () => {
+const OrdersList = () => {
   const { orders } = UseOrder();
   return (
     <>
@@ -46,4 +46,4 @@ const Ordres = () => {
   );
 };
 
-export default Ordres;
+export default OrdersList;
