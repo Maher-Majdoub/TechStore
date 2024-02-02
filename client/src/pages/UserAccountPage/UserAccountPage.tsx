@@ -2,7 +2,7 @@ import styles from "./UserAccountPage.module.css";
 import { useState } from "react";
 import AccountInformation from "../../components/UserPageComponents/AccountInformation";
 import AccountDashboard from "../../components/UserPageComponents/AccountDashboard";
-import Ordres from "../../components/Orders/Ordres";
+import Ordres from "../../components/UserPageComponents/Ordres";
 import WishList from "../../components/WishList/WishList";
 import CompareList from "../../components/CompareList/CompareList";
 import Navigator from "../../components/Navigator/Navigator";
