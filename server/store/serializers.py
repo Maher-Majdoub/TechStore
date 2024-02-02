@@ -206,6 +206,14 @@ class GetOrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
     shipping_address = AddressSerializer()
     billing_address = AddressSerializer()
+    total = serializers.SerializerMethodField()
+
+    def get_total(self, obj: Order):
+        total = 0
+        items = OrderItem.objects.filter(order=obj)
+        for item in items: total += item.final_unit_price * item.quantity
+        return total
+
 
     class Meta:
         model = Order
@@ -218,6 +226,7 @@ class GetOrderSerializer(serializers.ModelSerializer):
             'billing_address',
             'shipping_address',
             'shipping_method',
+            'total',
             'items',
         ]
 
