@@ -311,6 +311,9 @@ class WishViewSet(ModelViewSet):
         return super().create(request, *args, **kwargs)
     
     def get_queryset(self):
+        if self.kwargs['customer_pk'] == 'me':
+            customer = Customer.objects.only('id').get(user_id=self.request.user.id)
+            self.kwargs['customer_pk'] = customer.pk
         return Wish.objects.filter(customer=self.kwargs['customer_pk']).select_related('product')
     
     def get_serializer_class(self):
@@ -336,6 +339,9 @@ class CompareViewSet(ModelViewSet):
         return super().create(request, *args, **kwargs)
     
     def get_queryset(self):
+        if self.kwargs['customer_pk'] == 'me':
+            customer = Customer.objects.only('id').get(user_id=self.request.user.id)
+            self.kwargs['customer_pk'] = customer.pk
         return Compare.objects.filter(customer=self.kwargs['customer_pk']).select_related('product')
     
     def get_serializer_class(self):
