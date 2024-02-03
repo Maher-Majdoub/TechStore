@@ -13,9 +13,11 @@ import { FaRegHeart, FaBalanceScale, FaRegUserCircle } from "react-icons/fa";
 import CartButton from "../CartButton/CartButton";
 import { useNavigate } from "react-router-dom";
 import { endpoints } from "../../constants";
+import useWish from "../../hooks/useWish";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { data: wishes } = useWish();
 
   return (
     <header className={styles.header}>
@@ -33,7 +35,12 @@ const Header = () => {
           <Icon count={10} onClick={() => console.log("hola")}>
             <FaBalanceScale />
           </Icon>
-          <Icon count={10} onClick={() => console.log("hola")}>
+          <Icon
+            count={wishes?.length || 0}
+            onClick={() => {
+              navigate(endpoints["wishlist"]);
+            }}
+          >
             <FaRegHeart />
           </Icon>
           <CartButton />
