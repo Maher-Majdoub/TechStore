@@ -1,5 +1,6 @@
 import useDeleteWish from "../../hooks/useDeleteWish";
 import useWish from "../../hooks/useWish";
+import Paginator from "../Paginator/Paginator";
 import ProductCard from "../ProductCard/ProductCard";
 import styles from "./styles.module.css";
 
@@ -26,19 +27,26 @@ const WishList = () => {
             <div className={styles.titleContainer}>
               <h2>My Wish List</h2>
             </div>
-            <ul className={styles.list}>
-              {data.map((wish) => (
-                <ProductCard
-                  key={wish.id}
-                  product={wish.product}
-                  addToWish={false}
-                  del
-                  onDelete={() => {
-                    deleteWish({ wishId: wish.id });
-                  }}
-                />
-              ))}
-            </ul>
+            <Paginator
+              page={1}
+              pageSize={20}
+              total={data.length}
+              onChangePage={() => {}}
+            >
+              <ul className={styles.list}>
+                {data.map((wish) => (
+                  <ProductCard
+                    key={wish.id}
+                    product={wish.product}
+                    addToWish={false}
+                    del
+                    onDelete={() => {
+                      deleteWish({ wishId: wish.id });
+                    }}
+                  />
+                ))}
+              </ul>
+            </Paginator>
             {isDeleteWishPending && <p>deleting wish</p>}
           </div>
         </div>

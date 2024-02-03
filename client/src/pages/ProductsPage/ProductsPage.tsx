@@ -4,13 +4,9 @@ import useProducts from "../../hooks/useProducts";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import Navigator from "../../components/Navigator/Navigator";
 import styles from "./ProductsPage.module.css";
-import {
-  FaArrowUp,
-  FaArrowDown,
-  FaChevronLeft,
-  FaChevronRight,
-} from "react-icons/fa";
+import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { endpoints } from "../../constants";
+import Paginator from "../../components/Paginator/Paginator";
 
 const ProductsPage = () => {
   const location = useLocation();
@@ -36,7 +32,6 @@ const ProductsPage = () => {
   });
 
   const pageSize = 20;
-  const pagesCount = Math.ceil((data?.count || 0) / pageSize);
 
   if (error) {
     const navigate = useNavigate();
@@ -69,56 +64,22 @@ const ProductsPage = () => {
           </button>
         </div>
       </div>
-      <ul className={styles.list}>
-        {data?.results.map((product) => (
-          <li key={product.id}>
-            <ProductCard product={product} />
-          </li>
-        ))}
-      </ul>
-      <div className={styles.pagination}>
-        {data && (
-          <div>
-            {page !== 1 && (
-              <button
-                className={styles.pageSelector}
-                hidden={page === 1}
-                onClick={() => {
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                  setPage(page - 1);
-                }}
-              >
-                <FaChevronLeft />
-              </button>
-            )}
-            {Array.from({ length: pagesCount }, (_, index) => (
-              <button
-                key={index}
-                className={`${styles.pageSelector} ${
-                  page === index + 1 ? styles.selected : ""
-                }`}
-                onClick={() => {
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                  setPage(index + 1);
-                }}
-              >
-                {index + 1}
-              </button>
-            ))}
-            {page !== pagesCount && (
-              <button
-                className={styles.pageSelector}
-                onClick={() => {
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                  setPage(page + 1);
-                }}
-              >
-                <FaChevronRight />
-              </button>
-            )}
-          </div>
-        )}
-      </div>
+      <Paginator
+        page={1}
+        pageSize={pageSize}
+        total={data?.count || 0}
+        onChangePage={(page) => {
+          setPage(page);
+        }}
+      >
+        <ul className={styles.list}>
+          {data?.results.map((product) => (
+            <li key={product.id}>
+              <ProductCard product={product} />
+            </li>
+          ))}
+        </ul>
+      </Paginator>
     </main>
   );
 };
