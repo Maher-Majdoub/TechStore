@@ -1,12 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import useCustomer from "../../hooks/useCustomer";
 import AddressDisplayer from "./AddressDisplayer";
 import styles from "./styles.module.css";
+import { endpoints } from "../../constants";
 
-interface Props {
-  displayAddressBook(): void;
-}
-
-const AccountDashboard = ({ displayAddressBook }: Props) => {
+const AccountDashboard = () => {
   const { customer } = useCustomer();
   const defaultShippingAddress = customer?.addresses.find(
     (address) => address.is_default_shipping_address
@@ -14,6 +12,8 @@ const AccountDashboard = ({ displayAddressBook }: Props) => {
   const defaultBillingAddress = customer?.addresses.find(
     (address) => address.is_default_billing_address
   );
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -43,7 +43,11 @@ const AccountDashboard = ({ displayAddressBook }: Props) => {
           <div>
             <div className={`${styles.titleContainer} ${styles.flxBx}`}>
               <h2>Address Book</h2>
-              <div onClick={displayAddressBook}>
+              <div
+                onClick={() => {
+                  navigate(endpoints["addressBook"]);
+                }}
+              >
                 <span className={styles.link}>Manage Addresses</span>
               </div>
             </div>

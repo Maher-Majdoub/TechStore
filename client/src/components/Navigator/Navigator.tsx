@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { FaChevronRight } from "react-icons/fa";
 import styles from "./Navigator.module.css";
 import useLocation from "../../hooks/useLocation";
+import { endpoints } from "../../constants";
 
 const getNavEndpoint = (value: string, endpoints: string[]) => {
   let navEndpoint = "";
@@ -15,7 +16,7 @@ const getNavEndpoint = (value: string, endpoints: string[]) => {
 const Navigator = () => {
   const { pathname } = useLocation();
 
-  const endpoints = pathname.split("/");
+  const currEndpoints = pathname.split("/");
   const navigate = useNavigate();
 
   return (
@@ -23,16 +24,16 @@ const Navigator = () => {
       <span
         className={styles.endpoint}
         onClick={() => {
-          navigate("/");
+          navigate(endpoints["homePage"]);
         }}
       >
         Home
       </span>
-      {endpoints.map((value, index) => {
+      {currEndpoints.map((value, index) => {
         return (
           <div key={index}>
             <FaChevronRight />
-            {index === endpoints.length - 1 ? (
+            {index === currEndpoints.length - 1 ? (
               <span className={`${styles.currEndpoint} ${styles.endpoint}`}>
                 {value.replace("-", " ")}
               </span>
@@ -40,7 +41,7 @@ const Navigator = () => {
               <span
                 className={styles.endpoint}
                 onClick={() => {
-                  navigate(getNavEndpoint(value, endpoints));
+                  navigate(getNavEndpoint(value, currEndpoints));
                 }}
               >
                 {value.replace("-", " ")}

@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import useLogin from "../hooks/useLogin";
 import Navigator from "../components/Navigator/Navigator";
 import { useJwt } from "react-jwt";
+import { endpoints } from "../constants";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const LoginPage = () => {
     const { isExpired } = useJwt(accessToken);
     if (!isExpired) {
       useEffect(() => {
-        navigate("/customer");
+        navigate(endpoints["accountDashboard"]);
       }, []);
     }
   }
@@ -24,7 +25,7 @@ const LoginPage = () => {
   if (!isError && data) {
     localStorage.setItem("access_token", data.access);
     localStorage.setItem("refresh_token", data.refresh);
-    navigate("/customer");
+    navigate(endpoints["accountDashboard"]);
     return;
   }
 
@@ -88,7 +89,7 @@ const LoginPage = () => {
             </ul>
             <Button
               onClick={() => {
-                navigate("/signup");
+                navigate(endpoints["signup"]);
               }}
               filled
             >

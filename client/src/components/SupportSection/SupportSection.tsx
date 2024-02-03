@@ -2,6 +2,7 @@ import { MdOutlineArrowRightAlt } from "react-icons/md";
 import styles from "./SupportSection.module.css";
 import customerSupportImage from "../../assets/cusomerSupport.png";
 import { useNavigate } from "react-router-dom";
+import { endpoints } from "../../constants";
 
 const SupportSection = () => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const SupportSection = () => {
         <div
           className={styles.link}
           onClick={() => {
-            navigate("/product-support");
+            navigate(endpoints["productSupport"]);
           }}
         >
           <span>Product Support</span>
@@ -22,7 +23,7 @@ const SupportSection = () => {
         <div
           className={styles.link}
           onClick={() => {
-            navigate("/faq");
+            navigate(endpoints["faq"]);
           }}
         >
           <span>FAQ</span>
@@ -33,7 +34,7 @@ const SupportSection = () => {
         <div
           className={styles.link}
           onClick={() => {
-            navigate("/buyer-guide");
+            navigate(endpoints["buyerGuide"]);
           }}
         >
           <span>Our Buyer Guide</span>

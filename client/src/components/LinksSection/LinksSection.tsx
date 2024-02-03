@@ -3,6 +3,7 @@ import { RiAccountPinCircleFill } from "react-icons/ri";
 import { GiPriceTag } from "react-icons/gi";
 import styles from "./LinksSection.module.css";
 import { useNavigate } from "react-router-dom";
+import { endpoints } from "../../constants";
 
 const LinksSection = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const LinksSection = () => {
         <div
           className={styles.card}
           onClick={() => {
-            navigate("/customer");
+            navigate(endpoints["accountDashboard"]);
           }}
         >
           <div className={styles.icon}>

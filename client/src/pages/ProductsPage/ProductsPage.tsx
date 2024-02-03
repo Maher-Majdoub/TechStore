@@ -10,6 +10,7 @@ import {
   FaChevronLeft,
   FaChevronRight,
 } from "react-icons/fa";
+import { endpoints } from "../../constants";
 
 const ProductsPage = () => {
   const location = useLocation();
@@ -39,7 +40,7 @@ const ProductsPage = () => {
 
   if (error) {
     const navigate = useNavigate();
-    navigate("/error");
+    navigate(endpoints["error"]);
   }
 
   return (

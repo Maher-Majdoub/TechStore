@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import CategoryCard from "../CategoryCard/CategoryCard";
 import hideOnClickOutSide from "../../services/hideOnClickOutside";
 import { useNavigate } from "react-router-dom";
+import { endpoints } from "../../constants";
 
 const CategoriesSelector = () => {
   const { data } = useCategories();
@@ -34,7 +35,7 @@ const CategoriesSelector = () => {
               key={parent_category.id}
               onClick={() => {
                 toggleShowMenu(false);
-                navigate(`/categories/${parent_category.slug}`);
+                navigate(endpoints["subCategories"](parent_category.slug));
               }}
             >
               <img
@@ -53,7 +54,10 @@ const CategoriesSelector = () => {
                         event.stopPropagation();
                         toggleShowMenu(false);
                         navigate(
-                          `/categories/${parent_category.slug}/${category.slug}`
+                          endpoints["categoryProducts"](
+                            parent_category.slug,
+                            category.slug
+                          )
                         );
                       }}
                     >

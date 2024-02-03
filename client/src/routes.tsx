@@ -10,46 +10,45 @@ import SignupPage from "./pages/SignupPage";
 import CartPage from "./pages/CartPage/CartPage";
 import UserAccountPage from "./pages/UserAccountPage/UserAccountPage";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
+import { endpoints } from "./constants";
 
 const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
-      { path: "/", element: <HomePage /> },
-      { path: "/login", element: <LoginPage /> },
-      { path: "/signup", element: <SignupPage /> },
-      { path: "/customer/account_dashboard", element: <UserAccountPage /> },
-      { path: "/customer/account_information", element: <UserAccountPage /> },
-      { path: "/customer/address_book", element: <UserAccountPage /> },
-      { path: "/customer/orders", element: <UserAccountPage /> },
-      { path: "/customer/wishlist", element: <UserAccountPage /> },
-      { path: "/customer/compare_products", element: <UserAccountPage /> },
-      { path: "/products", element: <ProductsPage /> },
+      { path: endpoints["homePage"], element: <HomePage /> },
+      { path: endpoints["login"], element: <LoginPage /> },
+      { path: endpoints["signup"], element: <SignupPage /> },
+      { path: endpoints["accountDashboard"], element: <UserAccountPage /> },
+      { path: endpoints["accountInformation"], element: <UserAccountPage /> },
+      { path: endpoints["addressBook"], element: <UserAccountPage /> },
+      { path: endpoints["orders"], element: <UserAccountPage /> },
+      { path: endpoints["wishlist"], element: <UserAccountPage /> },
+      { path: endpoints["compareProducts"], element: <UserAccountPage /> },
+      { path: endpoints["products"], element: <ProductsPage /> },
+      { path: endpoints["categories"], element: <CategoriesPage /> },
       {
-        path: "/categories/",
-        element: <CategoriesPage />,
-      },
-      {
-        path: "/categories/:categorySlug",
+        path: endpoints["subCategories"](":categorySlug"),
         element: <SubCategoriesPage />,
       },
       {
-        path: "/categories/:categorySlug/:SubCategorySlug",
+        path: endpoints["categoryProducts"](
+          ":categorySlug",
+          ":SubCategorySlug"
+        ),
         element: <ProductsPage />,
       },
       {
-        path: "/categories/:categorySlug/:SubCategorySlug/:productSlug",
+        path: endpoints["productDetails"](
+          ":categorySlug",
+          ":SubCategorySlug",
+          ":productSlug"
+        ),
         element: <ProductDetailsPage />,
       },
-      { path: "/cart", element: <CartPage /> },
-      {
-        path: "/cart/checkout",
-        element: <CheckoutPage selectedSection="selectShippingMethod" />,
-      },
-      {
-        path: "/cart/checkout/payment",
-        element: <CheckoutPage selectedSection="selectPaymentMethod" />,
-      },
+      { path: endpoints["cart"], element: <CartPage /> },
+      { path: endpoints["checkout"], element: <CheckoutPage /> },
+      { path: endpoints["payment"], element: <CheckoutPage /> },
     ],
   },
 ]);

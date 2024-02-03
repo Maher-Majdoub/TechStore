@@ -5,6 +5,7 @@ import styles from "./CartPage.module.css";
 import CartSummary from "../../components/CartSummary/CartSummary";
 import Navigator from "../../components/Navigator/Navigator";
 import LinksSection from "../../components/LinksSection/LinksSection";
+import { endpoints } from "../../constants";
 
 const CartPage = () => {
   const { cart, isLoading, isError } = useCart();
@@ -31,7 +32,7 @@ const CartPage = () => {
                   <button
                     className={styles.btn + " " + styles.light}
                     onClick={() => {
-                      navigate("/");
+                      navigate(endpoints["homePage"]);
                     }}
                   >
                     Continue Shopping

@@ -12,6 +12,7 @@ import {
 import { FaRegHeart, FaBalanceScale, FaRegUserCircle } from "react-icons/fa";
 import CartButton from "../CartButton/CartButton";
 import { useNavigate } from "react-router-dom";
+import { endpoints } from "../../constants";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Header = () => {
           alt="logo"
           className={styles.logo}
           onClick={() => {
-            navigate("/");
+            navigate(endpoints["homePage"]);
           }}
         />
         <SearchBar />
@@ -38,7 +39,7 @@ const Header = () => {
           <CartButton />
           <Icon
             onClick={() => {
-              navigate("/customer/account_dashboard");
+              navigate(endpoints["accountDashboard"]);
             }}
           >
             <FaRegUserCircle fontWeight={100} />
@@ -53,7 +54,7 @@ const Header = () => {
           <div
             className={styles.option}
             onClick={() => {
-              navigate("/categories");
+              navigate(endpoints["categories"]);
             }}
           >
             <div className={styles.icon}>

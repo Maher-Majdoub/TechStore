@@ -3,12 +3,13 @@ import Navigator from "../../components/Navigator/Navigator";
 import useCategories from "../../hooks/useCategories";
 import { useNavigate } from "react-router-dom";
 import styles from "./CategoriesPage.module.css";
+import { endpoints } from "../../constants";
 
 const CategoriesPage = () => {
   const navigate = useNavigate();
   const { data, isLoading, error } = useCategories();
 
-  if (error) navigate("/error");
+  if (error) navigate(endpoints["error"]);
   return (
     <>
       {isLoading && <p>Loading...</p>}
@@ -20,7 +21,7 @@ const CategoriesPage = () => {
             <li
               key={category.id}
               onClick={() => {
-                navigate(`/categories/${category.slug}/`);
+                navigate(endpoints["subCategories"](category.slug));
               }}
             >
               <CategoryCard category={category} />

@@ -3,6 +3,7 @@ import useCategories, { Category } from "../../hooks/useCategories";
 import Navigator from "../../components/Navigator/Navigator";
 import styles from "./SubCategoriesPage.module.css";
 import CategoryCard from "../../components/CategoryCard/CategoryCard";
+import { endpoints } from "../../constants";
 
 const SubCategoriesPage = () => {
   const { categorySlug } = useParams();
@@ -11,7 +12,7 @@ const SubCategoriesPage = () => {
   const navigate = useNavigate();
 
   if (error) {
-    navigate("/error");
+    navigate(endpoints["error"]);
   }
 
   var subCategories = [] as Category[];
@@ -27,22 +28,29 @@ const SubCategoriesPage = () => {
   return (
     <>
       {isLoading && <p>Loading...</p>}
-      <main className={styles.container + " container"}>
-        <Navigator />
-        <h2 className={styles.title}>Sub Categories</h2>
-        <ul className={styles.list}>
-          {subCategories.map((category) => (
-            <li
-              key={category.id}
-              onClick={() => {
-                navigate(`/categories/${categorySlug}/${category.slug}/`);
-              }}
-            >
-              <CategoryCard category={category} />
-            </li>
-          ))}
-        </ul>
-      </main>
+      {data && (
+        <main className={styles.container + " container"}>
+          <Navigator />
+          <h2 className={styles.title}>Sub Categories</h2>
+          <ul className={styles.list}>
+            {subCategories.map((category) => (
+              <li
+                key={category.id}
+                onClick={() => {
+                  navigate(
+                    endpoints["categoryProducts"](
+                      categorySlug || "",
+                      category.slug
+                    )
+                  );
+                }}
+              >
+                <CategoryCard category={category} />
+              </li>
+            ))}
+          </ul>
+        </main>
+      )}
     </>
   );
 };

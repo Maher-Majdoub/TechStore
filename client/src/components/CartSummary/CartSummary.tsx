@@ -3,6 +3,7 @@ import useCart from "../../hooks/useCart";
 import Button from "../Button/Button";
 import styles from "./CartSummary.module.css";
 import { useNavigate } from "react-router-dom";
+import { endpoints } from "../../constants";
 
 const CartSummary = () => {
   const navigate = useNavigate();
@@ -100,7 +101,7 @@ const CartSummary = () => {
       <Button
         filled
         onClick={() => {
-          navigate("/cart/checkout");
+          navigate(endpoints["checkout"]);
         }}
       >
         Proceed To Checkout

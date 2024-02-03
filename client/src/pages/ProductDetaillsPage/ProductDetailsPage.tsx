@@ -11,6 +11,7 @@ import useCart from "../../hooks/useCart";
 import SupportSection from "../../components/SupportSection/SupportSection";
 import ProductInfoSection from "../../components/ProductInfoSection/ProductInfoSection";
 import LinksSection from "../../components/LinksSection/LinksSection";
+import { endpoints } from "../../constants";
 
 const ProductDetailsPage = () => {
   const { productSlug } = useParams();
@@ -20,7 +21,7 @@ const ProductDetailsPage = () => {
   >("about");
 
   if (!productSlug) {
-    navigate("/Eror Page");
+    navigate(endpoints["error"]);
     return;
   }
 

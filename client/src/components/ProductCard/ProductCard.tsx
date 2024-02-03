@@ -7,6 +7,7 @@ import Review from "../Review/Review";
 import styles from "./ProductCard.module.css";
 import { useNavigate } from "react-router-dom";
 import useCart from "../../hooks/useCart";
+import { endpoints } from "../../constants";
 
 interface Props {
   product: Product;
@@ -22,7 +23,11 @@ const ProductCard = ({ product }: Props) => {
         className={styles.card}
         onClick={() => {
           navigate(
-            `/categories/${product.category.parent_category.slug}/${product.category.slug}/${product.slug}`
+            endpoints["productDetails"](
+              product.category.parent_category.slug,
+              product.category.slug,
+              product.slug
+            )
           );
         }}
       >
@@ -66,7 +71,6 @@ const ProductCard = ({ product }: Props) => {
           className={styles.addToCart}
           onClick={(event) => {
             event.stopPropagation();
-            console.log("add to cart");
             addToCart({ product: product, quantity: 1 });
           }}
         >

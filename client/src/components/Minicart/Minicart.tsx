@@ -3,6 +3,7 @@ import useCart from "../../hooks/useCart";
 import Button from "../Button/Button";
 import MiniProductCard from "../MiniProductCard/MiniProductCard";
 import styles from "./Minicart.module.css";
+import { endpoints } from "../../constants";
 
 const Minicart = ({
   toggleShowCart,
@@ -35,7 +36,7 @@ const Minicart = ({
               <Button
                 onClick={() => {
                   toggleShowCart(false);
-                  navigate("/cart");
+                  navigate(endpoints["cart"]);
                 }}
               >
                 View or Edit Your Cart
@@ -52,7 +53,7 @@ const Minicart = ({
                     }}
                     onModify={() => {
                       toggleShowCart(false);
-                      navigate("/cart");
+                      navigate(endpoints["cart"]);
                     }}
                   />
                 </li>
@@ -66,7 +67,7 @@ const Minicart = ({
               <Button
                 onClick={() => {
                   toggleShowCart(false);
-                  navigate("/cart/checkout");
+                  navigate(endpoints["checkout"]);
                 }}
               >
                 Go To Checkout

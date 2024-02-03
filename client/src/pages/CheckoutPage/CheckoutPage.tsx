@@ -6,16 +6,22 @@ import Process from "../../components/Process/Process";
 import SelectPaymentMethod from "../../components/CheckoutPageComponents/SelectPaymentMethod";
 import { useNavigate } from "react-router-dom";
 import { Address } from "../../hooks/useCustomer";
-
-interface Props {
-  selectedSection: "selectShippingMethod" | "selectPaymentMethod";
-}
+import useLocation from "../../hooks/useLocation";
+import { ShippingMethod } from "../../hooks/useOrder";
+import { endpoints } from "../../constants";
 
 let selectedShippingAddress = {} as Address;
-let shippingMethod = "";
+let shippingMethod = "" as ShippingMethod;
 
-const CheckoutPage = ({ selectedSection }: Props) => {
+const CheckoutPage = () => {
+  const { pathname } = useLocation();
+  const currEndpoints = pathname.split("/");
+  const endpoint = currEndpoints[currEndpoints.length - 1];
+
+  console.log(endpoint);
+
   const navigate = useNavigate();
+
   return (
     <main className={styles.container + " container"}>
       <div className={styles.navContainer}>
@@ -27,22 +33,22 @@ const CheckoutPage = ({ selectedSection }: Props) => {
           <Process name="Shipping" done />
           <Process
             name="Review & Payments"
-            done={selectedSection === "selectPaymentMethod"}
+            done={endpoint === "payment"}
             count={2}
           />
         </div>
       </div>
-      {selectedSection === "selectShippingMethod" && (
+      {endpoint === "checkout" && (
         <SelectShippingMethod
           onSubmit={(selectedShippingAdd, shippingMeth) => {
             console.log(selectedShippingAdd, shippingMeth);
             selectedShippingAddress = selectedShippingAdd;
             shippingMethod = shippingMeth;
-            navigate("/cart/checkout/payment");
+            navigate(endpoints["payment"]);
           }}
         />
       )}
-      {selectedSection === "selectPaymentMethod" && (
+      {endpoint === "payment" && (
         <SelectPaymentMethod
           selectedShippingAddress={selectedShippingAddress}
           shippingMethod={shippingMethod}

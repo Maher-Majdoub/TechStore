@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import UseOrder, { PaymentMethod, ShippingMethod } from "../../hooks/useOrder";
 import useCart from "../../hooks/useCart";
 import { useQueryClient } from "@tanstack/react-query";
+import { endpoints } from "../../constants";
 
 interface Props {
   selectedShippingAddress: Address;
@@ -53,8 +54,9 @@ const SelectPaymentMethod = ({
   const { cart } = useCart();
 
   useEffect(() => {
-    if (!cart) navigate("/");
-    if (!shippingMethod || !selectedShippingAddress) navigate("/cart/checkout");
+    if (!cart) navigate(endpoints["homePage"]);
+    if (!shippingMethod || !selectedShippingAddress)
+      navigate(endpoints["checkout"]);
   }, [shippingMethod, selectedShippingAddress, cart]);
 
   if (cart)

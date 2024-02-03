@@ -9,12 +9,13 @@ import LinksSection from "../../components/LinksSection/LinksSection";
 import AddressBook from "../../components/UserPageComponents/AddressBook";
 import useLocation from "../../hooks/useLocation";
 import { useNavigate } from "react-router-dom";
+import { endpoints } from "../../constants";
 
 const UserAccountPage = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const endpoints = pathname.split("/");
-  const endpoint = endpoints[endpoints.length - 1];
+  const currEndpoints = pathname.split("/");
+  const endpoint = currEndpoints[currEndpoints.length - 1];
 
   console.log(endpoint);
 
@@ -31,7 +32,7 @@ const UserAccountPage = () => {
                   endpoint === "account_dashboard" ? styles.selected : ""
                 }`}
                 onClick={() => {
-                  navigate("/customer/account_dashboard");
+                  navigate(endpoints["accountDashboard"]);
                 }}
               >
                 Account DashBoard
@@ -41,7 +42,7 @@ const UserAccountPage = () => {
                   endpoint === "account_information" ? styles.selected : ""
                 }`}
                 onClick={() => {
-                  navigate("/customer/account_information");
+                  navigate(endpoints["accountInformation"]);
                 }}
               >
                 Account Information
@@ -51,7 +52,7 @@ const UserAccountPage = () => {
                   endpoint === "address_book" ? styles.selected : ""
                 }`}
                 onClick={() => {
-                  navigate("/customer/address_book");
+                  navigate(endpoints["addressBook"]);
                 }}
               >
                 Address Book
@@ -61,7 +62,7 @@ const UserAccountPage = () => {
                   endpoint === "orders" ? styles.selected : ""
                 }`}
                 onClick={() => {
-                  navigate("/customer/orders");
+                  navigate(endpoints["orders"]);
                 }}
               >
                 My Orders
@@ -71,7 +72,7 @@ const UserAccountPage = () => {
                   endpoint === "wishlist" ? styles.selected : ""
                 }`}
                 onClick={() => {
-                  navigate("/customer/wishlist");
+                  navigate(endpoints["wishlist"]);
                 }}
               >
                 My Wish List
@@ -81,20 +82,14 @@ const UserAccountPage = () => {
                   endpoint === "compare_products" ? styles.selected : ""
                 }`}
                 onClick={() => {
-                  navigate("/customer/compare_products");
+                  navigate(endpoints["compareProducts"]);
                 }}
               >
                 Compare Products
               </li>
             </ul>
             <div className={styles.section}>
-              {endpoint === "account_dashboard" && (
-                <AccountDashboard
-                  displayAddressBook={() => {
-                    //setSelectedSection(Section.addresses);
-                  }}
-                />
-              )}
+              {endpoint === "account_dashboard" && <AccountDashboard />}
               {endpoint === "account_information" && <AccountInformation />}
               {endpoint === "address_book" && <AddressBook />}
               {endpoint === "orders" && <OrdersList />}
