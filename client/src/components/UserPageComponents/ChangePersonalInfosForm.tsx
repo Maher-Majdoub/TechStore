@@ -13,7 +13,6 @@ const ChangePersonalInfosForm = () => {
 
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
   const birthDateRef = useRef<HTMLInputElement>(null);
 
@@ -21,7 +20,6 @@ const ChangePersonalInfosForm = () => {
     if (
       firstNameRef.current &&
       lastNameRef.current &&
-      emailRef.current &&
       phoneRef.current &&
       birthDateRef.current
     ) {

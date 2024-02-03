@@ -147,8 +147,8 @@
 }
 
 .list {
-    padding: 25px 0;
+    padding: 35px 0;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 10px
+    gap: 20px
 }

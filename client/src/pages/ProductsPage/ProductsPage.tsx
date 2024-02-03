@@ -13,25 +13,23 @@ const ProductsPage = () => {
   const search = new URLSearchParams(location.search).get("search");
   const { categorySlug, SubCategorySlug } = useParams();
   const [sortDirectionAsc, setSortDirectionAsc] = useState(true);
-  const [sortBy, setSortBy] = useState<null | "name" | "unit_price">(
-    "unit_price"
-  );
+  const [sortBy, setSortBy] = useState<"name" | "unit_price">("unit_price");
 
   const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
 
   const { data, isLoading, error } = useProducts({
     category: categorySlug,
     subCategory: SubCategorySlug,
     config: {
       params: {
-        page: page,
+        limit: pageSize,
+        offset: pageSize * (page - 1),
         ordering: `${!sortDirectionAsc ? "-" : ""}${sortBy}`,
         search: search,
       },
     },
   });
-
-  const pageSize = 20;
 
   if (error) {
     const navigate = useNavigate();
@@ -63,13 +61,27 @@ const ProductsPage = () => {
             {sortDirectionAsc ? <FaArrowUp /> : <FaArrowDown />}
           </button>
         </div>
+        <div className={styles.filter}>
+          <span>View Per Page:</span>
+          <select
+            name="page-size"
+            onChange={(event) => {
+              setPageSize(parseInt(event.target.value));
+            }}
+            defaultValue={pageSize}
+          >
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+          </select>
+        </div>
       </div>
       <Paginator
-        page={1}
+        page={page}
         pageSize={pageSize}
         total={data?.count || 0}
-        onChangePage={(page) => {
-          setPage(page);
+        onChangePage={(newPage) => {
+          setPage(newPage);
         }}
       >
         <ul className={styles.list}>

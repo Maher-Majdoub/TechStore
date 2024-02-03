@@ -35,20 +35,21 @@ const Paginator = ({
               <FaChevronLeft />
             </button>
           )}
-          {Array.from({ length: pagesCount }, (_, index) => (
-            <button
-              key={index}
-              className={`${styles.pageSelector} ${
-                page === index + 1 ? styles.selected : ""
-              }`}
-              onClick={() => {
-                window.scrollTo({ top: 0, behavior: "smooth" });
-                onChangePage(index + 1);
-              }}
-            >
-              {index + 1}
-            </button>
-          ))}
+          {pagesCount > 1 &&
+            Array.from({ length: pagesCount }, (_, index) => (
+              <button
+                key={index}
+                className={`${styles.pageSelector} ${
+                  page === index + 1 ? styles.selected : ""
+                }`}
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                  onChangePage(index + 1);
+                }}
+              >
+                {index + 1}
+              </button>
+            ))}
           {page !== pagesCount && (
             <button
               className={styles.pageSelector}

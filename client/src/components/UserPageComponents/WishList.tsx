@@ -1,3 +1,4 @@
+import { useState } from "react";
 import useDeleteWish from "../../hooks/useDeleteWish";
 import useWish from "../../hooks/useWish";
 import Paginator from "../Paginator/Paginator";
@@ -5,7 +6,10 @@ import ProductCard from "../ProductCard/ProductCard";
 import styles from "./styles.module.css";
 
 const WishList = () => {
-  const { data, isLoading, isError } = useWish();
+  const [page, setPage] = useState(1);
+  const pageSize = 10;
+
+  const { data, isLoading, isError } = useWish(page, pageSize);
   const {
     deleteWish,
     isSuccess: isDeleteWishSuccess,
@@ -28,13 +32,15 @@ const WishList = () => {
               <h2>My Wish List</h2>
             </div>
             <Paginator
-              page={1}
-              pageSize={20}
+              page={page}
+              pageSize={pageSize}
               total={data.length}
-              onChangePage={() => {}}
+              onChangePage={(newPage) => {
+                setPage(newPage);
+              }}
             >
               <ul className={styles.list}>
-                {data.map((wish) => (
+                {data?.map((wish) => (
                   <ProductCard
                     key={wish.id}
                     product={wish.product}
