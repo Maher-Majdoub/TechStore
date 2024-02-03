@@ -8,6 +8,7 @@ from .models import (
     Customer, OrderItem, Order, Compare, Wish, ProductTag, Tag,
     ProductInfo
 )
+from core.serializers import UserSerializer
 from .tasks import notify_customer
 
 
@@ -268,6 +269,7 @@ class GetCompareSerializer(CompareSerializer):
 
 
 class CustomerSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
     membership = serializers.CharField(read_only=True)
     addresses = AddressSerializer(many=True, read_only=True)
     wish_list = GetWishSerializer(many=True, read_only=True)
@@ -277,6 +279,7 @@ class CustomerSerializer(serializers.ModelSerializer):
         model = Customer
         fields = [
             'id',
+            'user',
             'first_name',
             'last_name',
             'phone', 
