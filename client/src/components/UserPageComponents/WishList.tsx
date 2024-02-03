@@ -17,7 +17,7 @@ const WishList = () => {
               <h2>My Wish List</h2>
             </div>
             <ul className={styles.list}>
-              {data.results.map((wish) => (
+              {data.map((wish) => (
                 <ProductCard key={wish.id} product={wish.product} />
               ))}
             </ul>

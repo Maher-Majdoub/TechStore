@@ -8,6 +8,7 @@ import styles from "./ProductCard.module.css";
 import { useNavigate } from "react-router-dom";
 import useCart from "../../hooks/useCart";
 import { endpoints } from "../../constants";
+import useCreateWish from "../../hooks/useCreateWish";
 
 interface Props {
   product: Product;
@@ -16,6 +17,11 @@ interface Props {
 const ProductCard = ({ product }: Props) => {
   const navigate = useNavigate();
   const { addToCart } = useCart();
+
+  const { createWish, isSuccess, isPending, isError } = useCreateWish();
+
+  if (isSuccess) console.log("wish created");
+  if (isError) console.error("something went wrong when create the wish");
 
   return (
     <div className={styles.container}>
@@ -37,6 +43,7 @@ const ProductCard = ({ product }: Props) => {
             onClick={(event) => {
               event.stopPropagation();
               console.log("add to wish");
+              createWish({ product: product });
             }}
           >
             <FaRegHeart />
@@ -67,6 +74,7 @@ const ProductCard = ({ product }: Props) => {
         <span className={styles.currPrice}>
           ${product.unit_price.toFixed(2)}
         </span>
+        {isPending && <span>Creating wish...</span>}
         <div
           className={styles.addToCart}
           onClick={(event) => {

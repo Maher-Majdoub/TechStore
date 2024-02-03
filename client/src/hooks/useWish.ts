@@ -3,21 +3,26 @@ import ApiService from "../services/apiService";
 import useAuthorization from "./useAuthorization";
 import { Product } from "./useProducts";
 
-interface Wish {
+export interface Wish {
   id: number;
   product: Product;
   created_at: Date;
 }
 
-const useWish = () => {
+const useWish = (page: number = 1) => {
   const access_token = useAuthorization();
   const apiService = new ApiService<Wish>("customers/me/wishlist/");
   const AUTHORIZATION = `JWT ${access_token}`;
 
   const { data, isSuccess, isLoading, isError } = useQuery({
-    queryKey: ["wishes"],
+    queryKey: ["wishes", page],
     queryFn: () =>
-      apiService.getPage({ headers: { Authorization: AUTHORIZATION } }),
+      apiService
+        .getPage({
+          params: { page: page },
+          headers: { Authorization: AUTHORIZATION },
+        })
+        .then((res) => res.results),
     staleTime: 1000 * 60 * 60 * 24, //24h
   });
 
