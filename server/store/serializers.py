@@ -279,7 +279,6 @@ class CustomerSerializer(serializers.ModelSerializer):
             'id',
             'first_name',
             'last_name',
-            'email',
             'phone', 
             'birth_date', 
             'membership', 
