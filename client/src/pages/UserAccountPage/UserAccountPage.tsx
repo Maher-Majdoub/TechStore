@@ -2,7 +2,7 @@ import styles from "./UserAccountPage.module.css";
 import AccountInformation from "../../components/UserPageComponents/AccountInformation";
 import AccountDashboard from "../../components/UserPageComponents/AccountDashboard";
 import OrdersList from "../../components/UserPageComponents/OrdersList";
-import WishList from "../../components/WishList/WishList";
+import WishList from "../../components/UserPageComponents/WishList";
 import CompareList from "../../components/CompareList/CompareList";
 import Navigator from "../../components/Navigator/Navigator";
 import LinksSection from "../../components/LinksSection/LinksSection";

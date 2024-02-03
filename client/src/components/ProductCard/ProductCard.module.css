@@ -13,6 +13,7 @@
 }
 
 .card:hover {
+    width: 100%;
     box-shadow: var(--shadow-3);
     transform: translateY(-20px);
     position: absolute;
