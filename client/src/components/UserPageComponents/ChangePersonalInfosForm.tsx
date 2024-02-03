@@ -28,7 +28,6 @@ const ChangePersonalInfosForm = () => {
       changePersonalInfos({
         first_name: firstNameRef.current.value,
         last_name: lastNameRef.current.value,
-        email: emailRef.current.value,
         phone: phoneRef.current.value,
         birth_date: birthDateRef.current.value,
       });
@@ -65,14 +64,6 @@ const ChangePersonalInfosForm = () => {
                   ref={lastNameRef}
                   type="text"
                   defaultValue={customer.last_name}
-                />
-              </div>
-              <div className={styles.inputGroup}>
-                <span>Email</span>
-                <input
-                  ref={emailRef}
-                  type="text"
-                  defaultValue={customer.email}
                 />
               </div>
               <div className={styles.inputGroup}>

@@ -14,7 +14,8 @@ const useLogin = () => {
     data,
     isError,
   } = useMutation({
-    mutationFn: (data: any) => apiService.post(data),
+    mutationFn: (data: { username: string; password: string }) =>
+      apiService.post(data),
   });
 
   return { login, data, isError };

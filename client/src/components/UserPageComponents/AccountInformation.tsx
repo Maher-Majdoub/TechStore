@@ -31,7 +31,7 @@ const AccountInformation = () => {
               </div>
               <div className={styles.info}>
                 <span>Email: </span>
-                <span>{customer.email}</span>
+                <span>{customer.user.email}</span>
               </div>
               <div className={styles.info}>
                 <span>Phone: </span>

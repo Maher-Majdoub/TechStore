@@ -33,13 +33,13 @@ interface Compare extends Wish {}
 interface PersonalInfos {
   first_name: string;
   last_name: string;
-  email: string;
   phone: string;
   birth_date: string;
 }
 
 export interface Customer extends PersonalInfos {
   id: number;
+  user: { id: number; email: string };
   membership: string;
   addresses: Address[];
   wish_list: Wish[];

@@ -27,7 +27,7 @@ const AccountDashboard = () => {
               <div className={styles.sectionContainer}>
                 <h4>Contact Information</h4>
                 <span>{`${customer.first_name} ${customer.last_name}`}</span>
-                <span>{customer.email}</span>
+                <span>{customer.user.email}</span>
                 <div className={styles.flxBx}>
                   <span className={styles.link}>Edit</span>
                   <span className={styles.link}>Change Password</span>
