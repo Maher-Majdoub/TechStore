@@ -10,7 +10,13 @@ interface Props {
 
 const ActionBtn = ({ action, onClick }: Props) => {
   return (
-    <button className={styles.btn} onClick={onClick}>
+    <button
+      className={styles.btn}
+      onClick={(event) => {
+        event.stopPropagation();
+        onClick();
+      }}
+    >
       {action === "delete" && <LiaTimesSolid />}
       {action === "modify" && <TiPencil />}
       {action === "addToWish" && <FaRegHeart />}

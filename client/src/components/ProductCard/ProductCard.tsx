@@ -1,6 +1,5 @@
 import { Product } from "../../hooks/useProducts";
 import { GrCart } from "react-icons/gr";
-import { FaRegHeart, FaBalanceScale } from "react-icons/fa";
 import CheckAvailability from "../CheckAvailability/CheckAvailability";
 import InStock from "../InStock/InStock";
 import Review from "../Review/Review";
@@ -9,12 +8,23 @@ import { useNavigate } from "react-router-dom";
 import useCart from "../../hooks/useCart";
 import { endpoints } from "../../constants";
 import useCreateWish from "../../hooks/useCreateWish";
+import ActionBtn from "../ActionBtn/ActionBtn";
 
 interface Props {
   product: Product;
+  addToWish?: boolean;
+  addToCompare?: boolean;
+  del?: boolean;
+  onDelete?(): void;
 }
 
-const ProductCard = ({ product }: Props) => {
+const ProductCard = ({
+  product,
+  addToWish = true,
+  addToCompare = true,
+  del = false,
+  onDelete = () => {},
+}: Props) => {
   const navigate = useNavigate();
   const { addToCart } = useCart();
 
@@ -38,25 +48,18 @@ const ProductCard = ({ product }: Props) => {
         }}
       >
         <div className={styles.actions}>
-          <div
-            className={styles.action}
-            onClick={(event) => {
-              event.stopPropagation();
-              console.log("add to wish");
-              createWish({ product: product });
-            }}
-          >
-            <FaRegHeart />
-          </div>
-          <div
-            className={styles.action}
-            onClick={(event) => {
-              event.stopPropagation();
-              console.log("add to compare");
-            }}
-          >
-            <FaBalanceScale />
-          </div>
+          {del && <ActionBtn action="delete" onClick={onDelete} />}
+          {addToWish && (
+            <ActionBtn
+              action="addToWish"
+              onClick={() => {
+                createWish({ product: product });
+              }}
+            />
+          )}
+          {addToCompare && (
+            <ActionBtn action="addToCompare" onClick={() => {}} />
+          )}
         </div>
         {product.inventory > 0 ? <InStock /> : <CheckAvailability />}
         <img

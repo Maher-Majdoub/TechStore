@@ -30,24 +30,6 @@
     top: 30px;
 }
 
-.action {
-    cursor: pointer;
-    display: grid;
-    place-items: center;
-    width: 30px;
-    height: 30px;
-    border: 2px solid var(--color-5);
-    border-radius: 50%;
-    font-size: 17px;
-    font-weight: 600;
-    transition: .3s;
-}
-
-.action:hover {
-    color: var(--color-1);
-    background-color: var(--color-5);
-}
-
 .img {
     width: 150px;
     height: 150px;
