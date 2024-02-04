@@ -70,7 +70,7 @@ const SelectShippingMethod = ({ onSubmit }: Props) => {
                         setSeletedAddress(address);
                       }}
                     >
-                      {selectedShippingAddress.id === address.id && (
+                      {selectedShippingAddress?.id === address.id && (
                         <div className={styles.selectedIcon}>
                           <MdOutlineDone />
                         </div>

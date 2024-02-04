@@ -15,14 +15,12 @@ const useWish = (page: number = 1, pageSize: number = 10) => {
   const AUTHORIZATION = `JWT ${access_token}`;
 
   const { data, isSuccess, isLoading, isError } = useQuery({
-    queryKey: ["wishes", page],
+    queryKey: ["wishes", page, pageSize],
     queryFn: () =>
-      apiService
-        .getPage({
-          params: { limit: pageSize, offset: (page - 1) * pageSize },
-          headers: { Authorization: AUTHORIZATION },
-        })
-        .then((res) => res.results),
+      apiService.getPage({
+        params: { limit: pageSize, offset: (page - 1) * pageSize },
+        headers: { Authorization: AUTHORIZATION },
+      }),
     staleTime: 1000 * 60 * 60 * 24, //24h
   });
 

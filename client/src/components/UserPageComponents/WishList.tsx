@@ -34,13 +34,13 @@ const WishList = () => {
             <Paginator
               page={page}
               pageSize={pageSize}
-              total={data.length}
+              total={data.count}
               onChangePage={(newPage) => {
                 setPage(newPage);
               }}
             >
               <ul className={styles.list}>
-                {data?.map((wish) => (
+                {data?.results.map((wish) => (
                   <ProductCard
                     key={wish.id}
                     product={wish.product}

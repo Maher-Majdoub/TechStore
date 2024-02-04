@@ -19,15 +19,7 @@ const useDeleteWish = () => {
           Authorization: AUTHORIZATION,
         },
       }),
-    onMutate: ({ wishId }) => {
-      const oldWishes = queryClient.getQueryData<Wish[]>(["wishes", 1]);
-      queryClient.setQueryData<Wish[]>(["wishes", 1], (oldWishes) =>
-        oldWishes?.filter((wish) => wish.id != wishId)
-      );
-      return oldWishes;
-    },
-    onError: (_, __, oldWishes) =>
-      queryClient.setQueryData<Wish[]>(["wishes", 1], oldWishes),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["wishes"] }),
   });
 
   return { deleteWish, isSuccess, isPending, isError };

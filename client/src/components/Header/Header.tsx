@@ -36,7 +36,7 @@ const Header = () => {
             <FaBalanceScale />
           </Icon>
           <Icon
-            count={wishes?.length || 0}
+            count={wishes?.count || 0}
             onClick={() => {
               navigate(endpoints["wishlist"]);
             }}
