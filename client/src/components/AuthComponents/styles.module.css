@@ -1,0 +1,72 @@
+.section, .form, .inputSection {
+    display: flex;
+    flex-direction: column;
+}
+
+.section {
+    gap: 15px;
+    padding: 30px;
+    background-color: var(--color-13);
+    border-radius: 10px;
+    min-width: 270px;
+    height: fit-content;
+}
+
+.sectionTitle {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.desc {
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.form {
+    gap: 10px;
+}
+
+.inputSection {
+    gap: 5px;
+    font-size: 14px;
+}
+
+.inputSection > span {
+    font-weight: 600;
+}
+
+.required::after {
+    content: '*';
+    margin-left: 5px;
+    color: #ff3838
+}
+
+.input{
+    background-color: var(--color-1);
+    border: 1px solid var(--color-5);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.btnContainer {
+    width: fit-content;
+}
+
+.ul > li {
+    font-size: 16px;
+    margin: 10px 0;
+    margin-left: 20px;
+    position: relative;
+}
+
+.ul > li::before {
+    content: "";
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--color-7);
+}
