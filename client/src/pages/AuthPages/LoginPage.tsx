@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useJwt } from "react-jwt";
 import { endpoints } from "../../constants";
 import useAuthorization from "../../hooks/useAuthorization";
 import useRefreshToken from "../../hooks/useRefreshToken";
@@ -13,32 +12,23 @@ import styles from "./styles.module.css";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { access, refresh } = useAuthorization();
+  const { refresh, isAccessExpired, isRefreshExpired } = useAuthorization();
   const { refreshToken, isRefreshSuccess, isRefreshPending, isRefreshError } =
     useRefreshToken();
   const { login, isLoginSuccess, isLoginPending } = useLogin();
 
   useEffect(() => {
-    if (isRefreshSuccess || isLoginSuccess) {
+    if (!isAccessExpired || isRefreshSuccess || isLoginSuccess) {
       navigate(endpoints["accountDashboard"]);
     }
-    return;
-  }, [isRefreshSuccess, isLoginSuccess]);
-
-  const { isExpired: isAccessExpired } = useJwt(access || "");
+  }, [isAccessExpired, isRefreshSuccess, isLoginSuccess]);
 
   useEffect(() => {
-    if (access && !isAccessExpired) {
-      navigate(endpoints["accountDashboard"]);
-      return;
+    if (refresh && !isRefreshExpired && !isRefreshError && !isRefreshPending) {
+      console.log("refreshing...");
+      refreshToken({ refresh: refresh });
     }
-  }, [access, isAccessExpired]);
-
-  const { isExpired: isRefreshExpired } = useJwt(refresh || "");
-
-  if (refresh && !isRefreshError && !isRefreshPending && !isRefreshExpired) {
-    refreshToken({ refresh: refresh });
-  }
+  }, [refresh, isRefreshExpired, isRefreshError, isRefreshPending]);
 
   if (isRefreshPending || isLoginPending) return <p>Wait....</p>;
 

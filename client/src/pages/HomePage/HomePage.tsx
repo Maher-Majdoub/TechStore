@@ -3,14 +3,8 @@ import ProductsDisplayer from "../../components/ProductsDisplayer/ProductsDispla
 import useProducts from "../../hooks/useProducts";
 import styles from "./HomePage.module.css";
 import customBuildImage from "../../assets/customBuild.jpg";
-import UseOrder from "../../hooks/useOrder";
 
 const HomePage = () => {
-  //const navigate = useNavigate();
-
-  const { orders } = UseOrder();
-  console.log(orders);
-
   const { data, isLoading, error } = useProducts({
     config: {
       params: { page: 1, tag: "new" },
