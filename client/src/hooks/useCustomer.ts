@@ -49,10 +49,10 @@ export interface Customer extends PersonalInfos {
 const apiService = new ApiService<Customer>("customers");
 
 const useCustomer = () => {
-  const access_token = useAuthorization();
+  const { access } = useAuthorization();
   const queryClient = useQueryClient();
 
-  if (!access_token)
+  if (!access)
     return {
       customer: null,
       isLoading: false,
@@ -74,7 +74,7 @@ const useCustomer = () => {
       isChangingPersonalInfosError: false,
     };
 
-  const AUTHORIZATION = `JWT ${access_token}`;
+  const AUTHORIZATION = `JWT ${access}`;
 
   const {
     data: customer,
@@ -85,7 +85,7 @@ const useCustomer = () => {
     queryFn: () =>
       apiService.get("me", {
         headers: {
-          Authorization: `JWT ${access_token}`,
+          Authorization: `JWT ${access}`,
         },
       }),
     staleTime: 60 * 60 * 1000, // 1h

@@ -10,9 +10,9 @@ export interface Wish {
 }
 
 const useWish = (page: number = 1, pageSize: number = 10) => {
-  const access_token = useAuthorization();
   const apiService = new ApiService<Wish>("customers/me/wishlist/");
-  const AUTHORIZATION = `JWT ${access_token}`;
+  const { access } = useAuthorization();
+  const AUTHORIZATION = `JWT ${access}`;
 
   const { data, isSuccess, isLoading, isError } = useQuery({
     queryKey: ["wishes", page, pageSize],

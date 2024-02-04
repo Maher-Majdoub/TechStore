@@ -1,24 +1,22 @@
-import { useMutation } from "@tanstack/react-query";
-import ApiService from "../services/apiService";
-
-interface Response {
-  access: string;
-  refresh: string;
-}
-
-const apiService = new ApiService<Response>("/auth/jwt/create");
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Tokens } from "./useAuthorization";
+import apiClient from "../services/apiClient";
 
 const useLogin = () => {
+  const queryClient = useQueryClient();
+
   const {
     mutate: login,
-    data,
-    isError,
-  } = useMutation({
-    mutationFn: (data: { username: string; password: string }) =>
-      apiService.post(data),
+    isSuccess: isLoginSuccess,
+    isPending: isLoginPending,
+    isError: isLoginError,
+  } = useMutation<Tokens, Error, { username: string; password: string }>({
+    mutationFn: (data) =>
+      apiClient.post("/auth/jwt/create/", data).then((res) => res.data),
+    onSuccess: (tokens) => queryClient.setQueryData<Tokens>(["auth"], tokens),
   });
 
-  return { login, data, isError };
+  return { login, isLoginSuccess, isLoginPending, isLoginError };
 };
 
 export default useLogin;

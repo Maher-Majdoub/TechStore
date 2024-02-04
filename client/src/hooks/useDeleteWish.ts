@@ -4,8 +4,8 @@ import useAuthorization from "./useAuthorization";
 import { Wish } from "./useWish";
 
 const useDeleteWish = () => {
-  const access_token = useAuthorization();
-  const AUTHORIZATION = `JWT ${access_token}`;
+  const { access } = useAuthorization();
+  const AUTHORIZATION = `JWT ${access}`;
   const queryClient = useQueryClient();
   const {
     mutate: deleteWish,

@@ -5,8 +5,8 @@ import { Wish } from "./useWish";
 import useAuthorization from "./useAuthorization";
 
 const useCreateWish = () => {
-  const access_token = useAuthorization();
-  const AUTHORIZATION = `JWT ${access_token}`;
+  const { access } = useAuthorization();
+  const AUTHORIZATION = `JWT ${access}`;
   const queryClient = useQueryClient();
 
   const {

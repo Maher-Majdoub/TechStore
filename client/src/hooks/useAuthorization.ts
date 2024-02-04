@@ -1,15 +1,14 @@
-import { useJwt } from "react-jwt";
+import { useQueryClient } from "@tanstack/react-query";
 
-const useAuthorization = () => {
-  const accessToken = localStorage.getItem("access_token");
-  // const refreshToken = localStorage.getItem("refresh_token");
+export interface Tokens {
+  access?: string;
+  refresh?: string;
+}
 
-  if (accessToken) {
-    const { isExpired } = useJwt(accessToken);
-    if (!isExpired) return accessToken;
-  }
-
-  return null;
+const useAuthorization = (): Tokens => {
+  const queryClient = useQueryClient();
+  const tokens = queryClient.getQueryData<Tokens>(["auth"]);
+  return tokens ? tokens : { access: undefined, refresh: undefined };
 };
 
 export default useAuthorization;

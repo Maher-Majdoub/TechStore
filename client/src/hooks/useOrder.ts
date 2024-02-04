@@ -69,9 +69,9 @@ interface CreateOrder {
 }
 
 const UseOrder = () => {
-  const access_token = useAuthorization();
   const apiService = new ApiService<Order>("customers/me/orders/");
-  const AUTHORIZATION = `JWT ${access_token}`;
+  const { access } = useAuthorization();
+  const AUTHORIZATION = `JWT ${access}`;
 
   const {
     data: orders,
