@@ -16,6 +16,7 @@
   --shadow-1: 0 0 200px 0 #00000023;
   --shadow-2: 0 4px 200px 0 #00000033;
   --shadow-3: 0 0 6px 0 #00000051;
+  --tablets-screen-width: 768px;
 }
 
 * {

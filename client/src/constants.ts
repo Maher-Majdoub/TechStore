@@ -27,3 +27,7 @@ export const endpoints = {
   buyerGuide: "/buyerd-guide",
   error: "/error",
 };
+
+export const screenWidths = {
+  tablets: 768,
+};

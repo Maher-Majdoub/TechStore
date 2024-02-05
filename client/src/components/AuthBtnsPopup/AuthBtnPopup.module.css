@@ -9,18 +9,6 @@
     position: relative;
 }
 
-.container::after {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    right: 50px;
-    height: 20px;
-    width: 20px;
-    transform:translateY(-50%) rotateZ(45deg);
-    box-shadow: var(--shadow-3);
-}
-
 .btns {
     display: flex;
     flex-direction: column;

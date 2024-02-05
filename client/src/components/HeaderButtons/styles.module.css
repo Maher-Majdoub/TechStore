@@ -5,10 +5,21 @@
 .popup {
     position: absolute;
     z-index:99999;
-    right: -45px;
+    right: -10px;
     bottom: -15px;
     transform: translateY(100%);
     display: block;
+}
+
+.popup::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 18px;
+    height: 13px;
+    width: 13px;
+    background-color: var(--color-1);
+    transform:translateY(-45%) rotateZ(45deg);
 }
 
 .popup.hiden {
