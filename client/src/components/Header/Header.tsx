@@ -9,11 +9,12 @@ import {
   MdPercent,
   MdLocalPhone,
 } from "react-icons/md";
-import { FaRegHeart, FaBalanceScale, FaRegUserCircle } from "react-icons/fa";
-import CartButton from "../CartButton/CartButton";
+import { FaRegHeart, FaBalanceScale } from "react-icons/fa";
+import CartButton from "../HeaderButtons/CartButton";
 import { useNavigate } from "react-router-dom";
 import { endpoints } from "../../constants";
 import useWish from "../../hooks/useWish";
+import AccountButton from "../HeaderButtons/AccountButton";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -44,13 +45,7 @@ const Header = () => {
             <FaRegHeart />
           </Icon>
           <CartButton />
-          <Icon
-            onClick={() => {
-              navigate(endpoints["accountDashboard"]);
-            }}
-          >
-            <FaRegUserCircle fontWeight={100} />
-          </Icon>
+          <AccountButton />
         </div>
       </div>
       <div className={styles.bottomHeader + " container"}>

@@ -25,7 +25,6 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (refresh && !isRefreshExpired && !isRefreshError && !isRefreshPending) {
-      console.log("refreshing...");
       refreshToken({ refresh: refresh });
     }
   }, [refresh, isRefreshExpired, isRefreshError, isRefreshPending]);

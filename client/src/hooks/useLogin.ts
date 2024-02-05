@@ -13,7 +13,12 @@ const useLogin = () => {
   } = useMutation<Tokens, Error, { username: string; password: string }>({
     mutationFn: (data) =>
       apiClient.post("/auth/jwt/create/", data).then((res) => res.data),
-    onSuccess: (tokens) => queryClient.setQueryData<Tokens>(["auth"], tokens),
+    onSuccess: (tokens) => {
+      queryClient.setQueryData<Tokens>(["auth"], tokens);
+      queryClient.invalidateQueries({ queryKey: ["wishes"] });
+      queryClient.invalidateQueries({ queryKey: ["customer"] });
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+    },
   });
 
   return { login, isLoginSuccess, isLoginPending, isLoginError };

@@ -6,10 +6,11 @@ import { endpoints } from "../../constants";
 
 const AccountDashboard = () => {
   const { customer } = useCustomer();
-  const defaultShippingAddress = customer?.addresses.find(
+
+  const defaultShippingAddress = customer?.addresses?.find(
     (address) => address.is_default_shipping_address
   );
-  const defaultBillingAddress = customer?.addresses.find(
+  const defaultBillingAddress = customer?.addresses?.find(
     (address) => address.is_default_billing_address
   );
 
@@ -27,7 +28,7 @@ const AccountDashboard = () => {
               <div className={styles.sectionContainer}>
                 <h4>Contact Information</h4>
                 <span>{`${customer.first_name} ${customer.last_name}`}</span>
-                <span>{customer.user.email}</span>
+                <span>{customer.user?.email}</span>
                 <div className={styles.flxBx}>
                   <span className={styles.link}>Edit</span>
                   <span className={styles.link}>Change Password</span>

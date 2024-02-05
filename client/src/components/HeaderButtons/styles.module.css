@@ -2,18 +2,15 @@
     position: relative;
 }
 
-.miniCart {
+.popup {
     position: absolute;
     z-index:99999;
     right: -45px;
     bottom: -15px;
     transform: translateY(100%);
+    display: block;
 }
 
-.miniCart.hiden {
+.popup.hiden {
     display: none;
-}
-
-.miniCart.shown {
-    height: block;
 }

@@ -54,7 +54,7 @@ const useCustomer = () => {
 
   if (!access)
     return {
-      customer: null,
+      customer: undefined,
       isLoading: false,
       isError: true,
       addAddress: () => {},

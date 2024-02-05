@@ -1,0 +1,51 @@
+.container {
+    box-shadow: var(--shadow-3);
+    background-color: var(--color-1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    padding: 10px 40px;
+    position: relative;
+}
+
+.container::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    right: 50px;
+    height: 20px;
+    width: 20px;
+    transform:translateY(-50%) rotateZ(45deg);
+    box-shadow: var(--shadow-3);
+}
+
+.btns {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btns > button {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-3);
+    position: relative;
+    text-wrap: nowrap;
+}
+
+.btns > button::before {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    height: 2px;
+    width: 0;
+    background-color: var(--color-3);
+    transition: .5s;
+}
+
+.btns > button:hover::before {
+    width: 100%;
+}

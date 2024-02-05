@@ -3,7 +3,7 @@ import LoginForm from "../../components/AuthComponents/LoginForm";
 import SignupForm from "../../components/AuthComponents/SignupForm";
 import LinksSection from "../../components/LinksSection/LinksSection";
 import Navigator from "../../components/Navigator/Navigator";
-import useSignup from "../../hooks/useSinup";
+import useSignup from "../../hooks/useSignup";
 import styles from "./styles.module.css";
 import { endpoints } from "../../constants";
 
