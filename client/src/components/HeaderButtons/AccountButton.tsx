@@ -7,15 +7,15 @@ import AuthBtnsPopup from "../AuthBtnsPopup/AuthBtnsPopup";
 
 const AccountButton = () => {
   const [showPopup, toggleShowPopup] = useState(false);
-  const cartRef = useRef<HTMLDivElement>(null);
+  const popupRef = useRef<HTMLDivElement>(null);
 
   hideOnClickOutSide({
-    ref: cartRef,
+    ref: popupRef,
     toggleShow: toggleShowPopup,
   });
 
   return (
-    <div className={styles.container}>
+    <div ref={popupRef} className={styles.container}>
       <Icon
         onClick={() => {
           toggleShowPopup(!showPopup);
