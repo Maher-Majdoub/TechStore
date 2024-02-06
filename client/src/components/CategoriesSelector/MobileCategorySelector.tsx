@@ -4,7 +4,6 @@ import styles from "./CategoriesSelector.module.css";
 import { MdMenu } from "react-icons/md";
 import { LiaTimesSolid } from "react-icons/lia";
 import CategoryList from "./CategoryList";
-import Links from "../Header/Links";
 
 const MobileCategorySelector = () => {
   const { data } = useCategories();

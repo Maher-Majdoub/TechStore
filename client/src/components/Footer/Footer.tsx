@@ -21,7 +21,9 @@ const Footer = () => {
             placeholder="Your Email"
             className={styles.input}
           />
-          <Button filled>Subscribe</Button>
+          <div className={styles.btnContainer}>
+            <Button filled>Subscribe</Button>
+          </div>
         </form>
       </div>
       <div className={styles.copyright + " container"}>
