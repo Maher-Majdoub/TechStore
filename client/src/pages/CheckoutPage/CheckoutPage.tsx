@@ -23,37 +23,39 @@ const CheckoutPage = () => {
   const navigate = useNavigate();
 
   return (
-    <main className={styles.container + " container"}>
-      <div className={styles.navContainer}>
-        <Navigator />
-      </div>
-      <div className={styles.head}>
-        <h2 className={styles.title}>Checkout</h2>
-        <div className={styles.processes}>
-          <Process name="Shipping" done />
-          <Process
-            name="Review & Payments"
-            done={endpoint === "payment"}
-            count={2}
-          />
+    <main>
+      <div className={styles.container + " container"}>
+        <div className={styles.navContainer}>
+          <Navigator />
         </div>
+        <div className={styles.head}>
+          <h2 className={styles.title}>Checkout</h2>
+          <div className={styles.processes}>
+            <Process name="Shipping" done />
+            <Process
+              name="Review & Payments"
+              done={endpoint === "payment"}
+              count={2}
+            />
+          </div>
+        </div>
+        {endpoint === "checkout" && (
+          <SelectShippingMethod
+            onSubmit={(selectedShippingAdd, shippingMeth) => {
+              console.log(selectedShippingAdd, shippingMeth);
+              selectedShippingAddress = selectedShippingAdd;
+              shippingMethod = shippingMeth;
+              navigate(endpoints["payment"]);
+            }}
+          />
+        )}
+        {endpoint === "payment" && (
+          <SelectPaymentMethod
+            selectedShippingAddress={selectedShippingAddress}
+            shippingMethod={shippingMethod}
+          />
+        )}
       </div>
-      {endpoint === "checkout" && (
-        <SelectShippingMethod
-          onSubmit={(selectedShippingAdd, shippingMeth) => {
-            console.log(selectedShippingAdd, shippingMeth);
-            selectedShippingAddress = selectedShippingAdd;
-            shippingMethod = shippingMeth;
-            navigate(endpoints["payment"]);
-          }}
-        />
-      )}
-      {endpoint === "payment" && (
-        <SelectPaymentMethod
-          selectedShippingAddress={selectedShippingAddress}
-          shippingMethod={shippingMethod}
-        />
-      )}
       <LinksSection />
     </main>
   );

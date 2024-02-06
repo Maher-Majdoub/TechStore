@@ -16,39 +16,39 @@ const CartPage = () => {
   }
 
   return (
-    <main className={styles.container}>
-      {isLoading && <p>isLoading...</p>}
-      {cart && (
-        <div className="container">
-          <Navigator />
-          <h2 className={styles.title}>Shopping Cart</h2>
-          <div className={styles.flxBx}>
-            <div className={styles.cartData}>
-              <div className={styles.cartItems}>
-                <CartItemsList />
-              </div>
-              <div className={styles.actions}>
-                <div>
-                  <button
-                    className={styles.btn + " " + styles.light}
-                    onClick={() => {
-                      navigate(endpoints["homePage"]);
-                    }}
-                  >
-                    Continue Shopping
-                  </button>
-                  <button className={styles.btn}>Clear Shopping Cart</button>
+    <main>
+      <div className={styles.container + " container"}>
+        {isLoading && <p>isLoading...</p>}
+        {cart && (
+          <div>
+            <Navigator />
+            <h2 className={styles.title}>Shopping Cart</h2>
+            <div className={styles.flxBx}>
+              <div className={styles.cartData}>
+                <div className={styles.cartItems}>
+                  <CartItemsList />
                 </div>
-                <button className={styles.btn}>Update Shopping Cart</button>
+                <div className={styles.actions}>
+                  <div>
+                    <button
+                      className={styles.btn + " " + styles.light}
+                      onClick={() => {
+                        navigate(endpoints["homePage"]);
+                      }}
+                    >
+                      Continue Shopping
+                    </button>
+                    <button className={styles.btn}>Clear Shopping Cart</button>
+                  </div>
+                  <button className={styles.btn}>Update Shopping Cart</button>
+                </div>
               </div>
+              <CartSummary />
             </div>
-            <CartSummary />
           </div>
-        </div>
-      )}
-      <div>
-        <LinksSection />
+        )}
       </div>
+      <LinksSection />
     </main>
   );
 };

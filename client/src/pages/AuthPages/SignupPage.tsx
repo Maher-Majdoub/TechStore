@@ -18,16 +18,18 @@ const SignUpPage = () => {
   }
 
   return (
-    <main className={styles.container + " container"}>
-      <Navigator />
-      <h2 className={styles.title}>Sign UP</h2>
-      <div className={styles.sections}>
-        <SignupForm
-          onSignup={(email, username, password) => {
-            signup({ email: email, username: username, password: password });
-          }}
-        />
-        <LoginForm onLogin={() => {}} />
+    <main>
+      <div className={styles.container + " container"}>
+        <Navigator />
+        <h2 className={styles.title}>Sign UP</h2>
+        <div className={styles.sections}>
+          <SignupForm
+            onSignup={(email, username, password) => {
+              signup({ email: email, username: username, password: password });
+            }}
+          />
+          <LoginForm onLogin={() => {}} />
+        </div>
       </div>
       <LinksSection />
     </main>

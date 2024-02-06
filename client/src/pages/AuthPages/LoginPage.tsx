@@ -32,16 +32,18 @@ const LoginPage = () => {
   if (isRefreshPending || isLoginPending) return <p>Wait....</p>;
 
   return (
-    <main className={styles.container + " container"}>
-      <Navigator />
-      <h2 className={styles.title}>Customer Login</h2>
-      <div className={styles.sections}>
-        <LoginForm
-          onLogin={(username, password) => {
-            login({ username: username, password: password });
-          }}
-        />
-        <NewCustomer />
+    <main>
+      <div className={styles.container + " container"}>
+        <Navigator />
+        <h2 className={styles.title}>Customer Login</h2>
+        <div className={styles.sections}>
+          <LoginForm
+            onLogin={(username, password) => {
+              login({ username: username, password: password });
+            }}
+          />
+          <NewCustomer />
+        </div>
       </div>
       <LinksSection />
     </main>
