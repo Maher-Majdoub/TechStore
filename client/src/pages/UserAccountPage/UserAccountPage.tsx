@@ -8,8 +8,9 @@ import Navigator from "../../components/Navigator/Navigator";
 import LinksSection from "../../components/LinksSection/LinksSection";
 import AddressBook from "../../components/UserPageComponents/AddressBook";
 import useLocation from "../../hooks/useLocation";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { endpoints } from "../../constants";
+import useAuthorization from "../../hooks/useAuthorization";
 
 const UserAccountPage = () => {
   const navigate = useNavigate();
@@ -17,7 +18,10 @@ const UserAccountPage = () => {
   const currEndpoints = pathname.split("/");
   const endpoint = currEndpoints[currEndpoints.length - 1];
 
-  console.log(endpoint);
+  const { isAccessExpired, isRefreshExpired } = useAuthorization();
+
+  if (isAccessExpired && isRefreshExpired)
+    return <Navigate to={endpoints["login"]} />;
 
   return (
     <>
