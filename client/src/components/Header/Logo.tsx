@@ -11,7 +11,7 @@ const Logo = () => {
       alt="logo"
       className={styles.logo}
       onClick={() => {
-        navigate(endpoints["homePage"]);
+        navigate(endpoints["home"]);
       }}
     />
   );

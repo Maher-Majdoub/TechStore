@@ -37,7 +37,7 @@ const CategoryList = ({ category, onSelect }: Props) => {
               onClick={() => {
                 onSelect();
                 navigate(
-                  endpoints["categoryProducts"](
+                  endpoints["category_products"](
                     category.slug,
                     sub_category.slug
                   )

@@ -8,7 +8,7 @@ const SearchBar = () => {
   const navigate = useNavigate();
   const searchRef = useRef<HTMLInputElement>(null);
   const handleSubmition = () => {
-    navigate(endpoints["searchProducts"](searchRef.current?.value));
+    navigate(endpoints["search_products"](searchRef.current?.value));
   };
 
   return (

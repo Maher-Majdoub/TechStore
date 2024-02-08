@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import useAuthorization from "../../hooks/useAuthorization";
 import useLogout from "../../hooks/useLogout";
-import { endpoints } from "../../constants";
+import { endpoints, userAccountEndPoints } from "../../constants";
 import styles from "./AuthBtnPopup.module.css";
 
 interface Props {
@@ -40,7 +40,7 @@ const AuthBtnsPopup = ({ onSelect }: Props) => {
             <button
               onClick={() => {
                 onSelect();
-                navigate(endpoints["accountDashboard"]);
+                navigate(userAccountEndPoints["account_dashboard"]);
               }}
             >
               View Account
@@ -49,7 +49,7 @@ const AuthBtnsPopup = ({ onSelect }: Props) => {
               onClick={() => {
                 onSelect();
                 logout();
-                navigate(endpoints["homePage"]);
+                navigate(endpoints["home"]);
               }}
             >
               logout

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import useCustomer from "../../hooks/useCustomer";
 import AddressDisplayer from "./AddressDisplayer";
 import styles from "./styles.module.css";
-import { endpoints } from "../../constants";
+import { userAccountEndPoints } from "../../constants";
 
 const AccountDashboard = () => {
   const { customer } = useCustomer();
@@ -46,7 +46,7 @@ const AccountDashboard = () => {
               <h2>Address Book</h2>
               <div
                 onClick={() => {
-                  navigate(endpoints["addressBook"]);
+                  navigate(userAccountEndPoints["address_book"]);
                 }}
               >
                 <span className={styles.link}>Manage Addresses</span>

@@ -21,7 +21,7 @@ const CategoriesPage = () => {
             <li
               key={category.id}
               onClick={() => {
-                navigate(endpoints["subCategories"](category.slug));
+                navigate(endpoints["sub_categories"](category.slug));
               }}
             >
               <CategoryCard category={category} />

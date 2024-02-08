@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { endpoints } from "../../constants";
+import { userAccountEndPoints } from "../../constants";
 import useAuthorization from "../../hooks/useAuthorization";
 import useRefreshToken from "../../hooks/useRefreshToken";
 import useLogin from "../../hooks/useLogin";
@@ -19,7 +19,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (!isAccessExpired || isRefreshSuccess || isLoginSuccess) {
-      navigate(endpoints["accountDashboard"]);
+      navigate(userAccountEndPoints["account_dashboard"]);
     }
   }, [isAccessExpired, isRefreshSuccess, isLoginSuccess]);
 

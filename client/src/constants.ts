@@ -1,30 +1,32 @@
+export const userAccountEndPoints = {
+  account_dashboard: "/account_dashboard",
+  account_information: "/account_information",
+  address_book: "/address_book",
+  orders: "/orders",
+  wishlist: "/wishlist",
+};
+
 export const endpoints = {
-  homePage: "/",
+  home: "/",
   categories: "/categories",
-  subCategories: (parent_category: string) => `/categories/${parent_category}`,
+  sub_categories: (parent_category: string) => `/categories/${parent_category}`,
   products: "/products",
-  searchProducts: (search?: string) => `/products?search=${search}`,
-  categoryProducts: (parent_category: string, sub_category: string) =>
+  search_products: (search?: string) => `/products?search=${search}`,
+  category_products: (parent_category: string, sub_category: string) =>
     `/categories/${parent_category}/${sub_category}`,
-  productDetails: (
+  product_details: (
     parent_category: string,
     sub_category: string,
     productSlug: string
   ) => `/categories/${parent_category}/${sub_category}/${productSlug}`,
   login: "/login",
   signup: "/signup",
-  accountDashboard: "/customer/account_dashboard",
-  accountInformation: "/customer/account_information",
-  addressBook: "/customer/address_book",
-  orders: "/customer/orders",
-  wishlist: "/customer/wishlist",
-  compareProducts: "/customer/compare_products",
   cart: "/cart",
   checkout: "/cart/checkout",
   payment: "/cart/checkout/payment",
-  productSupport: "/product-support",
+  product_support: "/product-support",
   faq: "/faq",
-  buyerGuide: "/buyerd-guide",
+  buyer_guide: "/buyer-guide",
   error: "/error",
 };
 

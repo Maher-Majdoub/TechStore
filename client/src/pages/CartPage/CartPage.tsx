@@ -33,7 +33,7 @@ const CartPage = () => {
                     <button
                       className={styles.btn + " " + styles.light}
                       onClick={() => {
-                        navigate(endpoints["homePage"]);
+                        navigate(endpoints["home"]);
                       }}
                     >
                       Continue Shopping

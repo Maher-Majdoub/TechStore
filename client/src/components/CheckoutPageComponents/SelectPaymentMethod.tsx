@@ -54,7 +54,7 @@ const SelectPaymentMethod = ({
   const { cart } = useCart();
 
   useEffect(() => {
-    if (!cart) navigate(endpoints["homePage"]);
+    if (!cart) navigate(endpoints["home"]);
     if (!shippingMethod || !selectedShippingAddress)
       navigate(endpoints["checkout"]);
   }, [shippingMethod, selectedShippingAddress, cart]);

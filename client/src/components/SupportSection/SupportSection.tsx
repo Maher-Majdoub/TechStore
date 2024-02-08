@@ -12,7 +12,7 @@ const SupportSection = () => {
         <div
           className={styles.link}
           onClick={() => {
-            navigate(endpoints["productSupport"]);
+            navigate(endpoints["product_support"]);
           }}
         >
           <span>Product Support</span>
@@ -34,7 +34,7 @@ const SupportSection = () => {
         <div
           className={styles.link}
           onClick={() => {
-            navigate(endpoints["buyerGuide"]);
+            navigate(endpoints["buyer_guide"]);
           }}
         >
           <span>Our Buyer Guide</span>

@@ -39,7 +39,7 @@ const DesktopCategorySelector = () => {
               key={parent_category.id}
               onClick={() => {
                 toggleShowMenu(false);
-                navigate(endpoints["subCategories"](parent_category.slug));
+                navigate(endpoints["sub_categories"](parent_category.slug));
               }}
             >
               <img
@@ -58,7 +58,7 @@ const DesktopCategorySelector = () => {
                         event.stopPropagation();
                         toggleShowMenu(false);
                         navigate(
-                          endpoints["categoryProducts"](
+                          endpoints["category_products"](
                             parent_category.slug,
                             category.slug
                           )

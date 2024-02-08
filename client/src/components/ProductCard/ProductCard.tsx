@@ -39,7 +39,7 @@ const ProductCard = ({
         className={styles.card}
         onClick={() => {
           navigate(
-            endpoints["productDetails"](
+            endpoints["product_details"](
               product.category.parent_category.slug,
               product.category.slug,
               product.slug

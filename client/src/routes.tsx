@@ -10,36 +10,44 @@ import SignupPage from "./pages/AuthPages/SignupPage";
 import CartPage from "./pages/CartPage/CartPage";
 import UserAccountPage from "./pages/UserAccountPage/UserAccountPage";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
-import { endpoints } from "./constants";
+import { endpoints, userAccountEndPoints } from "./constants";
 
 const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
-      { path: endpoints["homePage"], element: <HomePage /> },
+      { path: endpoints["home"], element: <HomePage /> },
       { path: endpoints["login"], element: <LoginPage /> },
       { path: endpoints["signup"], element: <SignupPage /> },
-      { path: endpoints["accountDashboard"], element: <UserAccountPage /> },
-      { path: endpoints["accountInformation"], element: <UserAccountPage /> },
-      { path: endpoints["addressBook"], element: <UserAccountPage /> },
-      { path: endpoints["orders"], element: <UserAccountPage /> },
-      { path: endpoints["wishlist"], element: <UserAccountPage /> },
-      { path: endpoints["compareProducts"], element: <UserAccountPage /> },
+      {
+        path: userAccountEndPoints["account_dashboard"],
+        element: <UserAccountPage />,
+      },
+      {
+        path: userAccountEndPoints["account_information"],
+        element: <UserAccountPage />,
+      },
+      {
+        path: userAccountEndPoints["address_book"],
+        element: <UserAccountPage />,
+      },
+      { path: userAccountEndPoints["orders"], element: <UserAccountPage /> },
+      { path: userAccountEndPoints["wishlist"], element: <UserAccountPage /> },
       { path: endpoints["products"], element: <ProductsPage /> },
       { path: endpoints["categories"], element: <CategoriesPage /> },
       {
-        path: endpoints["subCategories"](":categorySlug"),
+        path: endpoints["sub_categories"](":categorySlug"),
         element: <SubCategoriesPage />,
       },
       {
-        path: endpoints["categoryProducts"](
+        path: endpoints["category_products"](
           ":categorySlug",
           ":SubCategorySlug"
         ),
         element: <ProductsPage />,
       },
       {
-        path: endpoints["productDetails"](
+        path: endpoints["product_details"](
           ":categorySlug",
           ":SubCategorySlug",
           ":productSlug"

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import useWish from "../../hooks/useWish";
 import Icon from "../Icon/Icon";
-import { endpoints } from "../../constants";
+import { userAccountEndPoints } from "../../constants";
 import { FaRegHeart } from "react-icons/fa6";
 
 const WishesButton = () => {
@@ -11,7 +11,7 @@ const WishesButton = () => {
     <Icon
       count={wishes?.count || 0}
       onClick={() => {
-        navigate(endpoints["wishlist"]);
+        navigate(userAccountEndPoints["wishlist"]);
       }}
     >
       <FaRegHeart />

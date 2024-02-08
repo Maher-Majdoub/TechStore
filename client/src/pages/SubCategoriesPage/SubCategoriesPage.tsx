@@ -38,7 +38,7 @@ const SubCategoriesPage = () => {
                 key={category.id}
                 onClick={() => {
                   navigate(
-                    endpoints["categoryProducts"](
+                    endpoints["category_products"](
                       categorySlug || "",
                       category.slug
                     )

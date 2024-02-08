@@ -24,7 +24,7 @@ const Navigator = () => {
       <span
         className={styles.endpoint}
         onClick={() => {
-          navigate(endpoints["homePage"]);
+          navigate(endpoints["home"]);
         }}
       >
         Home
