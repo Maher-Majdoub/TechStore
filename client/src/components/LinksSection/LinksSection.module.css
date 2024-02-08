@@ -10,13 +10,13 @@
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    column-gap: 100px;
-    row-gap: 30px;
+    gap: 30px
 }
 
 @media only screen and (max-width: 768px) {
     .cards {
-        grid-template-columns: (1, minmax((200px, 1fr)));
+        display: flex;
+        flex-direction: column;
     }
 }
 
@@ -27,7 +27,7 @@
     align-items: center;
     gap: 10px;
     text-align: center;
-    padding: 30px 15px;
+    padding: 10px 15px;
     transition: .5s;
 }
 

@@ -19,9 +19,6 @@ const OrdersList = () => {
                     <th>Date</th>
                     <th>Subtotal</th>
                     <th>Status</th>
-                    <th>Paymment Method</th>
-                    <th>Payment Status</th>
-                    <th>Shipping Method</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -31,9 +28,6 @@ const OrdersList = () => {
                       <td>{new Date(order.created_at).toLocaleDateString()}</td>
                       <td>${order.total.toFixed(2)}</td>
                       <td>{order.status}</td>
-                      <td>{order.payment_method}</td>
-                      <td>{order.payment_status}</td>
-                      <td>{order.shipping_method}</td>
                     </tr>
                   ))}
                 </tbody>

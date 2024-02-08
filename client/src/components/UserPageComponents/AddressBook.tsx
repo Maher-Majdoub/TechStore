@@ -60,10 +60,6 @@ const AddressBook = () => {
                       <th>First Name</th>
                       <th>Last Name</th>
                       <th>Address</th>
-                      <th>Country</th>
-                      <th>State</th>
-                      <th>City</th>
-                      <th>Postal Code</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -72,10 +68,6 @@ const AddressBook = () => {
                         <td>{address.first_name}</td>
                         <td>{address.last_name}</td>
                         <td>{address.address}</td>
-                        <td>{address.country}</td>
-                        <td>{address.state}</td>
-                        <td>{address.city}</td>
-                        <td>{address.postal_code}</td>
                         <td className={styles.actions}>
                           <ActionBtn
                             action="delete"
