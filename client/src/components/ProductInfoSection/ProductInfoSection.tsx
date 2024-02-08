@@ -14,14 +14,14 @@ const ProductInfoSection = ({ infos }: Props) => {
         {infos.map((info) => (
           <SwiperSlide key={info.id}>
             <div className={styles.content}>
-              <div className={styles.notes}>
-                <h3 className={styles.title}>{info.title}</h3>
-                <p className={styles.description}>{info.description}</p>
-              </div>
               <div
                 className={styles.imgContainer}
                 style={{ backgroundImage: `url(${info.image})` }}
               ></div>
+              <div className={styles.notes}>
+                <h3 className={styles.title}>{info.title}</h3>
+                <p className={styles.description}>{info.description}</p>
+              </div>
             </div>
           </SwiperSlide>
         ))}

@@ -1,10 +1,10 @@
 import { LiaTimesSolid } from "react-icons/lia";
 import styles from "./ActionBtn.module.css";
 import { TiPencil } from "react-icons/ti";
-import { FaBalanceScale, FaRegHeart } from "react-icons/fa";
+import { FaRegEye, FaRegHeart } from "react-icons/fa";
 
 interface Props {
-  action: "delete" | "modify" | "addToWish" | "addToCompare";
+  action: "delete" | "modify" | "addToWish" | "view";
   onClick(): void;
 }
 
@@ -20,7 +20,7 @@ const ActionBtn = ({ action, onClick }: Props) => {
       {action === "delete" && <LiaTimesSolid />}
       {action === "modify" && <TiPencil />}
       {action === "addToWish" && <FaRegHeart />}
-      {action === "addToCompare" && <FaBalanceScale />}
+      {action === "view" && <FaRegEye />}
     </button>
   );
 };

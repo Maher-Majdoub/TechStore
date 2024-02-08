@@ -58,7 +58,18 @@ const ProductCard = ({
             />
           )}
           {addToCompare && (
-            <ActionBtn action="addToCompare" onClick={() => {}} />
+            <ActionBtn
+              action="view"
+              onClick={() => {
+                navigate(
+                  endpoints["product_details"](
+                    product.category.parent_category.slug,
+                    product.category.slug,
+                    product.slug
+                  )
+                );
+              }}
+            />
           )}
         </div>
         {product.inventory > 0 ? <InStock /> : <CheckAvailability />}

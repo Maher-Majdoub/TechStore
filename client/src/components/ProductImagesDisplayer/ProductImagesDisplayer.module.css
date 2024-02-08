@@ -5,11 +5,21 @@
 }
 
 .swiper {
-    width: 290px
+    width: 250px;
 }
 
 .img {
-    width: 255px;
-    height: 444px;
+    width: 250px;
+    height: 400px;
     object-fit: contain;
+}
+
+@media only screen and (max-width: 768px) {
+    .swiper {
+        width: 200px;
+    }
+    .img {
+        width: 200px;
+        height: 300px;
+    }
 }
