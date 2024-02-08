@@ -15,7 +15,6 @@ const getNavEndpoint = (value: string, endpoints: string[]) => {
 
 const Navigator = () => {
   const { pathname } = useLocation();
-
   const currEndpoints = pathname.split("/");
   const navigate = useNavigate();
 
@@ -35,7 +34,7 @@ const Navigator = () => {
             <FaChevronRight />
             {index === currEndpoints.length - 1 ? (
               <span className={`${styles.currEndpoint} ${styles.endpoint}`}>
-                {value.replace("-", " ")}
+                {value.replace("_", " ")}
               </span>
             ) : (
               <span
@@ -44,7 +43,7 @@ const Navigator = () => {
                   navigate(getNavEndpoint(value, currEndpoints));
                 }}
               >
-                {value.replace("-", " ")}
+                {value.replace("_", " ")}
               </span>
             )}
           </div>

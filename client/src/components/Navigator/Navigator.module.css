@@ -1,3 +1,7 @@
+.container {
+    margin-bottom: 10px;
+}
+
 .container, .container > div {
     display: flex;
     gap: 10px;
@@ -5,6 +9,7 @@
 }
 
 .endpoint {
+    text-transform: capitalize;
     cursor: pointer;
     transition: .5s;
 }

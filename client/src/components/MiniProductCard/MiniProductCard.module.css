@@ -1,7 +1,9 @@
 .card {
     display: flex;
     align-items: center;
-    gap: 20px
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
 }
 
 .cnt {
@@ -16,7 +18,6 @@
 }
 
 .prodName {
-    width: 200px;
     font-size: 13px;
     font-weight: 400;
 }

@@ -84,7 +84,7 @@
     z-index: 99999999;
     height: 100vh;
     width: 100%;
-    background-color: rgba(54, 54, 54, 0.748);
+    background-color: var(--color-15)
 }
 
 .sideBar .content {

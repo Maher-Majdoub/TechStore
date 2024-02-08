@@ -22,10 +22,10 @@ const UserAccountPage = () => {
 
   return (
     <>
-      <main>
+      <main className={styles.container}>
         <div className="container">
           <Navigator />
-          <div className={styles.container}>
+          <div>
             {width && width > screenWidths["tablets"] && (
               <h1 className={styles.title}>{endpoint.replace("_", " ")}</h1>
             )}
