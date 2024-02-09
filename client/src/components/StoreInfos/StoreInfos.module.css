@@ -1,0 +1,35 @@
+.container {
+    background-color: var(--color-13);
+    border-radius: 10px;
+    width: fit-content;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: fit-content;
+}
+
+.element {
+    display: flex;
+    align-items: center;
+    gap: 20px
+}
+
+.icon {
+    font-size: 23px;
+}
+
+.desc {
+    display: flex;
+    flex-direction: column;
+}
+
+.desc > span {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.desc > p, .desc > a {
+    font-size: 13px;
+    font-weight: 300;
+}

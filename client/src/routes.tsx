@@ -11,6 +11,7 @@ import CartPage from "./pages/CartPage/CartPage";
 import UserAccountPage from "./pages/UserAccountPage/UserAccountPage";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 import { endpoints, userAccountEndPoints } from "./constants";
+import ContactUsPage from "./pages/ContactUsPage/ContactUsPage";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,7 @@ const router = createBrowserRouter([
       { path: endpoints["cart"], element: <CartPage /> },
       { path: endpoints["checkout"], element: <CheckoutPage /> },
       { path: endpoints["payment"], element: <CheckoutPage /> },
+      { path: endpoints["contact_us"], element: <ContactUsPage /> },
     ],
   },
 ]);
