@@ -1,9 +1,9 @@
 import {
   MdOutlineCategory,
-  MdAccessTime,
-  MdPercent,
-  MdLocalPhone,
+  MdInfoOutline,
+  MdMailOutline,
 } from "react-icons/md";
+import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { endpoints } from "../../constants";
 import styles from "./styles.module.css";
 import { useNavigate } from "react-router-dom";
@@ -23,23 +23,38 @@ const Links = () => {
         </div>
         <span>Categories</span>
       </div>
-      <div className={styles.option}>
+      <div
+        className={styles.option}
+        onClick={() => {
+          navigate(endpoints["about_us"]);
+        }}
+      >
         <div className={styles.icon}>
-          <MdAccessTime />
+          <MdInfoOutline />
         </div>
-        <span>What's New</span>
+        <span>About Us</span>
       </div>
-      <div className={styles.option}>
+      <div
+        className={styles.option}
+        onClick={() => {
+          navigate(endpoints["contact_us"]);
+        }}
+      >
         <div className={styles.icon}>
-          <MdPercent />
+          <MdMailOutline />
         </div>
-        <span>Promo</span>
+        <span>Contact Us</span>
       </div>
-      <div className={styles.option}>
+      <div
+        className={styles.option}
+        onClick={() => {
+          navigate(endpoints["faq"]);
+        }}
+      >
         <div className={styles.icon}>
-          <MdLocalPhone />
+          <AiOutlineQuestionCircle />
         </div>
-        <span>Call Us</span>
+        <span>FAQ</span>
       </div>
     </div>
   );
