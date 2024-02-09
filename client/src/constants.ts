@@ -25,6 +25,7 @@ export const endpoints = {
   checkout: "/cart/checkout",
   payment: "/cart/checkout/payment",
   contact_us: "/contact_us",
+  about_us: "/about_us",
   product_support: "/product-support",
   faq: "/faq",
   buyer_guide: "/buyer-guide",

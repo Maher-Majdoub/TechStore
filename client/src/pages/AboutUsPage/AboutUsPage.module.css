@@ -1,0 +1,68 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.section {
+    padding: 60px 250px;
+    display: flex;
+    align-items: center;
+    gap: 100px
+}
+
+.section.dark {
+    background-color: var(--color-7);
+    color: var(--color-1)
+}
+
+.sectionContent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.sectionContent > p {
+    font-size: 14px;
+    font-weight: 200;
+}
+
+.sectionTitle {
+    font-size: 32px;
+}
+
+.imgContainer {
+    display: grid;
+    place-items: center;
+    width: 100%;
+}
+
+.img {
+    width: 80%;
+    object-fit: cover;
+}
+
+@media only screen and (max-width: 1500px) {
+    .section {
+        padding: 60px 100px;
+        gap: 50px
+    }
+}
+
+@media only screen and (max-width: 1500px) {
+    .section {
+        padding: 60px 50px;
+        gap: 20px
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .section {
+        padding: 40px 20px;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+}
