@@ -47,24 +47,22 @@
     width: 100%;
     font-size: 13px;
     font-weight: 600;
-    padding-top: 2px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 15px;
-}
-
-.option span {
-    transform: translateY(-1px);
+    padding: 5px 0
 }
 
 .option .icon {
     font-size: 18px;
+    display: flex;
+    align-items: center;
 }
 
 .option::before {
     content: '';
-    height: 3px;
+    height: 2px;
     background-color: var(--color-1);
     width: 0;
     position: absolute;
