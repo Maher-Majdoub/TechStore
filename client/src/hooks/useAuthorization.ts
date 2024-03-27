@@ -10,6 +10,14 @@ const useAuthorization = () => {
   const queryClient = useQueryClient();
   const tokens = queryClient.getQueryData<Tokens>(["auth"]);
 
+  const { access, refresh } = tokens ? tokens : ({} as Tokens);
+
+  let accessExpired = true;
+  let refreshExpired = true;
+
+  const { isExpired: isAccessExpired } = useJwt(access || "");
+  const { isExpired: isRefreshExpired } = useJwt(refresh || "");
+
   if (tokens === undefined)
     return {
       access: undefined,
@@ -17,14 +25,6 @@ const useAuthorization = () => {
       isAccessExpired: true,
       isRefreshExpired: true,
     };
-
-  const { access, refresh } = tokens;
-
-  let accessExpired = true;
-  let refreshExpired = true;
-
-  const { isExpired: isAccessExpired } = useJwt(access || "");
-  const { isExpired: isRefreshExpired } = useJwt(refresh || "");
 
   if (!isAccessExpired && access) accessExpired = false;
   if (!isRefreshExpired && refresh) refreshExpired = false;

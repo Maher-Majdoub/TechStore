@@ -11,6 +11,7 @@ import Paginator from "../../components/Paginator/Paginator";
 const ProductsPage = () => {
   const location = useLocation();
   const search = new URLSearchParams(location.search).get("search");
+  const tag = new URLSearchParams(location.search).get("tag");
   const { categorySlug, SubCategorySlug } = useParams();
   const [sortDirectionAsc, setSortDirectionAsc] = useState(true);
   const [sortBy, setSortBy] = useState<"name" | "unit_price">("unit_price");
@@ -27,6 +28,7 @@ const ProductsPage = () => {
         offset: pageSize * (page - 1),
         ordering: `${!sortDirectionAsc ? "-" : ""}${sortBy}`,
         search: search,
+        tag: tag,
       },
     },
   });
