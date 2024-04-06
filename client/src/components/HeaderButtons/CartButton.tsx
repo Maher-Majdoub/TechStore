@@ -24,7 +24,7 @@ const CartButton = () => {
   return (
     <div ref={cartRef} className={styles.container}>
       <Icon
-        count={cart?.items?.length || 0}
+        count={cart?.itemsCount || 0}
         onClick={() => {
           toggleShowCart(!showCart);
         }}

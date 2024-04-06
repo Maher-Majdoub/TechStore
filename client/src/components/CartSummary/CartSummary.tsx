@@ -12,10 +12,6 @@ const CartSummary = () => {
     "standard" | "pickupFromStore"
   >("standard");
 
-  let total = 0;
-  cart?.items.map((item) => {
-    total += item.quantity * item.product.unit_price;
-  });
   return (
     <div className={styles.summary}>
       <h4 className={styles.title}>Summary</h4>
@@ -78,7 +74,7 @@ const CartSummary = () => {
       <div className={styles.infos}>
         <div>
           <span>Subtotal</span>
-          <span>${total.toFixed(2)}</span>
+          <span>${cart?.total.toFixed(2)}</span>
         </div>
         <div>
           <span>Shipping</span>
@@ -92,9 +88,11 @@ const CartSummary = () => {
           <span>Order Total</span>
           <span className={styles.total}>
             $
-            {(total + 1.91 + (shippingMethod === "standard" ? 21 : 0)).toFixed(
-              2
-            )}
+            {(
+              (cart?.total || 0) +
+              1.91 +
+              (shippingMethod === "standard" ? 21 : 0)
+            ).toFixed(2)}
           </span>
         </div>
       </div>

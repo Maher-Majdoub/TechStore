@@ -12,6 +12,8 @@ export interface CartItem {
 export interface Cart {
   id: string;
   items: CartItem[];
+  itemsCount: number;
+  total: number;
 }
 
 interface TResponse {
@@ -25,7 +27,15 @@ interface TPost {
 
 const fetchCart = async () => {
   const apiService = new ApiService<Cart>("/store/carts/");
-  return await apiService.post({});
+  const cart = await apiService.post({});
+  var itemsCount = 0;
+  var total = 0;
+  if (cart?.items)
+    for (const item of cart.items) {
+      itemsCount += item.quantity;
+      total += item.quantity * item.product.unit_price;
+    }
+  return { ...cart, itemsCount: itemsCount, total: total } as Cart;
 };
 
 const useCart = () => {
@@ -64,18 +74,21 @@ const useCart = () => {
             return {
               id: oldCart.id,
               items: newItems,
+              itemsCount: oldCart.itemsCount + quantity,
+              total: oldCart.total + product.unit_price * quantity,
             };
           }
         }
         return {
-          id: oldCart.id,
+          ...oldCart,
           items: [
             ...oldCart.items,
             { id: -1, product: product, quantity: quantity },
           ],
+          itemsCount: oldCart.itemsCount + quantity,
+          total: oldCart.total + product.unit_price * quantity,
         };
       });
-
       return oldCart;
     },
 
@@ -93,9 +106,8 @@ const useCart = () => {
             });
           } else newItems.push(item);
         });
-
         return {
-          id: oldCart.id,
+          ...oldCart,
           items: newItems,
         };
       });
@@ -119,9 +131,18 @@ const useCart = () => {
       const oldCart = queryClient.getQueryData<Cart>(["cart"]);
       queryClient.setQueryData<Cart>(["cart"], (oldCart) => {
         if (oldCart === undefined) return undefined;
+        var newItemsCount = 0;
+        var newTotal = 0;
+        for (const item of oldCart.items)
+          if (item.id !== itemId) {
+            newItemsCount += item.quantity;
+            newTotal += item.quantity * item.product.id;
+          }
         return {
           id: oldCart.id,
           items: oldCart.items.filter((item) => item.id !== itemId),
+          itemsCount: newItemsCount,
+          total: newTotal,
         };
       });
       return oldCart;

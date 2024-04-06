@@ -17,18 +17,12 @@ const Minicart = ({
     return <h1>Something Went Wrong</h1>;
   }
 
-  var total = 0;
-  if (cart?.items)
-    for (const item of cart.items) {
-      total += item.product.unit_price * item.quantity;
-    }
-
   return (
     <>
       <div className={styles.cart}>
         <h3 className={styles.title}>My Cart</h3>
         <span className={styles.subTitle}>
-          {cart?.items.length} items in cart
+          {cart?.itemsCount || 0} items in cart
         </span>
         {cart?.items && cart.items.length > 0 && (
           <>
@@ -61,7 +55,7 @@ const Minicart = ({
             </ul>
             <div className={styles.subTotal}>
               <span>Subtotal: </span>
-              <span>${total.toFixed(2)}</span>
+              <span>${cart.total.toFixed(2) || 0}</span>
             </div>
             <div className={styles.container}>
               <Button

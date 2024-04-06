@@ -7,6 +7,8 @@ import msiLogoImage from "../../assets/msiLogo.jpg";
 import desktopImage from "../../assets/desktop.jpg";
 import monitorImage from "../../assets/monitor.jpg";
 import LinksSection from "../../components/LinksSection/LinksSection";
+import { Link } from "react-router-dom";
+import { endpoints } from "../../constants";
 
 const HomePage = () => {
   const { data, isLoading, error } = useProducts({
@@ -24,12 +26,18 @@ const HomePage = () => {
       <div className={styles.newProds}>
         <div className={styles.options}>
           <h3 className={styles.title}>New Products</h3>
-          <button className={styles.btn}>See All New Products</button>
+          <Link to={`${endpoints.products}?tag=new`} className={styles.btn}>
+            See All New Products
+          </Link>
         </div>
         {isLoading && <p>Loading....</p>}
         <ProductsDisplayer products={data ? data.results : []} />
       </div>
-      <TagProducts tag="new" title="Custom Builds" bgImage={customBuildImage} />
+      <TagProducts
+        tag="custom_builds"
+        title="Custom Builds"
+        bgImage={customBuildImage}
+      />
       <TagProducts
         tag="msi_laptops"
         title="MSI Laptops"

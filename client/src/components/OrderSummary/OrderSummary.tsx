@@ -3,10 +3,6 @@ import styles from "./OrderSummary.module.css";
 
 const OrderSummary = () => {
   const { cart } = useCart();
-  let total = 0;
-  cart?.items.map((item) => {
-    total += item.quantity * item.product.unit_price;
-  });
 
   return (
     <div className={styles.container}>
@@ -28,7 +24,7 @@ const OrderSummary = () => {
       </ul>
       <div className={styles.flxBx}>
         <span>total:</span>
-        <span className={styles.total}>${total}</span>
+        <span className={styles.total}>${cart?.total.toFixed(2)}</span>
       </div>
     </div>
   );
