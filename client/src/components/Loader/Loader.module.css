@@ -1,0 +1,15 @@
+.loader {
+    border: 3px solid white;
+    border-radius: 50%;
+    border-right-color: transparent;
+    animation: load 1s ease infinite;
+}
+
+@keyframes load {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    100% {
+        transform: rotateZ(360deg);
+    }
+}

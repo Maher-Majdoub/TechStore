@@ -29,7 +29,7 @@ const LoginPage = () => {
     }
   }, [refresh, isRefreshExpired, isRefreshError, isRefreshPending]);
 
-  if (isRefreshPending || isLoginPending) return <p>Wait....</p>;
+  if (isRefreshPending) return <p>Wait....</p>;
 
   return (
     <main>
@@ -38,6 +38,7 @@ const LoginPage = () => {
         <h2 className={styles.title}>Customer Login</h2>
         <div className={styles.sections}>
           <LoginForm
+            isLoading={isLoginPending}
             onLogin={(username, password) => {
               login({ username: username, password: password });
             }}

@@ -9,11 +9,9 @@ import { endpoints } from "../../constants";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
-  const { signup, isSignupSuccess, isSignupError } = useSignup();
+  const { signup, isSignupSuccess } = useSignup();
 
-  if (isSignupError) window.alert("signup failed");
   if (isSignupSuccess) {
-    console.log("signed up");
     navigate(endpoints["login"]);
   }
 

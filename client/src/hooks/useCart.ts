@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import ApiService from "../services/apiService";
 import { Product } from "./useProducts";
 import apiClient from "../services/apiClient";
+import { toast } from "react-toastify";
 
 export interface CartItem {
   id: number;
@@ -89,6 +90,7 @@ const useCart = () => {
           total: oldCart.total + product.unit_price * quantity,
         };
       });
+      toast.success("Product added to your cart");
       return oldCart;
     },
 
@@ -113,8 +115,8 @@ const useCart = () => {
       });
     },
 
-    onError(error, _, oldCart) {
-      console.error(error);
+    onError(_, __, oldCart) {
+      toast.error("Failed to add product to cart");
       queryClient.setQueryData(["cart"], () => oldCart);
     },
   });
@@ -154,12 +156,19 @@ const useCart = () => {
     },
   });
 
+  const clearCart = () => {
+    queryClient.refetchQueries({ queryKey: ["cart"] });
+  };
+
   return {
     cart,
     isLoading,
     isError,
     addToCart: addToCartMutation.mutate,
+    isAddToCartSuccess: addToCartMutation.isSuccess,
+    isAddToCartError: addToCartMutation.isError,
     deleteFromCart: DeleteFromCartMutation.mutate,
+    clearCart,
   };
 };
 

@@ -1,6 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Tokens } from "./useAuthorization";
 import apiClient from "../services/apiClient";
+import { toast } from "react-toastify";
+
+interface Error {
+  response: {
+    data: {
+      detail: string;
+    };
+  };
+}
 
 const useLogin = () => {
   const queryClient = useQueryClient();
@@ -18,6 +27,10 @@ const useLogin = () => {
       queryClient.invalidateQueries({ queryKey: ["wishes"] });
       queryClient.invalidateQueries({ queryKey: ["customer"] });
       queryClient.invalidateQueries({ queryKey: ["orders"] });
+      toast.success("Login successful");
+    },
+    onError: (error) => {
+      toast.error(error.response.data.detail, { autoClose: 2000 });
     },
   });
 

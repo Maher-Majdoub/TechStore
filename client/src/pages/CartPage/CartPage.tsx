@@ -8,7 +8,7 @@ import LinksSection from "../../components/LinksSection/LinksSection";
 import { endpoints } from "../../constants";
 
 const CartPage = () => {
-  const { cart, isLoading, isError } = useCart();
+  const { cart, isLoading, isError, clearCart } = useCart();
   const navigate = useNavigate();
 
   if (isError) {
@@ -38,7 +38,9 @@ const CartPage = () => {
                     >
                       Continue Shopping
                     </button>
-                    <button className={styles.btn}>Clear Shopping Cart</button>
+                    <button className={styles.btn} onClick={clearCart}>
+                      Clear Shopping Cart
+                    </button>
                   </div>
                   <button className={styles.btn}>Update Shopping Cart</button>
                 </div>

@@ -27,11 +27,7 @@ const ProductCard = ({
 }: Props) => {
   const navigate = useNavigate();
   const { addToCart } = useCart();
-
-  const { createWish, isSuccess, isPending, isError } = useCreateWish();
-
-  if (isSuccess) console.log("wish created");
-  if (isError) console.error("something went wrong when create the wish");
+  const { createWish, isPending: isCreateWishPending } = useCreateWish();
 
   return (
     <div className={styles.container}>
@@ -88,7 +84,7 @@ const ProductCard = ({
         <span className={styles.currPrice}>
           ${product.unit_price.toFixed(2)}
         </span>
-        {isPending && <span>Creating wish...</span>}
+        {isCreateWishPending && <span>Creating wish...</span>}
         <div
           className={styles.addToCart}
           onClick={(event) => {

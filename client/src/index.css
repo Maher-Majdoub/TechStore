@@ -84,6 +84,10 @@ body {
   padding-right: 50px;
 }
 
+.Toastify__toast-container {
+  font-size: 14px;
+}
+
 @media only screen and (max-width: 1800px) {
   body {
     width: 100%

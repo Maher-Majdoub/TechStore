@@ -4,9 +4,10 @@ import styles from "./styles.module.css";
 
 interface Props {
   onLogin(usename: string, password: string): void;
+  isLoading?: boolean;
 }
 
-const LoginForm = ({ onLogin }: Props) => {
+const LoginForm = ({ onLogin, isLoading = false }: Props) => {
   const username = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
 
@@ -44,6 +45,7 @@ const LoginForm = ({ onLogin }: Props) => {
         </div>
         <div className={styles.btnContainer}>
           <Button
+            load={isLoading}
             onClick={() => {
               if (username.current?.value && password.current?.value) {
                 onLogin(username.current.value, password.current.value);

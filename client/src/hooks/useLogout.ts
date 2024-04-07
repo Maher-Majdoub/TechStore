@@ -1,4 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 const useLogout = () => {
   const queryClient = useQueryClient();
@@ -10,6 +11,7 @@ const useLogout = () => {
     queryClient.removeQueries({ queryKey: ["orders"] });
     queryClient.resetQueries({ queryKey: ["wishes"] });
     queryClient.removeQueries({ queryKey: ["wishes"] });
+    toast.success("Logout Successful");
   };
 
   return { logout };
