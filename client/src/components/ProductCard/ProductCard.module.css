@@ -87,6 +87,14 @@
     display: flex;
 }
 
+.skeletonContainer {
+    width: 100%
+}
+
+.skeletonCard {
+    padding: 25px 10px;
+}
+
 @keyframes anim {
     0% {
         transform: translateY(50%);

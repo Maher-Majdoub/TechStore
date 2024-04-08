@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import { endpoints } from "../../constants";
 
 const HomePage = () => {
-  const { data, isLoading, error } = useProducts({
+  const { data, error } = useProducts({
     config: {
       params: { page: 1, tag: "new" },
     },
@@ -30,8 +30,7 @@ const HomePage = () => {
             See All New Products
           </Link>
         </div>
-        {isLoading && <p>Loading....</p>}
-        <ProductsDisplayer products={data ? data.results : []} />
+        <ProductsDisplayer products={data?.results} />
       </div>
       <TagProducts
         tag="custom_builds"

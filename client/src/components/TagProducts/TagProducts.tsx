@@ -38,7 +38,7 @@ const CategoryProducts = ({ tag, title, bgImage }: Props) => {
         </div>
       </div>
       <div className={styles.products}>
-        <ProductsDisplayer products={data ? data.results : []} maxCards={5} />
+        <ProductsDisplayer products={data?.results} maxCards={5} />
       </div>
     </div>
   );

@@ -5,14 +5,16 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import styles from "./ProductsDisplayer.module.css";
+import ProductCardSkeleton from "../ProductCard/ProductCardSkeleton";
 
 const ProductsDisplayer = ({
   products,
   maxCards = 6,
 }: {
-  products: Product[];
+  products?: Product[];
   maxCards?: number;
 }) => {
+  const fakeProds = [1, 2, 3, 4, 5, 6, 7];
   return (
     <Swiper
       className={styles.swiper}
@@ -42,11 +44,17 @@ const ProductsDisplayer = ({
         },
       }}
     >
-      {products.map((prod) => (
-        <SwiperSlide key={`${prod.id}-${Math.random()}`}>
-          <ProductCard product={prod} />
-        </SwiperSlide>
-      ))}
+      {products
+        ? products.map((prod) => (
+            <SwiperSlide key={`${prod.id}-${Math.random()}`}>
+              <ProductCard product={prod} />
+            </SwiperSlide>
+          ))
+        : fakeProds.map((prod) => (
+            <SwiperSlide key={`${prod}-${Math.random()}`}>
+              <ProductCardSkeleton />
+            </SwiperSlide>
+          ))}
     </Swiper>
   );
 };
