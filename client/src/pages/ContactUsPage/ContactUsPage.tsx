@@ -1,11 +1,35 @@
+import { SubmitHandler, useForm } from "react-hook-form";
 import Button from "../../components/Button/Button";
 import LinksSection from "../../components/LinksSection/LinksSection";
 import Navigator from "../../components/Navigator/Navigator";
 import StoreInfos from "../../components/StoreInfos/StoreInfos";
 import styles from "./ContactUsPage.module.css";
+import { toast } from "react-toastify";
+import { TextField } from "@mui/material";
+
+interface FormInput {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}
 
 const ContactUsPage = () => {
-  const handleSubmit = () => {};
+  const {
+    register,
+    handleSubmit,
+    setError,
+    reset,
+    getValues,
+    formState: { errors },
+  } = useForm<FormInput>();
+
+  const sendMail: SubmitHandler<FormInput> = () => {
+    reset();
+    toast.success("Mail sended Successfuly! We will call you ASAP", {
+      autoClose: 3000,
+    });
+  };
 
   return (
     <main className={styles.container}>
@@ -20,42 +44,35 @@ const ContactUsPage = () => {
           </p>
         </div>
         <div className={styles.flxBx}>
-          <form
-            className={styles.form}
-            onSubmit={(event) => {
-              event.preventDefault();
-              handleSubmit();
-            }}
-          >
-            <div className={styles.inputGroup}>
-              <span className={styles.required}>Your Name</span>
-              <input
-                type="text"
-                placeholder="Your Name"
-                className={styles.input}
-                required
-              />
-            </div>
-            <div className={styles.inputGroup}>
-              <span className={styles.required}>Your Email</span>
-              <input
-                type="email"
-                placeholder="You Email"
-                className={styles.input}
-                required
-              />
-            </div>
-            <div className={styles.inputGroup}>
-              <span>Your Phone Number</span>
-              <input type="tel" placeholder="" className={styles.input} />
-            </div>
-            <div className={styles.inputGroup}>
-              <span className={styles.required}>What's on your mind?</span>
-              <textarea
-                className={styles.input}
-                placeholder="Jot us a note and we’ll get back to you as quickly as possible"
-              />
-            </div>
+          <form className={styles.form} onSubmit={handleSubmit(sendMail)}>
+            <TextField
+              {...register("name", { required: "Please enter your name" })}
+              label="Your name"
+              type="text"
+              error={!!errors.name}
+              helperText={errors.name?.message}
+            />
+            <TextField
+              {...register("email", { required: "Please enter your email" })}
+              label="Your email"
+              type="email"
+              error={!!errors.email}
+              helperText={errors.email?.message}
+            />
+            <TextField
+              {...register("phone", { required: "Please enter your phone" })}
+              label="Your phone"
+              type="tel"
+              error={!!errors.phone}
+              helperText={errors.phone?.message}
+            />
+            <TextField
+              {...register("name", { required: "Please enter your name" })}
+              label="Your Name"
+              type="text"
+              error={!!errors.name}
+              helperText={errors.name?.message}
+            />
             <div className={styles.btnContainer}>
               <Button filled>Submit</Button>
             </div>
