@@ -63,7 +63,7 @@ button, a, select, option, li {
   cursor: pointer;
 }
 
-button, input, select, textarea {
+button, input, select {
   background-color: transparent;
   border: none;
   outline: none;

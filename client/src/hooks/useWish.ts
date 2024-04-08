@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import ApiService from "../services/apiService";
 import useAuthorization from "./useAuthorization";
 import { Product } from "./useProducts";
+import { Response } from "../services/apiService";
 
 export interface Wish {
   id: number;
@@ -14,13 +15,25 @@ const useWish = (page: number = 1, pageSize: number = 10) => {
   const { access } = useAuthorization();
   const AUTHORIZATION = `JWT ${access}`;
 
-  const { data, isSuccess, isLoading, isError } = useQuery({
+  const { data, isSuccess, isLoading, isError } = useQuery<Response<Wish>>({
     queryKey: ["wishes", page, pageSize],
-    queryFn: () =>
-      apiService.getPage({
-        params: { limit: pageSize, offset: (page - 1) * pageSize },
-        headers: { Authorization: AUTHORIZATION },
-      }),
+    queryFn: () => {
+      if (access !== undefined) {
+        return apiService.getPage({
+          params: { limit: pageSize, offset: (page - 1) * pageSize },
+          headers: { Authorization: AUTHORIZATION },
+        });
+      } else {
+        return new Promise(() => {
+          return {
+            count: 0,
+            next: "",
+            previous: "",
+            results: {},
+          } as Response<Wish>;
+        });
+      }
+    },
     staleTime: 1000 * 60 * 60 * 24, //24h
     retry: 1,
   });
