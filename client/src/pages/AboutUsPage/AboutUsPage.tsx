@@ -6,12 +6,8 @@ import aboutUs2 from "../../assets/aboutUs2.png";
 import aboutUs3 from "../../assets/aboutUs3.jpg";
 import aboutUs4 from "../../assets/aboutUs4.png";
 import aboutUs5 from "../../assets/aboutUs5.jpg";
-import { useWindowSize } from "@uidotdev/usehooks";
-import { screenWidths } from "../../constants";
 
 const AboutUsPage = () => {
-  const { width } = useWindowSize();
-
   return (
     <main className={styles.container}>
       <div className={styles.content}>
@@ -20,12 +16,10 @@ const AboutUsPage = () => {
           <h1 className={styles.title}>About Us</h1>
         </div>
         <div>
-          <section className={`${styles.section} ${styles.dark}`}>
-            {width && width <= screenWidths["tablets"] && (
-              <div className={styles.imgContainer}>
-                <img src={aboutUs1} className={styles.img} />
-              </div>
-            )}
+          <section className={`${styles.section} ${styles.dark} ${styles.alt}`}>
+            <div className={styles.imgContainer}>
+              <img src={aboutUs1} className={styles.img} />
+            </div>
             <div className={styles.sectionContent}>
               <h1 className={styles.sectionTitle}>
                 A Family That Keeps On Growing
@@ -43,11 +37,6 @@ const AboutUsPage = () => {
                 the measure of our long-term success.
               </p>
             </div>
-            {width && width > screenWidths["tablets"] && (
-              <div className={styles.imgContainer}>
-                <img src={aboutUs1} className={styles.img} />
-              </div>
-            )}
           </section>
           <section className={`${styles.section}`}>
             <div className={styles.imgContainer}>
@@ -64,12 +53,10 @@ const AboutUsPage = () => {
               </p>
             </div>
           </section>
-          <section className={`${styles.section} ${styles.dark}`}>
-            {width && width <= screenWidths["tablets"] && (
-              <div className={styles.imgContainer}>
-                <img src={aboutUs3} className={styles.img} />
-              </div>
-            )}
+          <section className={`${styles.section} ${styles.dark} ${styles.alt}`}>
+            <div className={styles.imgContainer}>
+              <img src={aboutUs3} className={styles.img} />
+            </div>
             <div className={styles.sectionContent}>
               <h1 className={styles.sectionTitle}>
                 The Highest Quality of Products
@@ -82,11 +69,6 @@ const AboutUsPage = () => {
                 mismatch can escape the eye of our professionals.
               </p>
             </div>
-            {width && width > screenWidths["tablets"] && (
-              <div className={styles.imgContainer}>
-                <img src={aboutUs3} className={styles.img} />
-              </div>
-            )}
           </section>
           <section className={`${styles.section}`}>
             <div className={styles.imgContainer}>
@@ -103,12 +85,10 @@ const AboutUsPage = () => {
               </p>
             </div>
           </section>
-          <section className={`${styles.section} ${styles.dark}`}>
-            {width && width <= screenWidths["tablets"] && (
-              <div className={styles.imgContainer}>
-                <img src={aboutUs5} className={styles.img} />
-              </div>
-            )}
+          <section className={`${styles.section} ${styles.dark} ${styles.alt}`}>
+            <div className={styles.imgContainer}>
+              <img src={aboutUs5} className={styles.img} />
+            </div>
             <div className={styles.sectionContent}>
               <h1 className={styles.sectionTitle}>Now You're In Safe Hands</h1>
               <p>
@@ -119,11 +99,6 @@ const AboutUsPage = () => {
                 mismatch can escape the eye of our professionals.
               </p>
             </div>
-            {width && width > screenWidths["tablets"] && (
-              <div className={styles.imgContainer}>
-                <img src={aboutUs5} className={styles.img} />
-              </div>
-            )}
           </section>
         </div>
       </div>
