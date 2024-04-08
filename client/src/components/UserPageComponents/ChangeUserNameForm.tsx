@@ -1,6 +1,13 @@
-import { useRef } from "react";
+import { useEffect } from "react";
 import useCustomer from "../../hooks/useCustomer";
 import styles from "./styles.module.css";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { CircularProgress, TextField } from "@mui/material";
+
+interface FormInput {
+  currentPassword: string;
+  newUsername: string;
+}
 
 const ChangeUserNameForm = () => {
   const {
@@ -8,50 +15,69 @@ const ChangeUserNameForm = () => {
     isChangingUsernameSuccess,
     isChangingUsernamePending,
     isChangingUsernameError,
+    changingUsernameError,
   } = useCustomer();
 
-  const currentPasswordRef = useRef<HTMLInputElement>(null);
-  const newUserNameRef = useRef<HTMLInputElement>(null);
+  const {
+    register,
+    handleSubmit,
+    setError,
+    reset,
+    formState: { errors },
+  } = useForm<FormInput>();
 
-  if (isChangingUsernameSuccess) console.log("username changed");
-  if (isChangingUsernameError) console.error("error while changing username");
-
-  const handleChangeUserName = () => {
-    if (currentPasswordRef.current && newUserNameRef.current) {
-      changeUsername({
-        currentPassword: currentPasswordRef.current.value,
-        newUsername: newUserNameRef.current.value,
-      });
-    }
+  const handleChangeUserName: SubmitHandler<FormInput> = (data) => {
+    changeUsername(data);
   };
+
+  useEffect(() => {
+    if (isChangingUsernameError) {
+      const e = changingUsernameError?.response.data;
+      e?.current_password &&
+        setError("currentPassword", { message: e.current_password[0] });
+      !e?.current_password &&
+        e?.new_username &&
+        setError("newUsername", { message: e.new_username[0] });
+    }
+  }, [isChangingUsernameError]);
+
+  useEffect(() => {
+    isChangingUsernameSuccess && reset();
+  }, [isChangingUsernameSuccess]);
 
   return (
     <>
       <h4>Change Username</h4>
       <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          handleChangeUserName();
-        }}
+        onSubmit={handleSubmit(handleChangeUserName)}
+        className={styles.form}
       >
-        <div className={styles.inputGroups}>
-          <div className={styles.inputGroup}>
-            <span className={styles.required}>Current Password</span>
-            <input
-              ref={currentPasswordRef}
-              type="password"
-              required
-              autoComplete="current-password"
-            />
-          </div>
-          <div className={styles.inputGroup}>
-            <span className={styles.required}>New Username</span>
-            <input ref={newUserNameRef} type="text" required />
-          </div>
-          {isChangingUsernamePending && <span>changing username....</span>}
-          <div className={styles.btnContainer}>
+        <TextField
+          {...register("currentPassword", {
+            required: "This field is required",
+          })}
+          label="Current password"
+          type="password"
+          error={!!errors.currentPassword}
+          helperText={errors.currentPassword?.message}
+          fullWidth
+        />
+        <TextField
+          {...register("newUsername", { required: "This field is required" })}
+          label="New username"
+          type="text"
+          error={!!errors.newUsername}
+          helperText={errors.newUsername?.message}
+          fullWidth
+        />
+        <div className={styles.btnContainer}>
+          {isChangingUsernamePending ? (
+            <span className={styles.link}>
+              Changing Username <CircularProgress size={15} color="inherit" />
+            </span>
+          ) : (
             <button className={styles.link}>Change Username</button>
-          </div>
+          )}
         </div>
       </form>
     </>

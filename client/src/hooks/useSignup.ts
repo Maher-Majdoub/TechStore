@@ -30,14 +30,6 @@ const useSignup = () => {
     onSuccess: () => {
       toast.success("Signup successful");
     },
-    onError: (error) => {
-      const e = error.response.data;
-      toast.error(
-        (e.email && e.email[0]) ||
-          (e.username && e.username[0]) ||
-          (e.password && e.password[0])
-      );
-    },
   });
 
   return {

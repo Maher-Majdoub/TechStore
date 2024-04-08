@@ -45,7 +45,6 @@ const CheckoutPage = () => {
         {endpoint === "checkout" && (
           <SelectShippingMethod
             onSubmit={(selectedShippingAdd, shippingMeth) => {
-              console.log(selectedShippingAdd, shippingMeth);
               selectedShippingAddress = selectedShippingAdd;
               shippingMethod = shippingMeth;
               navigate(endpoints["payment"]);

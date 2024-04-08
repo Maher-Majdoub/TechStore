@@ -1,7 +1,8 @@
-import { useRef } from "react";
 import styles from "./styles.module.css";
-import Button from "../Button/Button";
 import useCustomer, { Address } from "../../hooks/useCustomer";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { Checkbox, FormControlLabel, TextField } from "@mui/material";
+import Button from "../Button/Button";
 
 interface Props {
   afterSubmition(): void;
@@ -11,207 +12,130 @@ interface Props {
 const AddEditAddress = ({ afterSubmition, address }: Props) => {
   const { addAddress, editAddress } = useCustomer();
 
-  const firstNameRef = useRef<HTMLInputElement>(null);
-  const lastNameRef = useRef<HTMLInputElement>(null);
-  const companyRef = useRef<HTMLInputElement>(null);
-  const phoneNumberRef = useRef<HTMLInputElement>(null);
-  const addressRef = useRef<HTMLInputElement>(null);
-  const countryRef = useRef<HTMLInputElement>(null);
-  const stateRef = useRef<HTMLInputElement>(null);
-  const cityRef = useRef<HTMLInputElement>(null);
-  const regionRef = useRef<HTMLInputElement>(null);
-  const streetNumberRef = useRef<HTMLInputElement>(null);
-  const postalCodeRef = useRef<HTMLInputElement>(null);
-  const descriptionRef = useRef<HTMLInputElement>(null);
-  const is_default_billing_ref = useRef<HTMLInputElement>(null);
-  const is_default_shipping_ref = useRef<HTMLInputElement>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Address>({ defaultValues: address });
 
-  const handleSubmition = () => {
-    if (
-      firstNameRef.current &&
-      lastNameRef.current &&
-      companyRef.current &&
-      phoneNumberRef.current &&
-      addressRef.current &&
-      countryRef.current &&
-      stateRef.current &&
-      cityRef.current &&
-      regionRef.current &&
-      streetNumberRef.current &&
-      postalCodeRef.current &&
-      descriptionRef.current &&
-      is_default_billing_ref.current &&
-      is_default_shipping_ref.current
-    ) {
-      const newAddress: Address = {
-        first_name: firstNameRef.current.value,
-        last_name: lastNameRef.current.value,
-        company: companyRef.current.value,
-        phone_number: phoneNumberRef.current.value,
-        address: addressRef.current.value,
-        country: countryRef.current.value,
-        state: stateRef.current.value,
-        city: cityRef.current.value,
-        region: regionRef.current.value,
-        street_number: streetNumberRef.current.value,
-        postal_code: parseInt(postalCodeRef.current.value),
-        description: descriptionRef.current.value,
-        is_default_billing_address: is_default_billing_ref.current.checked,
-        is_default_shipping_address: is_default_shipping_ref.current.checked,
-      };
-      address
-        ? editAddress({ id: address.id || -1, newAddress: newAddress })
-        : addAddress(newAddress);
-      afterSubmition();
-    }
+  const handleSubmition: SubmitHandler<Address> = (data) => {
+    address
+      ? editAddress({ id: address.id || -1, newAddress: data })
+      : addAddress(data);
+    afterSubmition();
   };
 
   return (
     <div className={styles.container}>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          handleSubmition();
-        }}
-        className={styles.form}
-      >
-        <div>
-          <div>
+      <form onSubmit={handleSubmit(handleSubmition)}>
+        <div className={styles.forms}>
+          <div className={styles.fullWidth}>
             <div className={styles.titleContainer}>
               <h2>Contact Information</h2>
             </div>
-            <div className={styles.inputGroups}>
-              <div className={styles.inputGroup}>
-                <span className={styles.required}>First Name</span>
-                <input
-                  ref={firstNameRef}
-                  type="text"
-                  defaultValue={address?.first_name}
-                  required
-                />
-              </div>
-              <div className={styles.inputGroup}>
-                <span className={styles.required}>Last Name</span>
-                <input
-                  ref={lastNameRef}
-                  type="text"
-                  defaultValue={address?.last_name}
-                  required
-                />
-              </div>
-              <div className={styles.inputGroup}>
-                <span>Company</span>
-                <input
-                  ref={companyRef}
-                  type="text"
-                  defaultValue={address?.company}
-                />
-              </div>
-              <div className={styles.inputGroup}>
-                <span className={styles.required}>Phone Number</span>
-                <input
-                  ref={phoneNumberRef}
-                  type="text"
-                  defaultValue={address?.phone_number}
-                  required
-                />
-              </div>
+            <div className={styles.form}>
+              <TextField
+                {...register("first_name", {
+                  required: "This field is required",
+                })}
+                label="First name"
+                error={!!errors.first_name}
+                helperText={errors.first_name?.message}
+              />
+              <TextField
+                {...register("last_name", {
+                  required: "This field is required",
+                })}
+                label="Last name"
+                error={!!errors.last_name}
+                helperText={errors.last_name?.message}
+              />
+              <TextField {...register("company")} label="Company" />
+              <TextField
+                {...register("phone_number", {
+                  required: "This field is required",
+                })}
+                label="Phone nubmer"
+                error={!!errors.phone_number}
+                helperText={errors.phone_number?.message}
+              />
             </div>
           </div>
-          <div>
+          <div className={styles.fullWidth}>
             <div className={styles.titleContainer}>
               <h2>Address</h2>
             </div>
-            <div className={styles.inputGroups}>
-              <div className={styles.inputGroup}>
-                <span className={styles.required}>Address</span>
-                <input
-                  ref={addressRef}
-                  type="text"
-                  defaultValue={address?.address}
-                  required
-                />
-              </div>
-              <div className={styles.inputGroup}>
-                <span className={styles.required}>Country</span>
-                <input
-                  ref={countryRef}
-                  type="text"
-                  defaultValue={address?.country}
-                  required
-                />
-              </div>
-              <div className={styles.inputGroup}>
-                <span className={styles.required}>State</span>
-                <input
-                  ref={stateRef}
-                  type="text"
-                  defaultValue={address?.state}
-                  required
-                />
-              </div>
-              <div className={styles.inputGroup}>
-                <span className={styles.required}>City</span>
-                <input
-                  ref={cityRef}
-                  type="text"
-                  defaultValue={address?.city}
-                  required
-                />
-              </div>
-              <div className={styles.inputGroup}>
-                <span className={styles.required}>Region</span>
-                <input
-                  ref={regionRef}
-                  type="text"
-                  defaultValue={address?.region}
-                  required
-                />
-              </div>
-              <div className={styles.inputGroup}>
-                <span className={styles.required}>Street Number</span>
-                <input
-                  ref={streetNumberRef}
-                  type="text"
-                  defaultValue={address?.street_number}
-                  required
-                />
-              </div>
-              <div className={styles.inputGroup}>
-                <span className={styles.required}>Postal Code</span>
-                <input
-                  ref={postalCodeRef}
-                  type="text"
-                  defaultValue={address?.postal_code}
-                  required
-                />
-              </div>
-              <div className={styles.inputGroup}>
-                <span>Description</span>
-                <input
-                  ref={descriptionRef}
-                  type="text"
-                  defaultValue={address?.description}
-                />
-              </div>
-              <label htmlFor="defaultBillingAddress" className={styles.flxBx}>
-                <input
-                  ref={is_default_billing_ref}
-                  type="checkbox"
-                  id="defaultBillingAddress"
-                  defaultChecked={address?.is_default_billing_address}
-                />
-                <span>Use as default billing address</span>
-              </label>
-              <label htmlFor="defaultShippingAddress" className={styles.flxBx}>
-                <input
-                  ref={is_default_shipping_ref}
-                  type="checkbox"
-                  id="defaultShippingAddress"
-                  defaultChecked={address?.is_default_shipping_address}
-                />
-                <span>Use as default shipping address</span>
-              </label>
+            <div className={styles.form}>
+              <TextField
+                {...register("address", { required: "This field is required" })}
+                label="Address"
+                error={!!errors.address}
+                helperText={errors.address?.message}
+              />
+              <TextField
+                {...register("country", { required: "This field is required" })}
+                label="Country"
+                error={!!errors.country}
+                helperText={errors.country?.message}
+              />
+              <TextField
+                {...register("state", { required: "This field is required" })}
+                label="State"
+                error={!!errors.state}
+                helperText={errors.state?.message}
+              />
+              <TextField
+                {...register("city", { required: "This field is required" })}
+                label="City"
+                error={!!errors.city}
+                helperText={errors.city?.message}
+              />
+              <TextField
+                {...register("region", { required: "This field is required" })}
+                label="Region"
+                error={!!errors.region}
+                helperText={errors.region?.message}
+              />
+              <TextField
+                {...register("street_number", {
+                  required: "This field is required",
+                })}
+                label="Street number"
+                error={!!errors.street_number}
+                helperText={errors.street_number?.message}
+              />
+              <TextField
+                {...register("postal_code", {
+                  required: "This field is required",
+                })}
+                label="Postal code"
+                error={!!errors.postal_code}
+                helperText={errors.postal_code?.message}
+              />
+              <TextField
+                {...register("description")}
+                label="Description"
+                error={!!errors.description}
+                helperText={errors.description?.message}
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    {...register("is_default_billing_address")}
+                    defaultChecked={address?.is_default_billing_address}
+                  />
+                }
+                label="Use as default billing address"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    {...register("is_default_shipping_address")}
+                    defaultChecked={address?.is_default_shipping_address}
+                  />
+                }
+                label="Use as default shipping address"
+              />
             </div>
           </div>
         </div>

@@ -7,7 +7,6 @@ const Footer = () => {
       className={styles.footer}
       onSubmit={(event) => {
         event.preventDefault();
-        console.log("subscribe");
       }}
     >
       <div className={styles.newsLister + " container"}>

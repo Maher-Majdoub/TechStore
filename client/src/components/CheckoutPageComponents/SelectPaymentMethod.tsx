@@ -24,19 +24,12 @@ const SelectPaymentMethod = ({
   const navigate = useNavigate();
   const { customer } = useCustomer();
 
-  const {
-    createOrder,
-    isCreateOrderSuccess,
-    isCreateOrderPending,
-    isCreateOrderEror,
-  } = UseOrder();
+  const { createOrder, isCreateOrderSuccess, isCreateOrderPending } =
+    UseOrder();
 
   if (isCreateOrderSuccess) {
-    console.log("order created Succesfuly");
     queryClient.removeQueries({ queryKey: ["cart"] });
   }
-  if (isCreateOrderEror)
-    console.error("something went wrong when creating the order");
 
   const defaultBillingAddress = customer?.addresses.find(
     (address) => address.is_default_billing_address
@@ -201,7 +194,6 @@ const SelectPaymentMethod = ({
               <Button
                 filled
                 onClick={() => {
-                  console.log(selectedShippingAddress, shippingMethod);
                   createOrder({
                     cart_id: cart.id,
                     shipping_method: shippingMethod,

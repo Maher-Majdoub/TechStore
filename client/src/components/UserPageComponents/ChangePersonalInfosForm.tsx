@@ -1,6 +1,15 @@
-import { useRef } from "react";
+import { useEffect } from "react";
 import useCustomer from "../../hooks/useCustomer";
 import styles from "./styles.module.css";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { CircularProgress, TextField } from "@mui/material";
+
+interface FormInput {
+  first_name: string;
+  last_name: string;
+  phone: string;
+  birth_date: string;
+}
 
 const ChangePersonalInfosForm = () => {
   const {
@@ -9,32 +18,39 @@ const ChangePersonalInfosForm = () => {
     isChangingPersonalInfosSuccess,
     isChangingPersonalInfosPending,
     isChangingPersonalInfosError,
+    changingPersonalInfosError,
   } = useCustomer();
 
-  const firstNameRef = useRef<HTMLInputElement>(null);
-  const lastNameRef = useRef<HTMLInputElement>(null);
-  const phoneRef = useRef<HTMLInputElement>(null);
-  const birthDateRef = useRef<HTMLInputElement>(null);
+  const {
+    register,
+    handleSubmit,
+    setError,
+    reset,
+    formState: { errors },
+  } = useForm<FormInput>({
+    defaultValues: {
+      first_name: customer?.first_name,
+      last_name: customer?.last_name,
+      phone: customer?.phone,
+      birth_date: customer?.birth_date,
+    },
+  });
 
-  const handleChangePersonalInfos = () => {
-    if (
-      firstNameRef.current &&
-      lastNameRef.current &&
-      phoneRef.current &&
-      birthDateRef.current
-    ) {
-      changePersonalInfos({
-        first_name: firstNameRef.current.value,
-        last_name: lastNameRef.current.value,
-        phone: phoneRef.current.value,
-        birth_date: birthDateRef.current.value,
-      });
-    }
+  const handleChangePersonalInfos: SubmitHandler<FormInput> = (data) => {
+    changePersonalInfos(data);
   };
 
-  if (isChangingPersonalInfosSuccess) console.log("personal infos changed");
-  if (isChangingPersonalInfosError)
-    console.error("error while changing personal infos");
+  useEffect(() => {
+    isChangingPersonalInfosSuccess && reset();
+  }, [isChangingPersonalInfosSuccess]);
+
+  useEffect(() => {
+    const e = changingPersonalInfosError?.response.data;
+    e?.first_name && setError("first_name", { message: e.first_name[0] });
+    e?.last_name && setError("last_name", { message: e.last_name[0] });
+    e?.phone && setError("phone", { message: e.phone[0] });
+    e?.birth_date && setError("birth_date", { message: e.birth_date[0] });
+  }, [isChangingPersonalInfosError]);
 
   return (
     <>
@@ -42,50 +58,96 @@ const ChangePersonalInfosForm = () => {
         <>
           <h4>Change Personal Infos</h4>
           <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              handleChangePersonalInfos();
-            }}
+            onSubmit={handleSubmit(handleChangePersonalInfos)}
+            className={styles.form}
           >
-            <div className={styles.inputGroups}>
-              <div className={styles.inputGroup}>
-                <span>First Name</span>
-                <input
-                  ref={firstNameRef}
-                  type="text"
-                  defaultValue={customer.first_name}
-                />
-              </div>
-              <div className={styles.inputGroup}>
-                <span>Last Name</span>
-                <input
-                  ref={lastNameRef}
-                  type="text"
-                  defaultValue={customer.last_name}
-                />
-              </div>
-              <div className={styles.inputGroup}>
-                <span>Phone</span>
-                <input
-                  ref={phoneRef}
-                  type="text"
-                  defaultValue={customer.phone}
-                />
-              </div>
-              <div className={styles.inputGroup}>
-                <span>Birth Date</span>
-                <input
-                  ref={birthDateRef}
-                  type="date"
-                  defaultValue={customer.birth_date}
-                />
-              </div>
-            </div>
-            {isChangingPersonalInfosPending && (
-              <span>changing personal infos....</span>
-            )}
+            <TextField
+              {...register("first_name", {
+                required: "This field is required",
+                pattern: {
+                  value: /^[a-zA-Z ]*$/,
+                  message: "Please enter a valid name",
+                },
+                validate: (value) => {
+                  if (value.trim().length < 4)
+                    return "Name must contain at least 4 characters";
+                  if (value.trim().length > 15)
+                    return "Name cant have more than 15 characters";
+                  return true;
+                },
+              })}
+              label="First name"
+              type="text"
+              error={!!errors.first_name}
+              helperText={errors.first_name?.message}
+            />
+            <TextField
+              {...register("last_name", {
+                required: "This field is required",
+                pattern: {
+                  value: /^[a-zA-Z ]*$/,
+                  message: "Please enter a valid name",
+                },
+                validate: (value) => {
+                  if (value.trim().length < 4)
+                    return "Name must contain at least 4 characters";
+                  if (value.trim().length > 15)
+                    return "Name cant have more than 15 characters";
+                  return true;
+                },
+              })}
+              label="Last name"
+              type="text"
+              error={!!errors.last_name}
+              helperText={errors.last_name?.message}
+            />
+            <TextField
+              {...register("phone", {
+                required: "This field is required",
+                pattern: {
+                  value: /^[0-9]+$/,
+                  message: "Please enter a valid phone number",
+                },
+                minLength: {
+                  value: 8,
+                  message: "Phone number must have at least 8 digits",
+                },
+                maxLength: {
+                  value: 15,
+                  message: "Phone number cant have more than 15 digits",
+                },
+              })}
+              label="Phone"
+              type="tel"
+              error={!!errors.phone}
+              helperText={errors.phone?.message}
+            />
+            <TextField
+              {...register("birth_date", {
+                required: "This field is required",
+                validate: (value) => {
+                  const year = new Date(value).getFullYear();
+                  const curr_year = new Date().getFullYear();
+                  const age = curr_year - year;
+                  if (age < 13) return "Age must be at least 13 yo";
+                  if (age > 90) return "Khouya Daynasour??";
+                  return true;
+                },
+              })}
+              label="Birth date"
+              type="date"
+              error={!!errors.birth_date}
+              helperText={errors.birth_date?.message}
+            />
             <div className={styles.btnContainer}>
-              <button className={styles.link}>Change Personal Infos</button>
+              {isChangingPersonalInfosPending ? (
+                <span className={styles.link}>
+                  Changing Personal Infos{" "}
+                  <CircularProgress size={15} color="inherit" />
+                </span>
+              ) : (
+                <button className={styles.link}>Change Personal Infos</button>
+              )}
             </div>
           </form>
         </>

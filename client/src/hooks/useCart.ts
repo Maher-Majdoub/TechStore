@@ -150,8 +150,7 @@ const useCart = () => {
       return oldCart;
     },
 
-    onError(error, _, cart) {
-      console.error(error);
+    onError(_, __, cart) {
       queryClient.setQueryData(["cart"], cart);
     },
   });

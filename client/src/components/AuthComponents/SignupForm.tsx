@@ -19,9 +19,16 @@ const SignupForm = () => {
     register,
     handleSubmit,
     getValues,
+    setError,
     formState: { errors },
   } = useForm<FormInput>();
-  const { signup, isSignupSuccess, isSignupPending } = useSignup();
+  const {
+    signup,
+    isSignupSuccess,
+    isSignupPending,
+    isSignupError,
+    signupError,
+  } = useSignup();
 
   const navigate = useNavigate();
 
@@ -32,6 +39,13 @@ const SignupForm = () => {
   useEffect(() => {
     isSignupSuccess && navigate(endpoints["login"]);
   }, [isSignupSuccess]);
+
+  useEffect(() => {
+    const e = signupError?.response.data;
+    e?.email && setError("email", { message: e.email[0] });
+    e?.username && setError("username", { message: e.username[0] });
+    e?.password && setError("password", { message: e.password[0] });
+  }, [isSignupError]);
 
   return (
     <div className={styles.section}>

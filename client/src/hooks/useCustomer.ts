@@ -3,6 +3,7 @@ import ApiService from "../services/apiService";
 import { Product } from "./useProducts";
 import useAuthorization from "./useAuthorization";
 import apiClient from "../services/apiClient";
+import { toast } from "react-toastify";
 
 export interface Address {
   id?: number;
@@ -46,6 +47,35 @@ export interface Customer extends PersonalInfos {
   compare_list: Compare[];
 }
 
+interface ChangePasswordError {
+  response: {
+    data: {
+      current_password: string[];
+      new_password: string[];
+    };
+  };
+}
+
+interface ChangeUserNameError {
+  response: {
+    data: {
+      current_password: string[];
+      new_username: string[];
+    };
+  };
+}
+
+interface ChangePersonalInfosError {
+  response: {
+    data: {
+      first_name: string[];
+      last_name: string[];
+      phone: string[];
+      birth_date: string[];
+    };
+  };
+}
+
 const apiService = new ApiService<Customer>("customers");
 
 const useCustomer = () => {
@@ -64,14 +94,17 @@ const useCustomer = () => {
       isChangingPasswordPending: false,
       isPasswordChangingError: false,
       isPasswordChangingSuccess: false,
+      changingPasswordError: {} as ChangePasswordError,
       changeUsername: () => {},
       isChangingUsernameSuccess: false,
       isChangingUsernamePending: false,
       isChangingUsernameError: false,
+      changingUsernameError: {} as ChangeUserNameError,
       changePersonalInfos: () => {},
       isChangingPersonalInfosSuccess: false,
       isChangingPersonalInfosPending: false,
       isChangingPersonalInfosError: false,
+      changingPersonalInfosError: {} as ChangePersonalInfosError,
     };
 
   const AUTHORIZATION = `JWT ${access}`;
@@ -92,15 +125,12 @@ const useCustomer = () => {
   });
 
   const AddAddressMutation = useMutation<Address, Error, Address>({
-    mutationFn: (address) => {
-      console.log(address);
-
-      return apiClient
+    mutationFn: (address) =>
+      apiClient
         .post("store/customers/me/addresses/", address, {
           headers: { Authorization: AUTHORIZATION },
         })
-        .then((res) => res.data);
-    },
+        .then((res) => res.data),
 
     onMutate: (address) => {
       const oldCustomer = queryClient.getQueryData<Customer>(["customer"]);
@@ -123,6 +153,7 @@ const useCustomer = () => {
           addresses: [...oldAddresses, { ...address, id: -1 }],
         };
       });
+      toast.success("Adress added successfuly");
       return oldCustomer;
     },
 
@@ -141,8 +172,8 @@ const useCustomer = () => {
       });
     },
 
-    onError: (error, _, oldCustomer) => {
-      console.log(error);
+    onError: (_, __, oldCustomer) => {
+      toast.error("Something went wrong while adding address");
       queryClient.setQueryData(["customer"], () => oldCustomer);
     },
   });
@@ -171,12 +202,13 @@ const useCustomer = () => {
           ),
         };
       });
+      toast.success("Address removed successfuly");
       return oldCustomer;
     },
 
-    onError: (error, _, oldCustomer) => {
-      console.error(error);
+    onError: (_, __, oldCustomer) => {
       queryClient.setQueryData<Customer>(["customer"], oldCustomer);
+      toast.error("Something went wrong while removing address");
     },
   });
 
@@ -217,12 +249,13 @@ const useCustomer = () => {
           addresses: newAddresses,
         };
       });
+      toast.success("Address updated successfuly");
       return oldCustomer;
     },
 
-    onError: (error, _, oldCustomer) => {
-      console.log(error);
+    onError: (_, __, oldCustomer) => {
       queryClient.setQueryData<Customer>(["customer"], oldCustomer);
+      toast.error("Something went wrong while updating address");
     },
   });
 
@@ -231,7 +264,12 @@ const useCustomer = () => {
     isSuccess: isChangingPasswordSuccess,
     isPending: isChangingPasswordPending,
     isError: isChangingPasswordError,
-  } = useMutation<{}, Error, { currentPassword: string; newPassword: string }>({
+    error: changingPasswordError,
+  } = useMutation<
+    {},
+    ChangePasswordError,
+    { currentPassword: string; newPassword: string }
+  >({
     mutationFn: ({ currentPassword, newPassword }) =>
       apiClient
         .post(
@@ -243,6 +281,9 @@ const useCustomer = () => {
           { headers: { Authorization: AUTHORIZATION } }
         )
         .then((res) => res.data),
+    onSuccess: () => {
+      toast.success("Password changed successfully");
+    },
   });
 
   const {
@@ -250,14 +291,26 @@ const useCustomer = () => {
     isSuccess: isChangingUsernameSuccess,
     isPending: isChangingUsernamePending,
     isError: isChangingUsernameError,
-  } = useMutation<{}, Error, { currentPassword: string; newUsername: string }>({
+    error: changingUsernameError,
+  } = useMutation<
+    {},
+    ChangeUserNameError,
+    { currentPassword: string; newUsername: string }
+  >({
     mutationFn: ({ currentPassword, newUsername }) =>
       apiClient
-        .post("/auth/users/set_username/", {
-          current_password: currentPassword,
-          new_username: newUsername,
-        })
+        .post(
+          "/auth/users/set_username/",
+          {
+            current_password: currentPassword,
+            new_username: newUsername,
+          },
+          { headers: { Authorization: AUTHORIZATION } }
+        )
         .then((res) => res.data),
+    onSuccess: () => {
+      toast.success("Username changed successfully");
+    },
   });
 
   const {
@@ -265,7 +318,8 @@ const useCustomer = () => {
     isSuccess: isChangingPersonalInfosSuccess,
     isPending: isChangingPersonalInfosPending,
     isError: isChangingPersonalInfosError,
-  } = useMutation<{}, Error, PersonalInfos, Customer>({
+    error: changingPersonalInfosError,
+  } = useMutation<{}, ChangePersonalInfosError, PersonalInfos, Customer>({
     mutationFn: (infos) =>
       apiClient.put("/store/customers/me/", infos, {
         headers: { Authorization: AUTHORIZATION },
@@ -275,6 +329,7 @@ const useCustomer = () => {
     },
     onSuccess: (_, infos, oldCustomer) => {
       queryClient.setQueryData(["customer"], { ...oldCustomer, ...infos });
+      toast.success("Personal infos changed successfully");
     },
   });
 
@@ -289,14 +344,17 @@ const useCustomer = () => {
     isChangingPasswordSuccess,
     isChangingPasswordPending,
     isChangingPasswordError,
+    changingPasswordError,
     changeUsername,
     isChangingUsernameSuccess,
     isChangingUsernamePending,
     isChangingUsernameError,
+    changingUsernameError,
     changePersonalInfos,
     isChangingPersonalInfosSuccess,
     isChangingPersonalInfosPending,
     isChangingPersonalInfosError,
+    changingPersonalInfosError,
   };
 };
 

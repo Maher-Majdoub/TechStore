@@ -30,8 +30,22 @@ const AccountDashboard = () => {
                 <span>{`${customer.first_name} ${customer.last_name}`}</span>
                 <span>{customer.user?.email}</span>
                 <div className={styles.flxBx}>
-                  <span className={styles.link}>Edit</span>
-                  <span className={styles.link}>Change Password</span>
+                  <span
+                    className={styles.link}
+                    onClick={() => {
+                      navigate(userAccountEndPoints["account_information"]);
+                    }}
+                  >
+                    Edit
+                  </span>
+                  <span
+                    className={styles.link}
+                    onClick={() => {
+                      navigate(userAccountEndPoints["account_information"]);
+                    }}
+                  >
+                    Change Password
+                  </span>
                 </div>
               </div>
               <div className={styles.sectionContainer}>

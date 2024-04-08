@@ -1,6 +1,14 @@
-import { useRef } from "react";
 import styles from "./styles.module.css";
 import useCustomer from "../../hooks/useCustomer";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { CircularProgress, TextField } from "@mui/material";
+import { useEffect } from "react";
+
+interface FormInput {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
 
 const ChangePasswordForm = () => {
   const {
@@ -8,64 +16,82 @@ const ChangePasswordForm = () => {
     isChangingPasswordSuccess,
     isChangingPasswordPending,
     isChangingPasswordError,
+    changingPasswordError,
   } = useCustomer();
 
-  const oldPasswordRef = useRef<HTMLInputElement>(null);
-  const newPasswordRef = useRef<HTMLInputElement>(null);
-  const confirmPasswordRef = useRef<HTMLInputElement>(null);
+  const {
+    register,
+    handleSubmit,
+    setError,
+    reset,
+    getValues,
+    formState: { errors },
+  } = useForm<FormInput>();
 
-  if (isChangingPasswordSuccess) console.log("pass changed");
-  if (isChangingPasswordError) console.error("error while changing password");
+  useEffect(() => {
+    if (isChangingPasswordError) {
+      const e = changingPasswordError?.response.data;
+      e?.current_password &&
+        setError("currentPassword", { message: e.current_password[0] });
+      e?.new_password &&
+        setError("newPassword", { message: e.new_password[0] });
+    }
+  }, [changingPasswordError]);
 
-  const handleChangePassword = () => {
-    if (oldPasswordRef.current && newPasswordRef.current)
-      changePassword({
-        currentPassword: oldPasswordRef.current.value,
-        newPassword: newPasswordRef.current.value,
-      });
+  useEffect(() => {
+    if (isChangingPasswordSuccess) reset();
+  }, [isChangingPasswordSuccess]);
+
+  const handleChangePassword: SubmitHandler<FormInput> = (data) => {
+    changePassword(data);
   };
 
   return (
     <>
       <h4>Change Password</h4>
       <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          handleChangePassword();
-        }}
+        onSubmit={handleSubmit(handleChangePassword)}
+        className={styles.form}
       >
-        <div className={styles.inputGroups}>
-          <div className={styles.inputGroup}>
-            <span className={styles.required}>Current Password</span>
-            <input
-              ref={oldPasswordRef}
-              type="password"
-              required
-              autoComplete="current-password"
-            />
-          </div>
-          <div className={styles.inputGroup}>
-            <span className={styles.required}>New Password</span>
-            <input
-              ref={newPasswordRef}
-              type="password"
-              required
-              autoComplete="new-password"
-            />
-          </div>
-          <div className={styles.inputGroup}>
-            <span className={styles.required}>Confirm Password</span>
-            <input
-              ref={confirmPasswordRef}
-              type="password"
-              required
-              autoComplete="new-password"
-            />
-          </div>
-        </div>
-        {isChangingPasswordPending && <span>changing pass...</span>}
+        <TextField
+          {...register("currentPassword", {
+            required: "This field is required",
+          })}
+          label="Current password"
+          type="password"
+          autoComplete="current-password"
+          error={!!errors.currentPassword}
+          helperText={errors.currentPassword?.message}
+          fullWidth
+        />
+        <TextField
+          {...register("newPassword", { required: "This field is required" })}
+          label="New Password"
+          type="password"
+          error={!!errors.newPassword}
+          helperText={errors.newPassword?.message}
+          fullWidth
+        />
+        <TextField
+          {...register("confirmPassword", {
+            required: "This field is required",
+            validate: (value) =>
+              value === getValues("newPassword") || "Passwords do not match",
+          })}
+          label="Confirm password"
+          type="password"
+          error={!!errors.confirmPassword}
+          helperText={errors.confirmPassword?.message}
+          fullWidth
+        />
         <div className={styles.btnContainer}>
-          <button className={styles.link}>Change Password</button>
+          {isChangingPasswordPending ? (
+            <span className={styles.link}>
+              Changing Password <CircularProgress size={15} color="inherit" />
+            </span>
+          ) : (
+            <button className={styles.link}>Change Password</button>
+          )}
         </div>
       </form>
     </>
