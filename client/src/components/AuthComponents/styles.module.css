@@ -23,29 +23,8 @@
 }
 
 .form {
-    gap: 10px;
-}
-
-.inputSection {
-    gap: 5px;
-    font-size: 14px;
-}
-
-.inputSection > span {
-    font-weight: 600;
-}
-
-.required::after {
-    content: '*';
-    margin-left: 5px;
-    color: #ff3838
-}
-
-.input{
-    background-color: var(--color-1);
-    border: 1px solid var(--color-5);
-    border-radius: 5px;
-    padding: 10px;
+    gap: 25px;
+    margin: 10px 0;
 }
 
 .btnContainer {

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import styles from "./Button.module.css";
-import Loader from "../Loader/Loader";
+import { CircularProgress } from "@mui/material";
 
 interface Props {
   children: ReactNode;
@@ -17,6 +17,7 @@ const Button = ({
 }: Props) => {
   return (
     <button
+      disabled={load}
       className={`${styles.container} ${
         filled ? styles.filled : styles.hollow
       }`}
@@ -24,7 +25,7 @@ const Button = ({
     >
       {load && (
         <div className={styles.loader}>
-          <Loader />
+          <CircularProgress color="inherit" size={25} />
         </div>
       )}
       <div className={load ? styles.hidden : ""}>{children}</div>

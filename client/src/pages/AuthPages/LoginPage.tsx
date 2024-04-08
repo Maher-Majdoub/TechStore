@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { userAccountEndPoints } from "../../constants";
 import useAuthorization from "../../hooks/useAuthorization";
 import useRefreshToken from "../../hooks/useRefreshToken";
-import useLogin from "../../hooks/useLogin";
 import Navigator from "../../components/Navigator/Navigator";
 import LoginForm from "../../components/AuthComponents/LoginForm";
 import NewCustomer from "../../components/AuthComponents/NewCustomer";
@@ -15,13 +14,12 @@ const LoginPage = () => {
   const { refresh, isAccessExpired, isRefreshExpired } = useAuthorization();
   const { refreshToken, isRefreshSuccess, isRefreshPending, isRefreshError } =
     useRefreshToken();
-  const { login, isLoginSuccess, isLoginPending } = useLogin();
 
   useEffect(() => {
-    if (!isAccessExpired || isRefreshSuccess || isLoginSuccess) {
+    if (!isAccessExpired || isRefreshSuccess) {
       navigate(userAccountEndPoints["account_dashboard"]);
     }
-  }, [isAccessExpired, isRefreshSuccess, isLoginSuccess]);
+  }, [isAccessExpired, isRefreshSuccess]);
 
   useEffect(() => {
     if (refresh && !isRefreshExpired && !isRefreshError && !isRefreshPending) {
@@ -37,12 +35,7 @@ const LoginPage = () => {
         <Navigator />
         <h2 className={styles.title}>Customer Login</h2>
         <div className={styles.sections}>
-          <LoginForm
-            isLoading={isLoginPending}
-            onLogin={(username, password) => {
-              login({ username: username, password: password });
-            }}
-          />
+          <LoginForm />
           <NewCustomer />
         </div>
       </div>

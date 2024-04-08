@@ -1,15 +1,35 @@
-import { useRef } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import Button from "../Button/Button";
+import { TextField } from "@mui/material";
 import styles from "./styles.module.css";
+import useLogin from "../../hooks/useLogin";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { userAccountEndPoints } from "../../constants";
 
-interface Props {
-  onLogin(usename: string, password: string): void;
-  isLoading?: boolean;
+interface FormInput {
+  username: string;
+  password: string;
 }
 
-const LoginForm = ({ onLogin, isLoading = false }: Props) => {
-  const username = useRef<HTMLInputElement>(null);
-  const password = useRef<HTMLInputElement>(null);
+const LoginForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormInput>();
+
+  const { login, isLoginSuccess, isLoginPending } = useLogin();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    isLoginSuccess && navigate(userAccountEndPoints["account_dashboard"]);
+  }, [isLoginSuccess]);
+
+  const onLogin: SubmitHandler<FormInput> = (data) => {
+    login(data);
+  };
 
   return (
     <div className={styles.section}>
@@ -17,42 +37,23 @@ const LoginForm = ({ onLogin, isLoading = false }: Props) => {
       <span className={styles.desc}>
         If you have an account, sign in with your credentials.
       </span>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-        }}
-        className={styles.form}
-      >
-        <div className={styles.inputSection}>
-          <span className={styles.required}>User Name</span>
-          <input
-            ref={username}
-            type="text"
-            placeholder="Your User Name"
-            required
-            className={styles.input}
-          />
-        </div>
-        <div className={styles.inputSection}>
-          <span className={styles.required}>Password</span>
-          <input
-            ref={password}
-            type="password"
-            placeholder="Your Password"
-            required
-            className={styles.input}
-          />
-        </div>
+      <form onSubmit={handleSubmit(onLogin)} className={styles.form}>
+        <TextField
+          {...register("username", { required: "Username is required" })}
+          label="Username"
+          type="text"
+          error={!!errors.username}
+          helperText={errors.username?.message}
+        />
+        <TextField
+          {...register("password", { required: "Password is required" })}
+          label="Password"
+          type="password"
+          error={!!errors.password}
+          helperText={errors.password?.message}
+        />
         <div className={styles.btnContainer}>
-          <Button
-            load={isLoading}
-            onClick={() => {
-              if (username.current?.value && password.current?.value) {
-                onLogin(username.current.value, password.current.value);
-              }
-            }}
-            filled
-          >
+          <Button load={isLoginPending} filled>
             Sign In
           </Button>
         </div>
