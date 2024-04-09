@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useProducts from "../../hooks/useProducts";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import Navigator from "../../components/Navigator/Navigator";
@@ -7,6 +7,7 @@ import styles from "./ProductsPage.module.css";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { endpoints } from "../../constants";
 import Paginator from "../../components/Paginator/Paginator";
+import ProductCardSkeleton from "../../components/ProductCard/ProductCardSkeleton";
 
 const ProductsPage = () => {
   const location = useLocation();
@@ -33,15 +34,19 @@ const ProductsPage = () => {
     },
   });
 
-  if (error) {
-    const navigate = useNavigate();
-    navigate(endpoints["error"]);
-  }
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (error) {
+      navigate(endpoints["error"]);
+    }
+  }, [error]);
+
+  const skeletons = [1, 2, 3, 4, 7, 8];
 
   return (
     <main className={styles.main + " container"}>
       <Navigator />
-      {isLoading && <p>Loading...</p>}
       <div className={styles.filters}>
         <div className={styles.filter}>
           <span>Sort By:</span>
@@ -81,17 +86,19 @@ const ProductsPage = () => {
       <Paginator
         page={page}
         pageSize={pageSize}
-        total={data?.count || 0}
+        total={data?.count || 7}
         onChangePage={(newPage) => {
           setPage(newPage);
         }}
       >
         <ul className={styles.list}>
-          {data?.results.map((product) => (
-            <li key={product.id}>
-              <ProductCard product={product} />
-            </li>
-          ))}
+          {!isLoading
+            ? data?.results.map((product) => (
+                <li key={product.id}>
+                  <ProductCard product={product} />
+                </li>
+              ))
+            : skeletons.map((s) => <ProductCardSkeleton key={s} />)}
         </ul>
       </Paginator>
     </main>

@@ -31,28 +31,30 @@ const WishList = () => {
             <div className={styles.titleContainer}>
               <h2>My Wish List</h2>
             </div>
-            <Paginator
-              page={page}
-              pageSize={pageSize}
-              total={data.count}
-              onChangePage={(newPage) => {
-                setPage(newPage);
-              }}
-            >
-              <ul className={styles.list}>
-                {data?.results.map((wish) => (
-                  <ProductCard
-                    key={wish.id}
-                    product={wish.product}
-                    addToWish={false}
-                    del
-                    onDelete={() => {
-                      deleteWish({ wishId: wish.id });
-                    }}
-                  />
-                ))}
-              </ul>
-            </Paginator>
+            {data?.results && (
+              <Paginator
+                page={page}
+                pageSize={pageSize}
+                total={data.count}
+                onChangePage={(newPage) => {
+                  setPage(newPage);
+                }}
+              >
+                <ul className={styles.list}>
+                  {data.results.map((wish) => (
+                    <ProductCard
+                      key={wish.id}
+                      product={wish.product}
+                      addToWish={false}
+                      del
+                      onDelete={() => {
+                        deleteWish({ wishId: wish.id });
+                      }}
+                    />
+                  ))}
+                </ul>
+              </Paginator>
+            )}
             {isDeleteWishPending && <p>deleting wish</p>}
           </div>
         </div>

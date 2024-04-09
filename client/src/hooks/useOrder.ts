@@ -3,6 +3,7 @@ import { Address } from "./useCustomer";
 import ApiService from "../services/apiService";
 import useAuthorization from "./useAuthorization";
 import apiClient from "../services/apiClient";
+import { toast } from "react-toastify";
 
 export enum OrderStatus {
   Pending = "PE",
@@ -97,6 +98,12 @@ const UseOrder = () => {
           headers: { Authorization: AUTHORIZATION },
         })
         .then((res) => res.data),
+    onSuccess: () => {
+      toast.success("Order placed successfuly");
+    },
+    onError: () => {
+      toast.error("Something went wrong while placing the order");
+    },
   });
 
   return {

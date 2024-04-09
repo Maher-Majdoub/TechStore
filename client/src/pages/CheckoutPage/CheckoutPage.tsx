@@ -4,12 +4,13 @@ import Navigator from "../../components/Navigator/Navigator";
 import Process from "../../components/Process/Process";
 import SelectPaymentMethod from "../../components/CheckoutPageComponents/SelectPaymentMethod";
 import useLocation from "../../hooks/useLocation";
-import useAuthorization from "../../hooks/useAuthorization";
-import { Navigate, useNavigate } from "react-router-dom";
-import { Address } from "../../hooks/useCustomer";
+import { useNavigate } from "react-router-dom";
+import useCustomer, { Address } from "../../hooks/useCustomer";
 import { endpoints } from "../../constants";
 import { ShippingMethod } from "../../hooks/useOrder";
 import styles from "./CheckoutPage.module.css";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 let selectedShippingAddress = {} as Address;
 let shippingMethod = "" as ShippingMethod;
@@ -19,11 +20,15 @@ const CheckoutPage = () => {
   const currEndpoints = pathname.split("/");
   const endpoint = currEndpoints[currEndpoints.length - 1];
 
-  const { isAccessExpired, isRefreshExpired } = useAuthorization();
+  const { customer } = useCustomer();
   const navigate = useNavigate();
 
-  if (isAccessExpired && isRefreshExpired)
-    return <Navigate to={endpoints["login"]} />;
+  useEffect(() => {
+    if (!customer) {
+      toast.warn("Please login to place your order");
+      navigate(endpoints["login"]);
+    }
+  }, []);
 
   return (
     <main>

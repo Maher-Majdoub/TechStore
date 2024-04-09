@@ -17,23 +17,12 @@ const useWish = (page: number = 1, pageSize: number = 10) => {
 
   const { data, isSuccess, isLoading, isError } = useQuery<Response<Wish>>({
     queryKey: ["wishes", page, pageSize],
-    queryFn: () => {
-      if (access !== undefined) {
-        return apiService.getPage({
-          params: { limit: pageSize, offset: (page - 1) * pageSize },
-          headers: { Authorization: AUTHORIZATION },
-        });
-      } else {
-        return new Promise(() => {
-          return {
-            count: 0,
-            next: "",
-            previous: "",
-            results: {},
-          } as Response<Wish>;
-        });
-      }
-    },
+    queryFn: () =>
+      apiService.getPage({
+        params: { limit: pageSize, offset: (page - 1) * pageSize },
+        headers: { Authorization: AUTHORIZATION },
+      }),
+    enabled: !!access,
     staleTime: 1000 * 60 * 60 * 24, //24h
     retry: 1,
   });

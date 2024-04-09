@@ -24,9 +24,9 @@ const useLogin = () => {
       apiClient.post("/auth/jwt/create/", data).then((res) => res.data),
     onSuccess: (tokens) => {
       queryClient.setQueryData<Tokens>(["auth"], tokens);
-      queryClient.invalidateQueries({ queryKey: ["wishes"] });
-      queryClient.invalidateQueries({ queryKey: ["customer"] });
-      queryClient.invalidateQueries({ queryKey: ["orders"] });
+      queryClient.resetQueries({ queryKey: ["customer"] });
+      queryClient.resetQueries({ queryKey: ["orders"] });
+      queryClient.resetQueries({ queryKey: ["wishes"] });
       toast.success("Login successful");
     },
     onError: (error) => {

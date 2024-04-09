@@ -10,6 +10,7 @@ import UseOrder, { PaymentMethod, ShippingMethod } from "../../hooks/useOrder";
 import useCart from "../../hooks/useCart";
 import { useQueryClient } from "@tanstack/react-query";
 import { endpoints } from "../../constants";
+import { toast } from "react-toastify";
 
 interface Props {
   selectedShippingAddress: Address;
@@ -27,10 +28,6 @@ const SelectPaymentMethod = ({
   const { createOrder, isCreateOrderSuccess, isCreateOrderPending } =
     UseOrder();
 
-  if (isCreateOrderSuccess) {
-    queryClient.removeQueries({ queryKey: ["cart"] });
-  }
-
   const defaultBillingAddress = customer?.addresses.find(
     (address) => address.is_default_billing_address
   );
@@ -47,10 +44,18 @@ const SelectPaymentMethod = ({
   const { cart } = useCart();
 
   useEffect(() => {
-    if (!cart) navigate(endpoints["home"]);
-    if (!shippingMethod || !selectedShippingAddress)
+    if (!shippingMethod || !selectedShippingAddress) {
+      toast.warn("Please select your shipping address first");
       navigate(endpoints["checkout"]);
-  }, [shippingMethod, selectedShippingAddress, cart]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isCreateOrderSuccess) {
+      queryClient.resetQueries({ queryKey: ["cart"] });
+      navigate(endpoints["home"]);
+    }
+  }, [isCreateOrderSuccess]);
 
   if (cart)
     return (
