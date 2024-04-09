@@ -1,11 +1,11 @@
 import { useState } from "react";
 import styles from "./styles.module.css";
-import AddEditAddress from "../UserPageComponents/AddEditAddress";
 import useCustomer, { Address } from "../../hooks/useCustomer";
 import { MdOutlineDone } from "react-icons/md";
 import Button from "../Button/Button";
 import OrderSummary from "../OrderSummary/OrderSummary";
 import { ShippingMethod } from "../../hooks/useOrder";
+import PopupAddressForm from "./PopupAddressForm";
 
 interface Props {
   onSubmit(
@@ -33,26 +33,12 @@ const SelectShippingMethod = ({ onSubmit }: Props) => {
 
   return (
     <div>
-      {showAddAddressForm && (
-        <div
-          className={styles.addAddressContainer}
-          onClick={() => {
-            setShowAddAddressForm(false);
-          }}
-        >
-          <div
-            onClick={(event) => {
-              event.stopPropagation();
-            }}
-          >
-            <AddEditAddress
-              afterSubmition={() => {
-                setShowAddAddressForm(false);
-              }}
-            />
-          </div>
-        </div>
-      )}
+      <PopupAddressForm
+        open={showAddAddressForm}
+        onClose={() => {
+          setShowAddAddressForm(false);
+        }}
+      />
       <div className={styles.content}>
         <div>
           <div>

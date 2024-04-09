@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import useCustomer, { Address } from "../../hooks/useCustomer";
-import styles from "./styles.module.css";
-import { MdOutlineDone } from "react-icons/md";
-import Button from "../Button/Button";
-import AddEditAddress from "../UserPageComponents/AddEditAddress";
-import OrderSummary from "../OrderSummary/OrderSummary";
 import { useNavigate } from "react-router-dom";
-import UseOrder, { PaymentMethod, ShippingMethod } from "../../hooks/useOrder";
-import useCart from "../../hooks/useCart";
 import { useQueryClient } from "@tanstack/react-query";
 import { endpoints } from "../../constants";
+import { MdOutlineDone } from "react-icons/md";
 import { toast } from "react-toastify";
+import UseOrder, { PaymentMethod, ShippingMethod } from "../../hooks/useOrder";
+import useCustomer, { Address } from "../../hooks/useCustomer";
+import Button from "../Button/Button";
+import OrderSummary from "../OrderSummary/OrderSummary";
+import useCart from "../../hooks/useCart";
+import PopupAddressForm from "./PopupAddressForm";
+import styles from "./styles.module.css";
 
 interface Props {
   selectedShippingAddress: Address;
@@ -60,26 +60,12 @@ const SelectPaymentMethod = ({
   if (cart)
     return (
       <div>
-        {showAddAddressForm && (
-          <div
-            className={styles.addAddressContainer}
-            onClick={() => {
-              setShowAddAddressForm(false);
-            }}
-          >
-            <div
-              onClick={(event) => {
-                event.stopPropagation();
-              }}
-            >
-              <AddEditAddress
-                afterSubmition={() => {
-                  setShowAddAddressForm(false);
-                }}
-              />
-            </div>
-          </div>
-        )}
+        <PopupAddressForm
+          open={showAddAddressForm}
+          onClose={() => {
+            setShowAddAddressForm(false);
+          }}
+        />
         <div className={styles.content}>
           <div>
             <div>

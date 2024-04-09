@@ -33,7 +33,7 @@ body {
   background-color: var(--color-1);
 }
 
-ul::-webkit-scrollbar {
+ul::-webkit-scrollbar, .scroll::-webkit-scrollbar {
   width: 5px;
 }
 
@@ -41,21 +41,21 @@ body::-webkit-scrollbar {
   width: 10px;
 }
 
-body::-webkit-scrollbar-thumb, ul::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb, ul::-webkit-scrollbar-thumb, .scroll::-webkit-scrollbar-thumb {
   background-color: #888;
   border-radius: 6px;
 }
 
-body::-webkit-scrollbar-track, ul::-webkit-scrollbar-track {
+body::-webkit-scrollbar-track, ul::-webkit-scrollbar-track, .scroll::-webkit-scrollbar-track {
   background-color: #f1f1f1;
   border-radius: 6px; 
 }
 
-body::-webkit-scrollbar-thumb:hover, ul::-webkit-scrollbar-thumb:hover {
+body::-webkit-scrollbar-thumb:hover, ul::-webkit-scrollbar-thumb:hover, .scroll::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
 
-body::-webkit-scrollbar-thumb:active, ul::-webkit-scrollbar-thumb:active {
+body::-webkit-scrollbar-thumb:active, ul::-webkit-scrollbar-thumb:active, .scroll::-webkit-scrollbar-thumb:active {
   background-color: #333;
 }
 

@@ -92,5 +92,18 @@
         width: 150px;
         height: 30px;
     }
+
+    .options {
+        flex-direction: column;
+        gap: 7px;
+        background-color: inherit;
+    }
+    .option {
+        width: fit-content;
+        font-size: 16px;
+    }
+    .option::before{
+        background-color: var(--color-7);
+    }
   }
   

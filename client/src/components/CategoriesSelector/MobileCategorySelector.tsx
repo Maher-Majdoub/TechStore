@@ -1,15 +1,15 @@
-import { useState, useRef } from "react";
-import useCategories from "../../hooks/useCategories";
-import styles from "./CategoriesSelector.module.css";
+import { useState } from "react";
 import { MdMenu } from "react-icons/md";
 import { LiaTimesSolid } from "react-icons/lia";
+import { Modal } from "@mui/material";
 import CategoryList from "./CategoryList";
+import useCategories from "../../hooks/useCategories";
+import styles from "./CategoriesSelector.module.css";
+import Links from "../Header/Links";
 
 const MobileCategorySelector = () => {
   const { data } = useCategories();
   const [showSideBar, toggleShowSideBar] = useState(false);
-
-  const containerRef = useRef<HTMLDivElement>(null);
 
   return (
     <div>
@@ -18,29 +18,27 @@ const MobileCategorySelector = () => {
           <MdMenu />
         </div>
       </button>
-      {showSideBar && (
-        <div
-          className={`${styles.sideBar}`}
-          onClick={() => {
-            toggleShowSideBar(false);
-          }}
-        >
-          <div
-            ref={containerRef}
-            className={styles.content}
-            onClick={(event) => {
-              event?.stopPropagation();
-            }}
-          >
-            <div className={styles.head}>
-              <button
-                onClick={() => {
-                  toggleShowSideBar(false);
-                }}
-              >
-                <LiaTimesSolid />
-              </button>
-            </div>
+      <Modal
+        open={showSideBar}
+        onClose={() => {
+          toggleShowSideBar(false);
+        }}
+        sx={{
+          width: "80%",
+          overflowY: "auto",
+        }}
+      >
+        <div className={styles.sidebarContainer}>
+          <div className={styles.head}>
+            <button
+              onClick={() => {
+                toggleShowSideBar(false);
+              }}
+            >
+              <LiaTimesSolid />
+            </button>
+          </div>
+          <div className={styles.content}>
             <div className={styles.title}>
               <span>Our Categories</span>
             </div>
@@ -55,9 +53,17 @@ const MobileCategorySelector = () => {
                 />
               ))}
             </ul>
+            <div
+              className={styles.links}
+              onClick={() => {
+                toggleShowSideBar(false);
+              }}
+            >
+              <Links />
+            </div>
           </div>
         </div>
-      )}
+      </Modal>
     </div>
   );
 };

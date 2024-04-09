@@ -8,6 +8,7 @@ import styles from "./styles.module.css";
 import { screenWidths } from "../../constants";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { LiaTimesSolid } from "react-icons/lia";
+import { Modal } from "@mui/material";
 
 const CartButton = () => {
   const [showCart, toggleShowCart] = useState(false);
@@ -40,18 +41,15 @@ const CartButton = () => {
               </div>
             </div>
           ) : (
-            <div
-              className={styles.sideBar}
-              onClick={() => {
-                toggleShowCart(false);
+            <Modal
+              open={showCart}
+              sx={{
+                height: "100%",
+                width: "80%",
+                marginLeft: "auto",
               }}
             >
-              <div
-                className={styles.content}
-                onClick={(event) => {
-                  event.stopPropagation();
-                }}
-              >
+              <div className={styles.popupContainer}>
                 <div className={styles.exitBtnContainer}>
                   <button
                     className={styles.exitBtn}
@@ -66,7 +64,7 @@ const CartButton = () => {
                   <Minicart toggleShowCart={toggleShowCart} />
                 </div>
               </div>
-            </div>
+            </Modal>
           )}
         </>
       )}
