@@ -1,0 +1,41 @@
+.container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.content {
+    margin : 10px 0
+}
+
+.head {
+    margin: 20px 0;
+}
+
+.subTitle {
+    font-weight: 600;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.questions, .question {
+    display: flex;
+    flex-direction: column;
+}
+
+.questions {
+    gap: 15px;
+    padding: 10px 0
+}
+
+.question {
+    gap: 5px
+}
+
+.questionTitle {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.questionContent {
+    font-weight: 300;
+}
