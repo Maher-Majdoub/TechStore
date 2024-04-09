@@ -1,15 +1,16 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MdMenu, MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { MdMenu } from "react-icons/md";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { endpoints } from "../../constants";
 import useCategories from "../../hooks/useCategories";
 import hideOnClickOutSide from "../../services/hideOnClickOutside";
-import CategoryCard from "../CategoryCard/CategoryCard";
 import styles from "./CategoriesSelector.module.css";
+import InlineCategory from "./InlineCategory";
+import InlineCategorySekeleton from "./InlineCategorySekeleton";
 
 const DesktopCategorySelector = () => {
-  const { data } = useCategories();
+  const { data, isLoading } = useCategories();
   const [showMenu, toggleShowMenu] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -20,6 +21,8 @@ const DesktopCategorySelector = () => {
   });
 
   const navigate = useNavigate();
+
+  const skeletons = [1, 2, 3, 4, 5, 6, 7, 8];
 
   return (
     <div ref={containerRef} className={styles.container}>
@@ -34,44 +37,28 @@ const DesktopCategorySelector = () => {
       </button>
       <div hidden={!showMenu} className={styles.menuContainer}>
         <ul className={styles.menu}>
-          {data?.results.map((parent_category) => (
-            <li
-              key={parent_category.id}
-              onClick={() => {
-                toggleShowMenu(false);
-                navigate(endpoints["sub_categories"](parent_category.slug));
-              }}
-            >
-              <img
-                src={parent_category.thumbnail}
-                alt={`${parent_category.name} image`}
-                className={styles.thumbnail}
-              />
-              <span>{parent_category.name}</span>
-              <MdOutlineKeyboardArrowRight />
-              <div>
-                <div className={styles.subCategories}>
-                  {parent_category.sub_categories.map((category) => (
-                    <div
-                      key={category.id}
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        toggleShowMenu(false);
-                        navigate(
-                          endpoints["category_products"](
-                            parent_category.slug,
-                            category.slug
-                          )
-                        );
-                      }}
-                    >
-                      <CategoryCard category={category} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </li>
-          ))}
+          {!isLoading
+            ? data?.results.map((parent_category) => (
+                <li
+                  key={parent_category.id}
+                  onClick={() => {
+                    toggleShowMenu(false);
+                    navigate(endpoints["sub_categories"](parent_category.slug));
+                  }}
+                >
+                  <InlineCategory
+                    category={parent_category}
+                    onExit={() => {
+                      toggleShowMenu(false);
+                    }}
+                  />
+                </li>
+              ))
+            : skeletons.map((s) => (
+                <li key={s}>
+                  <InlineCategorySekeleton />
+                </li>
+              ))}
         </ul>
       </div>
     </div>

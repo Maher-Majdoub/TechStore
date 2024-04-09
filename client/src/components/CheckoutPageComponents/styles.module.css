@@ -38,6 +38,7 @@
     border: 2px solid transparent;
     transition: .2s;
     position: relative;
+    border: 1px solid var(--color-5)
 }
 
 .address:not(.selected):hover {

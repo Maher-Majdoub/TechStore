@@ -50,7 +50,7 @@
     padding: 8px 10px;
 }
 
-.menu > li > div {
+.menu > li .block {
     position: absolute;
     top: 0;
     right: 0;
@@ -72,7 +72,7 @@
     background-color: rgb(105, 105, 105);
 }
 
-.menu > li:hover > div {
+.menu > li:hover .block {
     display: block;
 }
 
@@ -160,4 +160,11 @@
     height: fit-content;
     width: fit-content;
     padding: 10px 0;
+}
+
+.inlineCatSekeleton {
+    width: 210px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

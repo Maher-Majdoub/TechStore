@@ -4,6 +4,8 @@ import Navigator from "../../components/Navigator/Navigator";
 import styles from "./SubCategoriesPage.module.css";
 import CategoryCard from "../../components/CategoryCard/CategoryCard";
 import { endpoints } from "../../constants";
+import CategoryCardSkeleton from "../../components/CategoryCard/CategoryCardSkeleton";
+import LinksSection from "../../components/LinksSection/LinksSection";
 
 const SubCategoriesPage = () => {
   const { categorySlug } = useParams();
@@ -12,7 +14,8 @@ const SubCategoriesPage = () => {
   const navigate = useNavigate();
 
   if (error) {
-    navigate(endpoints["error"]);
+    console.log(error);
+    // navigate(endpoints["error"]);
   }
 
   var subCategories = [] as Category[];
@@ -25,33 +28,39 @@ const SubCategoriesPage = () => {
     });
   }
 
+  const skeletons = [1, 2, 3, 4, 5, 6];
+
   return (
-    <>
-      {isLoading && <p>Loading...</p>}
-      {data && (
-        <main className={styles.container + " container"}>
-          <Navigator />
-          <h2 className={styles.title}>Sub Categories</h2>
-          <ul className={styles.list}>
-            {subCategories.map((category) => (
-              <li
-                key={category.id}
-                onClick={() => {
-                  navigate(
-                    endpoints["category_products"](
-                      categorySlug || "",
-                      category.slug
-                    )
-                  );
-                }}
-              >
-                <CategoryCard category={category} />
-              </li>
-            ))}
-          </ul>
-        </main>
-      )}
-    </>
+    <main className={styles.container}>
+      <div className="container">
+        <Navigator />
+        <h2 className={styles.title}>Sub Categories</h2>
+        <ul className={styles.list}>
+          {!isLoading
+            ? subCategories.map((category) => (
+                <li
+                  key={category.id}
+                  onClick={() => {
+                    navigate(
+                      endpoints["category_products"](
+                        categorySlug || "",
+                        category.slug
+                      )
+                    );
+                  }}
+                >
+                  <CategoryCard category={category} />
+                </li>
+              ))
+            : skeletons.map((s) => (
+                <li key={s}>
+                  <CategoryCardSkeleton />
+                </li>
+              ))}
+        </ul>
+      </div>
+      <LinksSection />
+    </main>
   );
 };
 

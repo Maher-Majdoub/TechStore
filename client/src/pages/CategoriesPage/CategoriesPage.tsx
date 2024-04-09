@@ -4,32 +4,35 @@ import useCategories from "../../hooks/useCategories";
 import { useNavigate } from "react-router-dom";
 import styles from "./CategoriesPage.module.css";
 import { endpoints } from "../../constants";
+import CategoryCardSkeleton from "../../components/CategoryCard/CategoryCardSkeleton";
 
 const CategoriesPage = () => {
   const navigate = useNavigate();
   const { data, isLoading, error } = useCategories();
 
-  if (error) navigate(endpoints["error"]);
+  if (error) console.log(error);
+
+  const skeletons = [1, 2, 3, 4, 5, 6, 7, 8];
+
   return (
-    <>
-      {isLoading && <p>Loading...</p>}
-      <main className={styles.container + " container"}>
-        <Navigator />
-        <h2 className={styles.title}>Our Categories</h2>
-        <ul className={styles.list}>
-          {data?.results.map((category) => (
-            <li
-              key={category.id}
-              onClick={() => {
-                navigate(endpoints["sub_categories"](category.slug));
-              }}
-            >
-              <CategoryCard category={category} />
-            </li>
-          ))}
-        </ul>
-      </main>
-    </>
+    <main className={styles.container + " container"}>
+      <Navigator />
+      <h2 className={styles.title}>Our Categories</h2>
+      <ul className={styles.list}>
+        {!isLoading
+          ? data?.results.map((category) => (
+              <li
+                key={category.id}
+                onClick={() => {
+                  navigate(endpoints["sub_categories"](category.slug));
+                }}
+              >
+                <CategoryCard category={category} />
+              </li>
+            ))
+          : skeletons.map((s) => <CategoryCardSkeleton key={s} />)}
+      </ul>
+    </main>
   );
 };
 
