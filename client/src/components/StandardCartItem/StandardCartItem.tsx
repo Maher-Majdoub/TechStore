@@ -2,6 +2,8 @@ import { useState } from "react";
 import { CartItem } from "../../hooks/useCart";
 import styles from "./StandardCartItem.module.css";
 import ActionBtn from "../ActionBtn/ActionBtn";
+import { useWindowSize } from "@uidotdev/usehooks";
+import { screenWidths } from "../../constants";
 
 interface Props {
   item: CartItem;
@@ -10,6 +12,9 @@ interface Props {
 
 const StandardCartItem = ({ item, onDelete }: Props) => {
   const [qty, setQty] = useState(item.quantity);
+
+  const { width } = useWindowSize();
+
   return (
     <tr className={styles.container}>
       <td className={styles.td}>
@@ -19,7 +24,11 @@ const StandardCartItem = ({ item, onDelete }: Props) => {
             alt={item.product.name + " image"}
             className={styles.prodImage}
           />
-          <p className={styles.prodName}>{item.product.description}</p>
+          <p className={styles.prodName}>
+            {width && width > screenWidths["tablets"]
+              ? item.product.description
+              : item.product.name}
+          </p>
         </div>
       </td>
       <td className={styles.td}>${item.product.unit_price}</td>

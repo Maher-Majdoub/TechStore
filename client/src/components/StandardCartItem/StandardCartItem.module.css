@@ -36,3 +36,26 @@
     display: flex;
     flex-direction: column;
 }
+
+
+@media only screen and (max-width: 768px) {
+    .flxBx {
+        flex-direction: column;
+        gap: 5px
+    }
+    .prodImage {
+        width: 30px;
+    }
+    .prodName {
+        font-size: 11px;
+        max-width: 100px;
+    }
+    .td {
+        padding: 5px;
+        font-size: 11px;
+    }
+    .qty {
+        width: 30px;
+        font-size: 11px;
+    }
+}

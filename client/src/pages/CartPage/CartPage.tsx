@@ -6,6 +6,8 @@ import CartSummary from "../../components/CartSummary/CartSummary";
 import Navigator from "../../components/Navigator/Navigator";
 import LinksSection from "../../components/LinksSection/LinksSection";
 import { endpoints } from "../../constants";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const CartPage = () => {
   const { cart, isLoading, isError, clearCart } = useCart();
@@ -15,6 +17,13 @@ const CartPage = () => {
     return <h1>Something Went Wrong!</h1>;
   }
 
+  useEffect(() => {
+    if (!cart || cart.itemsCount <= 0) {
+      toast.warn("Please add items in your cart");
+      navigate(endpoints["home"]);
+    }
+  }, []);
+
   return (
     <main>
       <div className={styles.container + " container"}>
@@ -23,7 +32,7 @@ const CartPage = () => {
           <div>
             <Navigator />
             <h2 className={styles.title}>Shopping Cart</h2>
-            <div className={styles.flxBx}>
+            <div className={styles.content}>
               <div className={styles.cartData}>
                 <div className={styles.cartItems}>
                   <CartItemsList />
@@ -45,7 +54,9 @@ const CartPage = () => {
                   <button className={styles.btn}>Update Shopping Cart</button>
                 </div>
               </div>
-              <CartSummary />
+              <div className={styles.cartSummaryContainer}>
+                <CartSummary />
+              </div>
             </div>
           </div>
         )}

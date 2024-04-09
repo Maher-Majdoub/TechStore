@@ -3,9 +3,10 @@
     font-weight: 600;
 }
 
-.flxBx {
+.content {
+    padding: 10px 0;
     display: flex;
-    gap: 20px
+    gap: 20px;
 }
 
 .cartData {
@@ -27,7 +28,6 @@
     border-radius: 50px;
     font-size: 14px;
     font-weight: 600;
-    background-color: red;
     padding: 5px 15px;
     background-color: var(--color-7);
     color: var(--color-1);
@@ -42,4 +42,29 @@
 .btn.light:hover {
     color: var(--color-10);
     border-color: var(--color-10);
+}
+.cartSummaryContainer {
+    max-width: 450px;
+}
+
+@media only screen and (max-width: 768px) {
+    .content {
+        flex-direction: column-reverse;
+    }
+    .cartSummaryContainer {
+        max-width: none;
+    }
+    .actions {
+        flex-direction: column-reverse;
+        gap: 5px
+    }
+    .actions > div {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 5px;
+    }
+    .btn {
+        width: 200px;
+        align-self: flex-end;
+    }
 }
