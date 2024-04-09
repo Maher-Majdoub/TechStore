@@ -3,7 +3,7 @@ import { RiAccountPinCircleFill } from "react-icons/ri";
 import { GiPriceTag } from "react-icons/gi";
 import styles from "./LinksSection.module.css";
 import { useNavigate } from "react-router-dom";
-import { userAccountEndPoints } from "../../constants";
+import { endpoints, userAccountEndPoints } from "../../constants";
 
 const LinksSection = () => {
   const navigate = useNavigate();
@@ -11,11 +11,16 @@ const LinksSection = () => {
   return (
     <div className={styles.container + " container"}>
       <div className={styles.cards}>
-        <div className={styles.card}>
+        <div
+          className={styles.card}
+          onClick={() => {
+            navigate(endpoints["faq"]);
+          }}
+        >
           <div className={styles.icon}>
             <MdOutlineHeadsetMic />
           </div>
-          <h4 className={styles.title}>Product Support</h4>
+          <h4 className={styles.title}>FAQ</h4>
           <p className={styles.discription}>
             Up to 3 years on-site warranty available for your peace of mind.
           </p>
@@ -35,7 +40,12 @@ const LinksSection = () => {
             specialist.
           </p>
         </div>
-        <div className={styles.card}>
+        <div
+          className={styles.card}
+          onClick={() => {
+            navigate(endpoints["products"]);
+          }}
+        >
           <div className={styles.icon}>
             <GiPriceTag />
           </div>
