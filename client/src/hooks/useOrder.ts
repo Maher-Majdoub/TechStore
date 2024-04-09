@@ -101,7 +101,12 @@ const UseOrder = () => {
     onSuccess: () => {
       toast.success("Order placed successfuly");
     },
-    onError: () => {
+    onError: (error) => {
+      if (!error.message)
+        toast.error(
+          "Sorry! There's an issue with our server. Please try again later.",
+          { autoClose: 5000 }
+        );
       toast.error("Something went wrong while placing the order");
     },
   });

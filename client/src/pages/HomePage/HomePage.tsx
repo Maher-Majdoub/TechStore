@@ -9,45 +9,45 @@ import monitorImage from "../../assets/monitor.jpg";
 import LinksSection from "../../components/LinksSection/LinksSection";
 import { Link } from "react-router-dom";
 import { endpoints } from "../../constants";
+import SupportSection from "../../components/SupportSection/SupportSection";
 
 const HomePage = () => {
-  const { data, error } = useProducts({
+  const { data } = useProducts({
     config: {
       params: { page: 1, tag: "new" },
     },
   });
 
-  if (error) {
-    console.error("hola");
-  }
-
   return (
-    <main className="container">
-      <div className={styles.newProds}>
-        <div className={styles.options}>
-          <h3 className={styles.title}>New Products</h3>
-          <Link to={`${endpoints.products}?tag=new`} className={styles.btn}>
-            See All New Products
-          </Link>
+    <main>
+      <div className="container">
+        <div className={styles.newProds}>
+          <div className={styles.options}>
+            <h3 className={styles.title}>New Products</h3>
+            <Link to={`${endpoints.products}?tag=new`} className={styles.btn}>
+              See All New Products
+            </Link>
+          </div>
+          <ProductsDisplayer products={data?.results} />
         </div>
-        <ProductsDisplayer products={data?.results} />
+        <TagProducts
+          tag="custom_builds"
+          title="Custom Builds"
+          bgImage={customBuildImage}
+        />
+        <TagProducts
+          tag="msi_laptops"
+          title="MSI Laptops"
+          bgImage={msiLogoImage}
+        />
+        <TagProducts tag="desktops" title="Desktops" bgImage={desktopImage} />
+        <TagProducts
+          tag="gaming_monitors"
+          title="Gaming Monitors"
+          bgImage={monitorImage}
+        />
       </div>
-      <TagProducts
-        tag="custom_builds"
-        title="Custom Builds"
-        bgImage={customBuildImage}
-      />
-      <TagProducts
-        tag="msi_laptops"
-        title="MSI Laptops"
-        bgImage={msiLogoImage}
-      />
-      <TagProducts tag="desktops" title="Desktops" bgImage={desktopImage} />
-      <TagProducts
-        tag="gaming_monitors"
-        title="Gaming Monitors"
-        bgImage={monitorImage}
-      />
+      <SupportSection />
       <LinksSection />
     </main>
   );

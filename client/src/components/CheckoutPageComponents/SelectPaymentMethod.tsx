@@ -183,6 +183,7 @@ const SelectPaymentMethod = ({
             <div className={styles.btnContainer}>
               {isCreateOrderPending && <span>Creating Order</span>}
               <Button
+                load={isCreateOrderPending}
                 filled
                 onClick={() => {
                   createOrder({

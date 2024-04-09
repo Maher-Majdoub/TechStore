@@ -73,7 +73,9 @@ const ContactUsPage = () => {
               <Button filled>Submit</Button>
             </div>
           </form>
-          <StoreInfos />
+          <div className={styles.storeInfosContainer}>
+            <StoreInfos />
+          </div>
         </div>
       </div>
       <LinksSection />

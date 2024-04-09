@@ -78,8 +78,10 @@ const FaqPage = () => {
               <span className={styles.questionContent}>
                 Our customer support team is available to assist you with any
                 questions or concerns you may have. You can reach us via email
-                at support@techstore.com, or through our contact form on the
-                website. We strive to respond to all inquiries within 24 hours.
+                at{" "}
+                <a href="mailto:support@techstore.com">support@techstore.com</a>
+                , or through our contact form on the website. We strive to
+                respond to all inquiries within 24 hours.
               </span>
             </div>
             <div className={styles.question}>

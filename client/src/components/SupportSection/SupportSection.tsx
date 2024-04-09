@@ -12,10 +12,10 @@ const SupportSection = () => {
         <div
           className={styles.link}
           onClick={() => {
-            navigate(endpoints["product_support"]);
+            navigate(endpoints["contact_us"]);
           }}
         >
-          <span>Product Support</span>
+          <span>Contact Us</span>
           <span className={styles.arrow}>
             <MdOutlineArrowRightAlt />
           </span>
@@ -34,10 +34,10 @@ const SupportSection = () => {
         <div
           className={styles.link}
           onClick={() => {
-            navigate(endpoints["buyer_guide"]);
+            navigate(endpoints["about_us"]);
           }}
         >
-          <span>Our Buyer Guide</span>
+          <span>About Us</span>
           <span className={styles.arrow}>
             <MdOutlineArrowRightAlt />
           </span>

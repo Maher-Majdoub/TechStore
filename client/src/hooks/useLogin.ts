@@ -30,6 +30,11 @@ const useLogin = () => {
       toast.success("Login successful");
     },
     onError: (error) => {
+      if (!error.response)
+        toast.error(
+          "Sorry! There's an issue with our server. Please try again later.",
+          { autoClose: 5000 }
+        );
       toast.error(error.response.data.detail, { autoClose: 2000 });
     },
   });

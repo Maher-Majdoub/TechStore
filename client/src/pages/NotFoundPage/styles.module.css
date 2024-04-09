@@ -1,0 +1,30 @@
+.errorContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px 0
+}
+
+.errorImage{
+    width: 50%;
+}
+
+.text {
+    font-size: 25px;
+    font-weight: 600;
+    color: var(--color-7);
+    margin: 10px 0;
+}
+
+.link {
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+@media only screen and (max-width: 768px) {
+    .errorImage {
+        width: 100%;
+    }
+}
