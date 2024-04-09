@@ -138,3 +138,17 @@
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px
 }
+
+@media only screen and (max-width: 768px) {
+    .titleContainer {
+        font-size: 14px;
+    }
+
+    .table th {
+        font-size: 13px;
+    }
+
+    .table td, .link {
+        font-size: 12px;
+    }
+}

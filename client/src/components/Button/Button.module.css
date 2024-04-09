@@ -44,3 +44,10 @@
     display: grid;
     place-items: center;
 }
+
+@media only screen and (max-width: 768px) {
+    .filled, .hollow {
+        font-size: 13px;
+        padding: 5px 20px;
+    }
+}

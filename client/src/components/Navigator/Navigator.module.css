@@ -21,3 +21,13 @@
 .currEndpoint {
     color: var(--color-5)
 }
+
+@media only screen and (max-width: 768px) {
+    .endpoint {
+        font-size: 12px;
+    }
+    .container {
+        gap: 5px;
+        flex-wrap: wrap;
+    }
+}
