@@ -1,4 +1,4 @@
-INSERT INTO `TechStore`.`store_category` (`id`, `name`, `slug`, `thumbnail`, `parent_category_id`) values 
+INSERT INTO `store_category` (`id`, `name`, `slug`, `thumbnail`, `parent_category_id`) values 
 	(1, 'COMPUTERS', 'computers', '/store/images/categories/category_1.png', NULL),
 	(2, 'COMPONENTS', 'components', '/store/images/categories/category_2.png', NULL),
 	(3, 'ACCESSORIES', 'accessories', '/store/images/categories/category_3.png', NULL),
