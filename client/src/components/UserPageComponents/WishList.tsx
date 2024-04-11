@@ -4,61 +4,59 @@ import useWish from "../../hooks/useWish";
 import Paginator from "../Paginator/Paginator";
 import ProductCard from "../ProductCard/ProductCard";
 import styles from "./styles.module.css";
+import ProductCardSkeleton from "../ProductCard/ProductCardSkeleton";
 
 const WishList = () => {
   const [page, setPage] = useState(1);
   const pageSize = 10;
 
-  const { data, isLoading, isError } = useWish(page, pageSize);
-  const {
-    deleteWish,
-    isSuccess: isDeleteWishSuccess,
-    isPending: isDeleteWishPending,
-    isError: isDeleteWishError,
-  } = useDeleteWish();
+  const { data, isLoading } = useWish(page, pageSize);
 
-  if (isError) console.error("somthing went wrong");
-  if (isDeleteWishSuccess) console.log("wish deleted");
-  if (isDeleteWishError)
-    console.error("something went wrong when deleting wish");
+  const { deleteWish } = useDeleteWish();
+
+  const skeletons = [1, 2, 3, 4, 5];
 
   return (
     <>
-      {isLoading && <p>Loading....</p>}
-      {data && (
-        <div className={styles.container}>
-          <div>
-            <div className={styles.titleContainer}>
-              <h2>My Wish List</h2>
-            </div>
-            {data?.results && (
-              <Paginator
-                page={page}
-                pageSize={pageSize}
-                total={data.count}
-                onChangePage={(newPage) => {
-                  setPage(newPage);
-                }}
-              >
-                <ul className={styles.list}>
-                  {data.results.map((wish) => (
-                    <ProductCard
-                      key={wish.id}
-                      product={wish.product}
-                      addToWish={false}
-                      del
-                      onDelete={() => {
-                        deleteWish({ wishId: wish.id });
-                      }}
-                    />
-                  ))}
-                </ul>
-              </Paginator>
-            )}
-            {isDeleteWishPending && <p>deleting wish</p>}
+      <div className={styles.container}>
+        <div>
+          <div className={styles.titleContainer}>
+            <h2>My Wish List</h2>
           </div>
+          {isLoading ? (
+            <ul className={styles.list}>
+              {skeletons.map((s) => (
+                <ProductCardSkeleton key={s} />
+              ))}
+            </ul>
+          ) : data?.results && data.results.length > 0 ? (
+            <Paginator
+              page={page}
+              pageSize={pageSize}
+              total={data.count}
+              onChangePage={(newPage) => {
+                setPage(newPage);
+              }}
+            >
+              <ul className={styles.list}>
+                {data.results.map((wish) => (
+                  <ProductCard
+                    key={wish.id}
+                    product={wish.product}
+                    addToWish={false}
+                    del
+                    onDelete={() => {
+                      deleteWish({ wishId: wish.id });
+                    }}
+                  />
+                ))}
+              </ul>
+            </Paginator>
+          ) : (
+            <span>There is no products in your wishlist.</span>
+          )}
         </div>
-      )}
+      </div>
     </>
   );
 };

@@ -15,21 +15,59 @@ const SectionSelector = ({ currEndpoint }: { currEndpoint: string }) => {
     <>
       {width && width > screenWidths["tablets"] ? (
         <ul className={styles.sectionSelectors}>
-          {Object.entries(userAccountEndPoints).map(
-            ([endpoint, url], index) => (
-              <li
-                key={index}
-                className={`${styles.sectionSelector} ${
-                  currEndpoint === endpoint && styles.selected
-                }`}
-                onClick={() => {
-                  navigate(url);
-                }}
-              >
-                {endpoint.replace("_", " ")}
-              </li>
-            )
-          )}
+          <li
+            className={`${styles.sectionSelector} ${
+              currEndpoint === "account_dashboard" && styles.selected
+            }`}
+            onClick={() => {
+              navigate(userAccountEndPoints["account_dashboard"]);
+            }}
+          >
+            Account Dashboard
+          </li>
+          <li
+            className={`${styles.sectionSelector} ${
+              currEndpoint === "account_information" && styles.selected
+            }`}
+            onClick={() => {
+              navigate(userAccountEndPoints["account_information"]);
+            }}
+          >
+            Account Information
+          </li>
+          <li
+            className={`${styles.sectionSelector} ${
+              (currEndpoint === "address_book" ||
+                currEndpoint === "add_address" ||
+                currEndpoint === "edit_address") &&
+              styles.selected
+            }`}
+            onClick={() => {
+              navigate(userAccountEndPoints["address_book"]);
+            }}
+          >
+            Address Book
+          </li>
+          <li
+            className={`${styles.sectionSelector} ${
+              currEndpoint === "orders" && styles.selected
+            }`}
+            onClick={() => {
+              navigate(userAccountEndPoints["orders"]);
+            }}
+          >
+            My Orders
+          </li>
+          <li
+            className={`${styles.sectionSelector} ${
+              currEndpoint === "wishlist" && styles.selected
+            }`}
+            onClick={() => {
+              navigate(userAccountEndPoints["wishlist"]);
+            }}
+          >
+            Wishlist
+          </li>
         </ul>
       ) : (
         <div className={styles.mobileSectionSelector}>

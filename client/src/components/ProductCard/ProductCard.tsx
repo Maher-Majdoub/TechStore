@@ -27,7 +27,7 @@ const ProductCard = ({
 }: Props) => {
   const navigate = useNavigate();
   const { addToCart } = useCart();
-  const { createWish, isPending: isCreateWishPending } = useCreateWish();
+  const { createWish } = useCreateWish();
 
   return (
     <div className={styles.container}>
@@ -84,7 +84,6 @@ const ProductCard = ({
         <span className={styles.currPrice}>
           ${product.unit_price.toFixed(2)}
         </span>
-        {isCreateWishPending && <span>Creating wish...</span>}
         <div
           className={styles.addToCart}
           onClick={(event) => {

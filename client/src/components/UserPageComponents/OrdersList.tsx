@@ -5,12 +5,12 @@ const OrdersList = () => {
   const { orders } = UseOrder();
   return (
     <>
-      {orders && (
-        <div className={styles.container}>
-          <div>
-            <div className={styles.titleContainer}>
-              <h2>My Orders</h2>
-            </div>
+      <div className={styles.container}>
+        <div>
+          <div className={styles.titleContainer}>
+            <h2>My Orders</h2>
+          </div>
+          {orders?.count && orders.count > 0 ? (
             <div>
               <table className={styles.table}>
                 <thead>
@@ -33,9 +33,11 @@ const OrdersList = () => {
                 </tbody>
               </table>
             </div>
-          </div>
+          ) : (
+            <span>You have no orders yet</span>
+          )}
         </div>
-      )}{" "}
+      </div>
     </>
   );
 };

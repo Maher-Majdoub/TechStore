@@ -3,14 +3,26 @@ import useCustomer, { Address } from "../../hooks/useCustomer";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Checkbox, FormControlLabel, TextField } from "@mui/material";
 import Button from "../Button/Button";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { userAccountEndPoints } from "../../constants";
 
 interface Props {
-  afterSubmition(): void;
   address?: Address;
+  onSuccess?(): void;
 }
 
-const AddEditAddress = ({ afterSubmition, address }: Props) => {
-  const { addAddress, editAddress } = useCustomer();
+const AddEditAddress = ({ address, onSuccess }: Props) => {
+  const {
+    addAddress,
+    editAddress,
+    isAddAddressSuccess,
+    isAddAddressError,
+    isAddAddressPending,
+    isEditAddressSuccess,
+    isEditAddressError,
+    isEditAddressPending,
+  } = useCustomer();
 
   const {
     register,
@@ -18,11 +30,28 @@ const AddEditAddress = ({ afterSubmition, address }: Props) => {
     formState: { errors },
   } = useForm<Address>({ defaultValues: address });
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (
+      isAddAddressSuccess ||
+      isEditAddressSuccess ||
+      isAddAddressError ||
+      isEditAddressError
+    ) {
+      onSuccess ? onSuccess() : navigate(userAccountEndPoints["address_book"]);
+    }
+  }, [
+    isAddAddressSuccess,
+    isEditAddressSuccess,
+    isAddAddressError,
+    isEditAddressError,
+  ]);
+
   const handleSubmition: SubmitHandler<Address> = (data) => {
     address
       ? editAddress({ id: address.id || -1, newAddress: data })
       : addAddress(data);
-    afterSubmition();
   };
 
   return (
@@ -140,7 +169,9 @@ const AddEditAddress = ({ afterSubmition, address }: Props) => {
           </div>
         </div>
         <div className={styles.btnContainer}>
-          <Button>Save Address</Button>
+          <Button load={isAddAddressPending || isEditAddressPending}>
+            Save Address
+          </Button>
         </div>
       </form>
     </div>

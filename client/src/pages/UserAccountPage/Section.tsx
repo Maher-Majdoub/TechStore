@@ -12,6 +12,8 @@ const Section = ({ endpoint }: { endpoint: string }) => {
       {endpoint === "account_dashboard" && <AccountDashboard />}
       {endpoint === "account_information" && <AccountInformation />}
       {endpoint === "address_book" && <AddressBook />}
+      {endpoint === "add_address" && <AddressBook add />}
+      {endpoint === "edit_address" && <AddressBook edit />}
       {endpoint === "orders" && <OrdersList />}
       {endpoint === "wishlist" && <WishList />}
       {endpoint === "compare_products" && <CompareList />}

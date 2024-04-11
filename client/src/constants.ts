@@ -2,6 +2,8 @@ export const userAccountEndPoints = {
   account_dashboard: "/account_dashboard",
   account_information: "/account_information",
   address_book: "/address_book",
+  add_address: "/address_book/add_address",
+  edit_address: "/address_book/edit_address",
   orders: "/orders",
   wishlist: "/wishlist",
 };

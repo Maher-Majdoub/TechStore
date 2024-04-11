@@ -2,12 +2,16 @@ import styles from "./UserAccountPage.module.css";
 import Navigator from "../../components/Navigator/Navigator";
 import LinksSection from "../../components/LinksSection/LinksSection";
 import useLocation from "../../hooks/useLocation";
-import { Navigate } from "react-router-dom";
-import { endpoints, screenWidths } from "../../constants";
+import { useNavigate } from "react-router-dom";
+import { endpoints, screenWidths, userAccountEndPoints } from "../../constants";
 import useAuthorization from "../../hooks/useAuthorization";
 import SectionSelector from "./SectionSelector";
 import Section from "./Section";
 import { useWindowSize } from "@uidotdev/usehooks";
+import { useContext, useEffect, useState } from "react";
+import { Address } from "../../hooks/useCustomer";
+import { AddressToEditContext, NextPageContext } from "../../contexts";
+import { toast } from "react-toastify";
 
 const UserAccountPage = () => {
   const { pathname } = useLocation();
@@ -17,11 +21,34 @@ const UserAccountPage = () => {
   const { width } = useWindowSize();
   const { isAccessExpired, isRefreshExpired } = useAuthorization();
 
-  if (isAccessExpired && isRefreshExpired)
-    return <Navigate to={endpoints["login"]} />;
+  const [addressToEdit, setAddressToEdit] = useState<Address | undefined>(
+    undefined
+  );
+
+  const navigate = useNavigate();
+  const { setNextPage } = useContext(NextPageContext);
+
+  useEffect(() => {
+    if (isAccessExpired && isRefreshExpired) {
+      toast.warn("Please login first");
+      setNextPage(
+        endpoint === "wishlist"
+          ? userAccountEndPoints["wishlist"]
+          : userAccountEndPoints["account_dashboard"]
+      );
+      navigate(endpoints["login"]);
+    }
+  }, []);
 
   return (
-    <>
+    <AddressToEditContext.Provider
+      value={{
+        address: addressToEdit as Address,
+        setAddress: (address) => {
+          setAddressToEdit(address);
+        },
+      }}
+    >
       <main className={styles.container}>
         <div className="container">
           <Navigator />
@@ -37,7 +64,7 @@ const UserAccountPage = () => {
         </div>
         <LinksSection />
       </main>
-    </>
+    </AddressToEditContext.Provider>
   );
 };
 

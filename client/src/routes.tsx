@@ -35,6 +35,14 @@ const router = createBrowserRouter([
         path: userAccountEndPoints["address_book"],
         element: <UserAccountPage />,
       },
+      {
+        path: userAccountEndPoints["add_address"],
+        element: <UserAccountPage />,
+      },
+      {
+        path: userAccountEndPoints["edit_address"],
+        element: <UserAccountPage />,
+      },
       { path: userAccountEndPoints["orders"], element: <UserAccountPage /> },
       { path: userAccountEndPoints["wishlist"], element: <UserAccountPage /> },
       { path: endpoints["products"], element: <ProductsPage /> },

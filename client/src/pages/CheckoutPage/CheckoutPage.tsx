@@ -4,13 +4,16 @@ import Navigator from "../../components/Navigator/Navigator";
 import Process from "../../components/Process/Process";
 import SelectPaymentMethod from "../../components/CheckoutPageComponents/SelectPaymentMethod";
 import useLocation from "../../hooks/useLocation";
-import { useNavigate } from "react-router-dom";
-import useCustomer, { Address } from "../../hooks/useCustomer";
-import { endpoints } from "../../constants";
-import { ShippingMethod } from "../../hooks/useOrder";
-import styles from "./CheckoutPage.module.css";
-import { useEffect } from "react";
+import useAuthorization from "../../hooks/useAuthorization";
 import { toast } from "react-toastify";
+import { Address } from "../../hooks/useCustomer";
+import { endpoints } from "../../constants";
+import { useNavigate } from "react-router-dom";
+import { ShippingMethod } from "../../hooks/useOrder";
+import { NextPageContext } from "../../contexts";
+import { useContext, useEffect } from "react";
+import styles from "./CheckoutPage.module.css";
+import useCart from "../../hooks/useCart";
 
 let selectedShippingAddress = {} as Address;
 let shippingMethod = "" as ShippingMethod;
@@ -20,13 +23,27 @@ const CheckoutPage = () => {
   const currEndpoints = pathname.split("/");
   const endpoint = currEndpoints[currEndpoints.length - 1];
 
-  const { customer } = useCustomer();
+  const { isAccessExpired } = useAuthorization();
   const navigate = useNavigate();
+  const { resetNextPage, setNextPage } = useContext(NextPageContext);
+  const { cart } = useCart();
 
   useEffect(() => {
-    if (!customer) {
+    resetNextPage();
+  }, []);
+
+  useEffect(() => {
+    if (isAccessExpired) {
       toast.warn("Please login to place your order");
+      setNextPage(endpoints["checkout"]);
       navigate(endpoints["login"]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!cart || cart.itemsCount == 0) {
+      toast.warn("Please add items in your cart");
+      navigate(endpoints["home"]);
     }
   }, []);
 

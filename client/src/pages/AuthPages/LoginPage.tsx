@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { userAccountEndPoints } from "../../constants";
 import useAuthorization from "../../hooks/useAuthorization";
 import useRefreshToken from "../../hooks/useRefreshToken";
@@ -8,6 +8,7 @@ import LoginForm from "../../components/AuthComponents/LoginForm";
 import NewCustomer from "../../components/AuthComponents/NewCustomer";
 import LinksSection from "../../components/LinksSection/LinksSection";
 import styles from "./styles.module.css";
+import { NextPageContext } from "../../contexts";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -15,9 +16,13 @@ const LoginPage = () => {
   const { refreshToken, isRefreshSuccess, isRefreshPending, isRefreshError } =
     useRefreshToken();
 
+  const { nextPage, resetNextPage } = useContext(NextPageContext);
+
   useEffect(() => {
     if (!isAccessExpired || isRefreshSuccess) {
-      navigate(userAccountEndPoints["account_dashboard"]);
+      let nxt = nextPage;
+      resetNextPage();
+      navigate(nxt || userAccountEndPoints["account_dashboard"]);
     }
   }, [isAccessExpired, isRefreshSuccess]);
 
@@ -26,8 +31,6 @@ const LoginPage = () => {
       refreshToken({ refresh: refresh });
     }
   }, [refresh, isRefreshExpired, isRefreshError, isRefreshPending]);
-
-  if (isRefreshPending) return <p>Wait....</p>;
 
   return (
     <main>

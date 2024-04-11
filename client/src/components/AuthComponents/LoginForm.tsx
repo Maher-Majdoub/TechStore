@@ -3,9 +3,10 @@ import Button from "../Button/Button";
 import { TextField } from "@mui/material";
 import styles from "./styles.module.css";
 import useLogin from "../../hooks/useLogin";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { userAccountEndPoints } from "../../constants";
+import { NextPageContext } from "../../contexts";
 
 interface FormInput {
   username: string;
@@ -23,8 +24,11 @@ const LoginForm = () => {
 
   const navigate = useNavigate();
 
+  const { nextPage } = useContext(NextPageContext);
+
   useEffect(() => {
-    isLoginSuccess && navigate(userAccountEndPoints["account_dashboard"]);
+    isLoginSuccess &&
+      navigate(nextPage || userAccountEndPoints["account_dashboard"]);
   }, [isLoginSuccess]);
 
   const onLogin: SubmitHandler<FormInput> = (data) => {

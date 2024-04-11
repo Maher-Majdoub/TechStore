@@ -3,6 +3,7 @@ import useCustomer from "../../hooks/useCustomer";
 import AddressDisplayer from "./AddressDisplayer";
 import styles from "./styles.module.css";
 import { userAccountEndPoints } from "../../constants";
+import { toast } from "react-toastify";
 
 const AccountDashboard = () => {
   const { customer } = useCustomer();
@@ -27,7 +28,9 @@ const AccountDashboard = () => {
             <div className={styles.sectionsContainer}>
               <div className={styles.sectionContainer}>
                 <h4>Contact Information</h4>
-                <span>{`${customer.first_name} ${customer.last_name}`}</span>
+                <span>
+                  {`${customer.first_name || ""} ${customer.last_name || ""}`}
+                </span>
                 <span>{customer.user?.email}</span>
                 <div className={styles.flxBx}>
                   <span
@@ -51,7 +54,14 @@ const AccountDashboard = () => {
               <div className={styles.sectionContainer}>
                 <h4>Newsletters</h4>
                 <span>You are not subscribed to our newsletter</span>
-                <span className={styles.link}>Edit</span>
+                <span
+                  className={styles.link}
+                  onClick={() => {
+                    toast.info("This feature is not built yet");
+                  }}
+                >
+                  Edit
+                </span>
               </div>
             </div>
           </div>

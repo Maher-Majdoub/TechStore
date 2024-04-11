@@ -28,9 +28,13 @@ const SelectPaymentMethod = ({
   const { createOrder, isCreateOrderSuccess, isCreateOrderPending } =
     UseOrder();
 
-  const defaultBillingAddress = customer?.addresses.find(
+  let defaultBillingAddress = customer?.addresses.find(
     (address) => address.is_default_billing_address
   );
+
+  if (defaultBillingAddress === undefined && customer?.addresses.length) {
+    defaultBillingAddress = customer.addresses[0];
+  }
 
   const [selectedBillingAddress, setSeletedBillingAddress] = useState<Address>(
     defaultBillingAddress as Address
@@ -78,14 +82,14 @@ const SelectPaymentMethod = ({
                     <div
                       key={address.id}
                       className={`${styles.address} ${
-                        selectedBillingAddress.id === address.id &&
+                        selectedBillingAddress?.id === address.id &&
                         styles.selected
                       }`}
                       onClick={() => {
                         setSeletedBillingAddress(address);
                       }}
                     >
-                      {selectedBillingAddress.id === address.id && (
+                      {selectedBillingAddress?.id === address.id && (
                         <div className={styles.selectedIcon}>
                           <MdOutlineDone />
                         </div>
@@ -181,11 +185,14 @@ const SelectPaymentMethod = ({
               </div>
             </div>
             <div className={styles.btnContainer}>
-              {isCreateOrderPending && <span>Creating Order</span>}
               <Button
                 load={isCreateOrderPending}
                 filled
                 onClick={() => {
+                  if (!selectedBillingAddress) {
+                    toast.warn("Please select billing address");
+                    return;
+                  }
                   createOrder({
                     cart_id: cart.id,
                     shipping_method: shippingMethod,

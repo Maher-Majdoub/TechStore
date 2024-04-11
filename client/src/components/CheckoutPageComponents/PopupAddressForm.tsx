@@ -35,11 +35,7 @@ const PopupAddressForm = ({
               <LiaTimesSolid />
             </button>
           </div>
-          <AddEditAddress
-            afterSubmition={() => {
-              onClose();
-            }}
-          />
+          <AddEditAddress onSuccess={onClose} />
         </div>
       </div>
     </Modal>

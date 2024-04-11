@@ -6,6 +6,7 @@ import Button from "../Button/Button";
 import OrderSummary from "../OrderSummary/OrderSummary";
 import { ShippingMethod } from "../../hooks/useOrder";
 import PopupAddressForm from "./PopupAddressForm";
+import { toast } from "react-toastify";
 
 interface Props {
   onSubmit(
@@ -21,9 +22,13 @@ const SelectShippingMethod = ({ onSubmit }: Props) => {
     ShippingMethod.StandardShipping
   );
 
-  const defaultShippingAddress = customer?.addresses.find(
+  let defaultShippingAddress = customer?.addresses.find(
     (address) => address.is_default_shipping_address
   );
+
+  if (defaultShippingAddress === undefined && customer?.addresses.length) {
+    defaultShippingAddress = customer.addresses[0];
+  }
 
   const [selectedShippingAddress, setSeletedAddress] = useState<Address>(
     defaultShippingAddress as Address
@@ -141,6 +146,14 @@ const SelectShippingMethod = ({ onSubmit }: Props) => {
               <Button
                 filled
                 onClick={() => {
+                  if (!selectedShippingAddress) {
+                    toast.warn("Please select shipping address");
+                    return;
+                  }
+                  if (!shippingMethod) {
+                    toast.warn("Please select shipping method");
+                    return;
+                  }
                   onSubmit(selectedShippingAddress, shippingMethod);
                 }}
               >

@@ -24,7 +24,6 @@ const useWish = (page: number = 1, pageSize: number = 10) => {
       }),
     enabled: !!access,
     staleTime: 1000 * 60 * 60 * 24, //24h
-    retry: 1,
   });
 
   return { data, isSuccess, isLoading, isError };
