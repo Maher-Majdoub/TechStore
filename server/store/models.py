@@ -34,6 +34,7 @@ class Tag(models.Model):
     def __str__(self) -> str:
         return self.name
 
+
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products')
     name = models.CharField(max_length=255, unique=True)
@@ -117,7 +118,7 @@ class Customer(models.Model):
     membership = models.CharField(max_length=1, choices=MEMBERSHIP_CHOICES, default=MEMBERSHIP_CHOICES[0][0])
 
     def __str__(self) -> str:
-        return f'{self.user.first_name} {self.user.last_name}'
+        return f'{self.user.username}'
 
 
 class Address(models.Model):
@@ -164,7 +165,7 @@ class Order(models.Model):
         ('D', 'Declined')
     ]
     SHIPING_METHOD_CHOICES = [
-        ('SS', 'Standart Shipping'), 
+        ('SS', 'Standard Shipping'), 
         ('FS', 'Free Shipping'), 
         ('PS', 'Pickup In-Store')
     ]
@@ -178,6 +179,10 @@ class Order(models.Model):
     shipping_address = models.ForeignKey(Address, on_delete=models.PROTECT, related_name='shipping_orders', null=True)
     shipping_method = models.CharField(max_length=2, choices=SHIPING_METHOD_CHOICES, default=SHIPING_METHOD_CHOICES[0][0])
 
+    def __str__(self) -> str:
+        return f'{self.pk}'
+
+
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
@@ -185,10 +190,12 @@ class OrderItem(models.Model):
     final_unit_price = models.DecimalField(max_digits=8, decimal_places=2, validators=[MinValueValidator(0)])
     quantity = models.IntegerField(validators=[MinValueValidator(0)])
 
+
 class Wish(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='wish_list')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     created_at = models.DateField(auto_now_add=True)
+
 
 class Compare(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='compare_list')

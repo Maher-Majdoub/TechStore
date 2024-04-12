@@ -364,15 +364,15 @@ class OrderSerializer(serializers.ModelSerializer):
         OrderItem.objects.bulk_create(order_items)
         Cart.objects.get(pk=cart_id).delete()
 
-        # notify_customer.delay(
-        #     user = UserSerializer(self.context['user']).data,
-        #     customer = CustomerSerializer(self.context['customer']).data,
-        #     order = GetOrderSerializer(order).data,
-        #     total_price = total_price,
-        #     order_items = [OrderItemSerializer(order_item).data for order_item in order_items],
-        #     #billing adress
-        #     shipping_address = AddressSerializer(order.shipping_address).data,
-        #     email = self.context['user'].email
-        # )
+        notify_customer.delay(
+            user = UserSerializer(self.context['user']).data,
+            customer = CustomerSerializer(self.context['customer']).data,
+            order = GetOrderSerializer(order).data,
+            total_price = total_price,
+            order_items = [OrderItemSerializer(order_item).data for order_item in order_items],
+            #billing adress
+            shipping_address = AddressSerializer(order.shipping_address).data,
+            email = self.context['user'].email
+        )
         
         return order

@@ -5,7 +5,8 @@ from django.utils.html import format_html
 from rangefilter.filters import NumericRangeFilter
 from .models import ( 
     Product, Category, Variation, ProductConfiguration,
-    Discount, ProductImage, Tag, ProductTag, ProductInfo
+    Discount, ProductImage, Tag, ProductTag, ProductInfo,
+    Order
 )
 
 
@@ -122,13 +123,17 @@ class InfoInline(TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(ModelAdmin):
-    list_per_page = 10
+    list_per_page = 20
+    
     list_filter = [
         'category',
         ('unit_price', NumericRangeFilter),
         ('inventory', NumericRangeFilter),
     ]
+
     inlines = [ConfigurationInline, DiscountInline, ImageInline, InfoInline]
+    list_display = ['id', 'name', 'category', 'unit_price', 'inventory']
+    list_editable = ['name', 'category', 'unit_price', 'inventory']
 
     def save_model(self, request, obj: Product, form, change) -> None:
         if Category.objects.filter(parent_category_id=obj.category.pk).exists():
@@ -176,13 +181,18 @@ class ProductAdmin(ModelAdmin):
                 return obj
         
         return super().save_model(request, obj, form, change)
-    
+
+
+class ProductTagInline(TabularInline):
+    model = ProductTag
 
 @admin.register(Tag)
 class TagAdmin(ModelAdmin):
-    pass
+    inlines = [ProductTagInline]
 
 
-@admin.register(ProductTag)
-class ProductTagAdmin(ModelAdmin):
-    pass
+@admin.register(Order)
+class OrderAdmin(ModelAdmin):
+    list_per_page = 10
+    list_display = ['id', 'customer', 'created_at', 'status', 'payment_status']
+    list_editable = ['status', 'payment_status']
