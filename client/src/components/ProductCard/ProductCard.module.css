@@ -95,6 +95,10 @@
     padding: 25px 10px;
 }
 
+.invisible {
+    opacity: 0;
+}
+
 @keyframes anim {
     0% {
         transform: translateY(50%);

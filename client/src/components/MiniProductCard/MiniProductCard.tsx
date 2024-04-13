@@ -1,6 +1,7 @@
 import { Product } from "../../hooks/useProducts";
 import styles from "./MiniProductCard.module.css";
 import ActionBtn from "../ActionBtn/ActionBtn";
+import noProductImage from "../../assets/noProductImage.png";
 
 interface Props {
   product: Product;
@@ -14,7 +15,9 @@ const MiniProductCard = ({ product, count, onDelete, onModify }: Props) => {
     <div className={styles.card}>
       <span className={styles.cnt}>{count} X</span>
       <img
-        src={product.images[0].image}
+        src={
+          product.images.length > 0 ? product.images[0].image : noProductImage
+        }
         alt="product image"
         className={styles.img}
       />

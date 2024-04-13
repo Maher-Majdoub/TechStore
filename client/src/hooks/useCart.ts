@@ -34,7 +34,8 @@ const fetchCart = async () => {
   if (cart?.items)
     for (const item of cart.items) {
       itemsCount += item.quantity;
-      total += item.quantity * item.product.unit_price;
+      total +=
+        item.quantity * item.product.unit_price * (1 - item.product.unit_price);
     }
   return { ...cart, itemsCount: itemsCount, total: total } as Cart;
 };
@@ -76,7 +77,9 @@ const useCart = () => {
               id: oldCart.id,
               items: newItems,
               itemsCount: oldCart.itemsCount + quantity,
-              total: oldCart.total + product.unit_price * quantity,
+              total:
+                oldCart.total +
+                product.unit_price * quantity * (1 - product.discount),
             };
           }
         }
@@ -87,7 +90,9 @@ const useCart = () => {
             { id: -1, product: product, quantity: quantity },
           ],
           itemsCount: oldCart.itemsCount + quantity,
-          total: oldCart.total + product.unit_price * quantity,
+          total:
+            oldCart.total +
+            product.unit_price * quantity * (1 - product.discount),
         };
       });
       toast.success("Product added to your cart");
@@ -138,7 +143,10 @@ const useCart = () => {
         for (const item of oldCart.items)
           if (item.id !== itemId) {
             newItemsCount += item.quantity;
-            newTotal += item.quantity * item.product.id;
+            newTotal +=
+              item.quantity *
+              item.product.unit_price *
+              (1 - item.product.discount);
           }
         return {
           id: oldCart.id,

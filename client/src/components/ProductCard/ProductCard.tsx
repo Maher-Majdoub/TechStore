@@ -9,6 +9,7 @@ import useCart from "../../hooks/useCart";
 import { endpoints } from "../../constants";
 import useCreateWish from "../../hooks/useCreateWish";
 import ActionBtn from "../ActionBtn/ActionBtn";
+import noProductImage from "../../assets/noProductImage.png";
 
 interface Props {
   product: Product;
@@ -70,7 +71,9 @@ const ProductCard = ({
         </div>
         {product.inventory > 0 ? <InStock /> : <CheckAvailability />}
         <img
-          src={product.images[0].image}
+          src={
+            product.images.length > 0 ? product.images[0].image : noProductImage
+          }
           alt={`${product.name} image`}
           className={styles.img}
         />
@@ -78,11 +81,15 @@ const ProductCard = ({
         <span className={styles.prodName}>
           {product.description.slice(0, 50) + "..."}
         </span>
-        <span className={styles.prevPrice}>
+        <span
+          className={`${styles.prevPrice} ${
+            product.discount == 0 && styles.invisible
+          }`}
+        >
           ${product.unit_price.toFixed(2)}
         </span>
         <span className={styles.currPrice}>
-          ${product.unit_price.toFixed(2)}
+          ${(product.unit_price * (1 - product.discount)).toFixed(2)}
         </span>
         <div
           className={styles.addToCart}

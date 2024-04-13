@@ -4,6 +4,7 @@ import styles from "./StandardCartItem.module.css";
 import ActionBtn from "../ActionBtn/ActionBtn";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { screenWidths } from "../../constants";
+import noProductImage from "../../assets/noProductImage.png";
 
 interface Props {
   item: CartItem;
@@ -20,7 +21,11 @@ const StandardCartItem = ({ item, onDelete }: Props) => {
       <td className={styles.td}>
         <div className={styles.flxBx}>
           <img
-            src={item.product.images[0]?.image}
+            src={
+              item.product.images.length > 0
+                ? item.product.images[0].image
+                : noProductImage
+            }
             alt={item.product.name + " image"}
             className={styles.prodImage}
           />
@@ -31,7 +36,9 @@ const StandardCartItem = ({ item, onDelete }: Props) => {
           </p>
         </div>
       </td>
-      <td className={styles.td}>${item.product.unit_price}</td>
+      <td className={styles.td}>
+        ${item.product.unit_price * (1 - item.product.discount)}
+      </td>
       <td className={styles.td}>
         <input
           type="number"
@@ -45,7 +52,10 @@ const StandardCartItem = ({ item, onDelete }: Props) => {
         />
       </td>
       <td className={styles.td}>
-        ${(qty * item.product.unit_price).toFixed(2)}{" "}
+        $
+        {(qty * item.product.unit_price * (1 - item.product.discount)).toFixed(
+          2
+        )}{" "}
       </td>
       <td className={styles.td}>
         <div className={styles.actions}>

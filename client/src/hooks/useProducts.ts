@@ -39,9 +39,9 @@ export interface Product {
   reference: string;
   description: string;
   unit_price: number;
+  discount: number;
   inventory: number;
   configurations: ProductConfiguration[];
-  dicounts: string[];
   images: ProductImage[];
   infos: ProductInfo[];
 }
