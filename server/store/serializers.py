@@ -69,9 +69,21 @@ class ProductInfoSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     category = SimpleSubCategorySerializer()
     configurations = ProductConfigurationSerializer(many=True)
-    discounts = ProductDiscountSerializer(many=True)
     images = ProductImageSerializer(many=True)
     infos = ProductInfoSerializer(many=True)
+    discount = serializers.SerializerMethodField()
+
+    def get_discount(self, obj):
+        discounts = Discount.objects.only('rate').filter(
+                product = obj,
+                start_date__lt = timezone.now(),
+                end_date__gt = timezone.now(),
+            )
+        if discounts.exists():
+            return discounts[0].rate
+        else:
+            return 0
+
     class Meta:
         model = Product
         fields = [
@@ -82,9 +94,9 @@ class ProductSerializer(serializers.ModelSerializer):
             'reference', 
             'description', 
             'unit_price', 
+            'discount',
             'inventory',
             'configurations',
-            'discounts',
             'images',
             'infos'
         ]
