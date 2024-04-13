@@ -1,5 +1,7 @@
+from django.db.models import Q
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.validators import ValidationError
 from rest_framework.response import Response
 from rest_framework.mixins import (
     RetrieveModelMixin,
@@ -189,6 +191,12 @@ class AddressViewSet(ModelViewSet):
             id = Customer.objects.only('id').get(user_id=request.user.id)
             self.kwargs['customer_pk'] = id
         return super().create(request, *args, **kwargs)
+
+    def destroy(self, request, *args, **kwargs):
+        orders = Order.objects.filter(Q(shipping_address=self.get_object()) | Q(billing_address=self.get_object()))
+        if (orders.exists()):
+            raise ValidationError({'error': 'Address assigned to some orders.'})
+        return super().destroy(request, *args, **kwargs)
 
     def get_queryset(self):
         if self.kwargs['customer_pk'] == 'me':
