@@ -9,6 +9,7 @@ from .models import (
     ProductInfo
 )
 from core.serializers import UserSerializer
+from decimal import Decimal
 from .tasks import notify_customer
 
 
@@ -344,17 +345,17 @@ class OrderSerializer(serializers.ModelSerializer):
                 end_date__gt = timezone.now(),
             )
 
-            discount = 0
+            discount: Discount = None
             if discounts.exists():
                 discount = discounts[0] # | discounts | = 0 or 1 no more
 
-            final_unit_price = item.product.unit_price * (1 - discount)
+            final_unit_price = item.product.unit_price * (Decimal(1) - (discount.rate if discount else Decimal(0)))
             total_price += final_unit_price * item.quantity
 
             order_item = OrderItem(
                 order = order,
                 product = item.product,
-                discount = discount,
+                discount = discount.rate if discount else 0,
                 final_unit_price = final_unit_price,
                 quantity = item.quantity
             )
@@ -363,16 +364,18 @@ class OrderSerializer(serializers.ModelSerializer):
         
         OrderItem.objects.bulk_create(order_items)
         Cart.objects.get(pk=cart_id).delete()
-
-        notify_customer.delay(
-            user = UserSerializer(self.context['user']).data,
-            customer = CustomerSerializer(self.context['customer']).data,
-            order = GetOrderSerializer(order).data,
-            total_price = total_price,
-            order_items = [OrderItemSerializer(order_item).data for order_item in order_items],
-            #billing adress
-            shipping_address = AddressSerializer(order.shipping_address).data,
-            email = self.context['user'].email
-        )
+        try:
+            notify_customer.delay(
+                user = UserSerializer(self.context['user']).data,
+                customer = CustomerSerializer(self.context['customer']).data,
+                order = GetOrderSerializer(order).data,
+                total_price = total_price,
+                order_items = [OrderItemSerializer(order_item).data for order_item in order_items],
+                #billing adress
+                shipping_address = AddressSerializer(order.shipping_address).data,
+                email = self.context['user'].email
+            )
+        except Exception as e:
+            print(e)
         
         return order
