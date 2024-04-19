@@ -10,8 +10,8 @@
 }
 
 .mainContent {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 80px;
+    padding-bottom: 80px;
     display: flex;
     justify-content: center;
     gap: 180px;
@@ -19,6 +19,7 @@
 }
 
 .selectedSection {
+    min-width: 50%;
     display: flex;
     flex-direction: column;
     gap: 10px;

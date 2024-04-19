@@ -12,6 +12,8 @@ import ProductImagesSection from "../../components/ProductDetailsPageComponents/
 import ProductInfo from "../../components/ProductDetailsPageComponents/ProductInfo";
 import SectionSelector from "../../components/ProductDetailsPageComponents/SectionSelector";
 import AddToCartForm from "../../components/ProductDetailsPageComponents/AddToCartForm";
+import { CircularProgress } from "@mui/material";
+import ServerError from "../../components/Error/ServerError";
 
 export type Section = "about" | "details" | "specs";
 
@@ -29,11 +31,10 @@ const ProductDetailsPage = () => {
 
   const { width } = useWindowSize();
 
-  if (error) return <h1>Cant fetch product</h1>;
-
   return (
     <>
-      {isLoading && <p>Loading...</p>}
+      {error && <ServerError />}
+      {isLoading && <CircularProgress />}
       {product && (
         <>
           <main className={styles.conatainer}>

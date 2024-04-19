@@ -107,3 +107,22 @@
         transform: translateY(0);
     }
 }
+
+@media only screen and (max-width: 768px) {
+    .container {
+        height: fit-content;
+    }
+    .card {
+        width: 100%;
+        box-shadow: var(--shadow-3);
+    }
+
+    .card:hover {
+        transform: none;
+        position: relative;
+    }
+
+    .addToCart, .actions {
+        display: flex;
+    }
+}

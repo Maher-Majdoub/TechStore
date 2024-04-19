@@ -41,3 +41,9 @@
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 30px;
 }
+
+@media only screen and (max-width: 768px) {
+    .list {
+        gap: 15px
+    }
+}

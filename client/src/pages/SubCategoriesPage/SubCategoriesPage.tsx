@@ -6,17 +6,13 @@ import CategoryCard from "../../components/CategoryCard/CategoryCard";
 import { endpoints } from "../../constants";
 import CategoryCardSkeleton from "../../components/CategoryCard/CategoryCardSkeleton";
 import LinksSection from "../../components/LinksSection/LinksSection";
+import ServerError from "../../components/Error/ServerError";
 
 const SubCategoriesPage = () => {
   const { categorySlug } = useParams();
   const { data, isLoading, error } = useCategories();
 
   const navigate = useNavigate();
-
-  if (error) {
-    console.log(error);
-    // navigate(endpoints["error"]);
-  }
 
   var subCategories = [] as Category[];
 
@@ -35,6 +31,7 @@ const SubCategoriesPage = () => {
       <div className="container">
         <Navigator />
         <h2 className={styles.title}>Sub Categories</h2>
+        {error && <ServerError />}
         <ul className={styles.list}>
           {!isLoading
             ? subCategories.map((category) => (

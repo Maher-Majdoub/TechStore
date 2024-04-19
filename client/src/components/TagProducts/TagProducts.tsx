@@ -11,7 +11,7 @@ interface Props {
 }
 
 const CategoryProducts = ({ tag, title, bgImage }: Props) => {
-  const { data, isLoading, error } = useProducts({
+  const { data } = useProducts({
     config: {
       params: {
         limit: 10,
@@ -19,8 +19,6 @@ const CategoryProducts = ({ tag, title, bgImage }: Props) => {
       },
     },
   });
-
-  if (isLoading || error) console.log("hello");
 
   return (
     <div className={styles.container}>

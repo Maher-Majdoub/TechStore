@@ -1,0 +1,46 @@
+.container {
+    display: flex;
+    align-items: center;
+    border: 3px solid;
+    padding: 4px;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.container.blue {
+    border-color: var(--color-2);
+    color: var(--color-2);
+}
+
+.container.white {
+    border-color: var(--color-1);
+    color: var(--color-1);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    font-family: "Times New Roman", Times, serif;
+    width: fit-content;
+    align-items: flex-end;
+}
+
+.title {
+    font-size: 20px;
+    font-family: inherit;
+    letter-spacing: 3px;
+    font-weight: 900;
+    margin: 0;
+}
+
+.subTitle {
+    margin-top: -3px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: inherit;
+}
+
+.icon {
+    width: 30px;
+    margin-left: 5px;
+}

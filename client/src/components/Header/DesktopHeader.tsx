@@ -1,4 +1,4 @@
-import Logo from "./Logo";
+import Logo from "../Logo/Logo";
 import SearchBar from "../SearchBar/SearchBar";
 import styles from "./styles.module.css";
 import CategoriesSelector from "../CategoriesSelector/CategoriesSelector";
@@ -9,7 +9,7 @@ const DesktopHeader = () => {
   return (
     <header>
       <div className={styles.topHeader + " container"}>
-        <Logo />
+        <Logo color="blue" />
         <SearchBar />
         <Actions />
       </div>

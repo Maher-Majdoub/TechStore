@@ -5,7 +5,7 @@ import Navigator from "../../components/Navigator/Navigator";
 import StoreInfos from "../../components/StoreInfos/StoreInfos";
 import styles from "./ContactUsPage.module.css";
 import { toast } from "react-toastify";
-import { TextField, TextareaAutosize } from "@mui/material";
+import { TextField } from "@mui/material";
 
 interface FormInput {
   name: string;
@@ -64,10 +64,14 @@ const ContactUsPage = () => {
               error={!!errors.phone}
               helperText={errors.phone?.message}
             />
-            <TextareaAutosize
-              {...register("name", { required: "Please enter your name" })}
+            <TextField
+              {...register("message", {
+                required: "Please enter your message",
+              })}
               placeholder="Enter your text here"
-              style={{ padding: "10px", resize: "none" }}
+              label="Enter your text here"
+              error={!!errors.message}
+              helperText={errors.message?.message}
             />
             <div className={styles.btnContainer}>
               <Button filled>Submit</Button>

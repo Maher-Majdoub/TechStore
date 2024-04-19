@@ -1,10 +1,10 @@
 import { useState } from "react";
 import useDeleteWish from "../../hooks/useDeleteWish";
 import useWish from "../../hooks/useWish";
-import Paginator from "../Paginator/Paginator";
 import ProductCard from "../ProductCard/ProductCard";
 import styles from "./styles.module.css";
 import ProductCardSkeleton from "../ProductCard/ProductCardSkeleton";
+import { Pagination } from "@mui/material";
 
 const WishList = () => {
   const [page, setPage] = useState(1);
@@ -15,6 +15,10 @@ const WishList = () => {
   const { deleteWish } = useDeleteWish();
 
   const skeletons = [1, 2, 3, 4, 5];
+
+  if (data && Math.ceil(data.count / pageSize) < page && page !== 1) {
+    setPage(1);
+  }
 
   return (
     <>
@@ -30,14 +34,7 @@ const WishList = () => {
               ))}
             </ul>
           ) : data?.results && data.results.length > 0 ? (
-            <Paginator
-              page={page}
-              pageSize={pageSize}
-              total={data.count}
-              onChangePage={(newPage) => {
-                setPage(newPage);
-              }}
-            >
+            <>
               <ul className={styles.list}>
                 {data.results.map((wish) => (
                   <ProductCard
@@ -51,7 +48,19 @@ const WishList = () => {
                   />
                 ))}
               </ul>
-            </Paginator>
+              {Math.ceil(data.count / pageSize) > 1 && (
+                <Pagination
+                  page={page}
+                  count={Math.ceil(data.count / pageSize)}
+                  onChange={(_, page) => {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                    setPage(page);
+                  }}
+                  color="primary"
+                  sx={{ width: "fit-content", margin: "auto" }}
+                />
+              )}
+            </>
           ) : (
             <span>There is no products in your wishlist.</span>
           )}
