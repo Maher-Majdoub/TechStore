@@ -2,9 +2,9 @@
 
 This is an e-commerce website built using Django, React, and MySQL.
 
+[![Live Version](https://img.shields.io/badge/Live%20Version-Visit%20Website-blue.svg)](https://client-4587.zeet-maherayari24-te.zeet.app/)
 
 ## Features
-
 - User authentication and authorization
 - Product browsing and searching
 - Shopping cart functionality
@@ -13,34 +13,29 @@ This is an e-commerce website built using Django, React, and MySQL.
 - Admin dashboard for managing products, orders, and users
 
 
-- ## Technologies Used
-- 
+## Technologies Used
 - Django: Backend framework for handling server-side logic, routing, and database interactions.
 - React: Frontend library for building dynamic user interfaces.
 - MySQL: Relational database management system used for storing product, user, and order data.
 - Docker Compose: Tool for defining and running multi-container Docker applications.
 
-- ## Prerequisites
-- 
+## Prerequisites
 - Docker: Install Docker on your system.
 
-- ## Installation
-
+## Installation
 - 1. Clone the repository:
      ```bash
-     git clone
+     git clone https://github.com/Maher-Majdoub/TechStore.git
      ```
 - 2. Navigate to the project directory:
-    ```bash
-    cd TechStore
-    ```
+     ```bash
+     cd TechStore
+     ```
 - 3. Build and run the containers using Docker Compose:
-    ```bash
-    docker-compose up --build
-    ```
+     ```bash
+     docker-compose up --build
+     ```
 - 4. Access the website at `http://localhost:3000`
-
- 
+  
 ## Contributing
-
 Contributions are welcome! Please open an issue or submit a pull request if you would like to contribute to this project.
