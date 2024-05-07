@@ -36,7 +36,6 @@ const useCreateWish = () => {
           }
         )
         .then((res) => res.data),
-
     onSuccess: () => {
       toast.success("Wish added successfully");
       queryClient.invalidateQueries({ queryKey: ["wishes"] });

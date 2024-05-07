@@ -19,13 +19,24 @@ class Command(BaseCommand):
         curr = os.path.dirname(os.path.realpath(__file__))
         print('seeding users.....')
         self.run(os.path.join(curr, 'sql/seed_users.sql'))
+        print('seeding customers.....')
+        self.run(os.path.join(curr, 'sql/seed_customers.sql'))
         print('seeding categories.....')
         self.run(os.path.join(curr, 'sql/seed_categories.sql'))
         print('seeding variations.....')
         self.run(os.path.join(curr, 'sql/seed_variations.sql'))
         print('seeding products....')
         self.run(os.path.join(curr, 'sql/seed_products.sql'))
-
+        print('seeding products configuartions....')
+        self.run(os.path.join(curr, 'sql/seed_product_configurations.sql'))
+        print('seeding products images....')
+        self.run(os.path.join(curr, 'sql/seed_product_image.sql'))
+        print('seeding products infos....')
+        self.run(os.path.join(curr, 'sql/seed_product_info.sql'))
+        print('seeding tags....')
+        self.run(os.path.join(curr, 'sql/seed_tags.sql'))
+        print('seeding products tags....')
+        self.run(os.path.join(curr, 'sql/seed_product_tag.sql'))
 
 
         

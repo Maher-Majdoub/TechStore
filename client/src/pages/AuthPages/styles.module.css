@@ -10,6 +10,10 @@
     padding: 20px
 }
 
+.container {
+    padding-top: 10px
+}
+
 @media only screen and (max-width: 920px) {
     .sections {
         grid-template-columns: 1fr;

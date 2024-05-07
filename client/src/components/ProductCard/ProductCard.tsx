@@ -10,6 +10,8 @@ import { endpoints } from "../../constants";
 import useCreateWish from "../../hooks/useCreateWish";
 import ActionBtn from "../ActionBtn/ActionBtn";
 import noProductImage from "../../assets/noProductImage.png";
+import useAuthorization from "../../hooks/useAuthorization";
+import { toast } from "react-toastify";
 
 interface Props {
   product: Product;
@@ -29,6 +31,7 @@ const ProductCard = ({
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const { createWish } = useCreateWish();
+  const { access } = useAuthorization();
 
   return (
     <div className={styles.container}>
@@ -50,7 +53,9 @@ const ProductCard = ({
             <ActionBtn
               action="addToWish"
               onClick={() => {
-                createWish({ product: product });
+                access
+                  ? createWish({ product: product })
+                  : toast.warn("Please login first");
               }}
             />
           )}

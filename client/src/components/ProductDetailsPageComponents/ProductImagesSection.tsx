@@ -3,9 +3,12 @@ import ProductImagesDisplayer from "../ProductImagesDisplayer/ProductImagesDispl
 import { Product } from "../../hooks/useProducts";
 import styles from "./styles.module.css";
 import useCreateWish from "../../hooks/useCreateWish";
+import { toast } from "react-toastify";
+import useAuthorization from "../../hooks/useAuthorization";
 
 const ProductImagesSection = ({ product }: { product: Product }) => {
   const { createWish } = useCreateWish();
+  const { access } = useAuthorization();
   return (
     <div className={styles.productImagesSection}>
       <div className={styles.imagesDisplayer}>
@@ -14,7 +17,9 @@ const ProductImagesSection = ({ product }: { product: Product }) => {
           <ActionBtn
             action="addToWish"
             onClick={() => {
-              createWish({ product: product });
+              access
+                ? createWish({ product: product })
+                : toast.warn("Please login first");
             }}
           />
         </div>

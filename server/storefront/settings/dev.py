@@ -12,10 +12,14 @@ INSTALLED_APPS += [
     'debug_toolbar',
 ]
 
+
+# DATA_BASE_URL = os.environ['DATA_BASE_URL']
+# DATABASES = {'default': dj_database_url.parse(DATA_BASE_URL)}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'TechStore',
+        'NAME': 'techstore',
         'HOST': 'localhost',
         'USER': 'root',
         'PASSWORD': 'maher'
@@ -26,6 +30,7 @@ DATABASES = {
 # EMAIL_HOST = 'localhost'
 # EMAIL_HOST_USER = ''
 # EMAIL_HOST_PASSWORD = ''
+
 EMAIL_PORT = 2525
 DEFAULT_FROM_EMAIL = 'from@maherbuy.com'
 

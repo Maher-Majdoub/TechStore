@@ -138,6 +138,8 @@ const ProductsPage = () => {
                 sx={{ width: "fit-content", margin: "auto" }}
                 size="medium"
                 color="primary"
+                siblingCount={1}
+                boundaryCount={0}
               />
             )}
           </>

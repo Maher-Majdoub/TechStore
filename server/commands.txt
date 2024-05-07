@@ -14,3 +14,5 @@ docker run --rm -it -p 6379:6379 redis
 # start celery 
 celery -A storefront worker --loglevel=info
 celery -A storefront flower
+
+apk add --no-cache mariadb-dev build-base

@@ -26,6 +26,7 @@
   padding: 0;
   font-family: "Poppins", sans-serif;
   font-style: normal;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -87,6 +88,7 @@ body {
 .Toastify__toast-container {
   font-size: 14px;
 }
+
 
 @media only screen and (max-width: 1800px) {
   body {
