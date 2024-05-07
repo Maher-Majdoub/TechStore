@@ -20,7 +20,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'techstore',
-        'HOST': 'localhost',
+        'HOST': 'database',
         'USER': 'root',
         'PASSWORD': 'maher'
     }
