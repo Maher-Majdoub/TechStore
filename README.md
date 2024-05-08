@@ -2,7 +2,7 @@
 
 This is an e-commerce website built using Django, React, and MySQL.
 
-[![Live Version](https://img.shields.io/badge/Live%20Version-Visit%20Website-blue.svg)](https://client-4587.zeet-maherayari24-te.zeet.app/)
+[![Live Version](https://img.shields.io/badge/Live%20Version-Visit%20Website-blue.svg)](https://techstore-vyz9.zeet-maherayari24-te.zeet.app/)
 
 ## Features
 - User authentication and authorization
